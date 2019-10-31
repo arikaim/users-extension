@@ -1,0 +1,5 @@
+{
+    "access": {
+        "deny-request": true
+    }
+}

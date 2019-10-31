@@ -1,0 +1,18 @@
+{{ component('navbar') }}
+<div class="ui container mt-20">       
+    <div class="ui segment">
+        <div class="ui left close rail">
+            <div class="ui segment">
+                <div class="ui block header mt-4">
+                    <i class="icon user outline olive mini"></i>
+                    <h4 class="content">{{ title }}</h4>
+                </div>
+                {{ component('users::users.menu') }}        
+            </div>
+        </div>
+        <div id="user_area_content" class="min-h-full">
+            {{ component('users::users.dashboard') }}        
+        </div>
+    </div>
+</div>
+{{ component('footer') }}

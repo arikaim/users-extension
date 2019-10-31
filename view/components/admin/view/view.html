@@ -1,0 +1,32 @@
+<div class="ui stackable grid">
+    <div class="sixteen wide column mt-10">           
+        {{ component("components:search",{ namespace: 'users' }) }}
+    </div>
+</div>
+<div class="ui stackable text menu">
+    <div class="item right floated">
+        {{ component('components:paginator.dropdown',{ namespace: 'users' }) }}
+    </div>
+</div>
+<div class="ui mt-2">
+    <table class="ui compact stackable selectable borderless basic table">
+        <thead class="bg-blue-100 border-2 border-solid border-blue-100">
+            <tr class="borderless">
+                <th class="collapsing center aligned">
+                    {{ component('users::admin.view.actions') }}
+                </th>
+                <th class="collapsing center aligned">{{ columns.edit }}</th>
+                <th class="one wide">{{ columns.created }}</th>
+                <th class="one wide">{{ columns.last_login }}</th>               
+                <th class="collapsing one wide">{{ columns.status }}</th>
+                <th>{{ columns.user_name }}</th>
+                <th>{{ columns.email }}</th>              
+                <th>{{ columns.name }}</th>  
+                <th class="collapsing one wide center aligned"></th>          
+            </tr>
+        </thead>
+        <tbody id="users_rows">
+            {{ component('users::admin.view.rows') }}
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,18 @@
+<div>
+    <div class="ui olive empty circular label"></div>
+    {{ permission.details.name }}  
+    <div class="ui labels right floated">
+        {% if permission.read == 1 %}
+            <span class="ui basic label text-gray-800 underline">{{ labels.read }}</span>
+        {% endif %}
+        {% if permission.write == 1 %}
+            <span class="ui basic label text-gray-800 underline">{{ labels.write }}</span>
+        {% endif %}
+        {% if permission.delete == 1 %}
+            <span class="ui basic label text-gray-800 underline">{{ labels.delete }}</span>
+        {% endif %}
+        {% if permission.execute == 1 %}
+            <span class="ui basic label text-gray-800 underline">{{ labels.execute }}</span>
+        {% endif %}
+    </div>
+</div>

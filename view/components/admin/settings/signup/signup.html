@@ -1,0 +1,84 @@
+{% set settings = service('options').get('users.signup.form') %}
+{% set activation = service('options').get('users.sugnup.activation') %}
+
+{% component 'components:tabs.vertical.content' %}
+<div class="ui equal width form" id="settings_form">  
+    <div class="ui segment padded">
+        <div class="field">
+            <label>{{ labels.name }}</label>
+            <div class="ui checkbox from-settings">
+                <input type="checkbox" name="show_name" id="show_name" tabindex="0" class="hidden" {{ settings.name.show|ifthen(true,'checked') }} >
+                <label>{{ labels.show }}</label>
+            </div>
+            <div class="ui checkbox ml-1 from-settings" >
+                <input type="checkbox" name="require_name" id="require_name" tabindex="0" class="hidden" {{ settings.name.required|ifthen(true,'checked') }} >
+                <label>{{ labels.required }}</label>
+            </div>
+        </div>
+        <div class="field">
+            <label>{{ labels.username }}</label>
+            <div class="ui checkbox from-settings">
+                <input type="checkbox" name="show_username" id="show_username" tabindex="0" class="hidden" {{ settings.username.show|ifthen(true,'checked') }} >
+                <label>{{ labels.show }}</label>
+            </div>
+            <div class="ui checkbox from-settings ml-1">
+                <input type="checkbox" name="require_username" id="require_username" tabindex="0" class="hidden" {{ settings.username.required|ifthen(true,'checked') }} >
+                <label>{{ labels.required }}</label>
+            </div>
+        </div>
+        <div class="field">
+            <label>{{ labels.email }}</label>
+            <div class="ui checkbox from-settings">
+                <input type="checkbox" name="show_email" id="show_email" tabindex="0" class="hidden" {{ settings.email.show|ifthen(true,'checked') }} >
+                <label>{{ labels.show }}</label>
+            </div>
+            <div class="ui checkbox from-settings ml-1">
+                <input type="checkbox" name="require_email" id="require_email" tabindex="0" class="hidden" {{ settings.email.required|ifthen(true,'checked') }} >
+                <label>{{ labels.required }}</label>
+            </div>
+        </div>
+        <div class="field">
+            <label>{{ labels.phone }}</label>
+            <div class="ui checkbox from-settings">
+                <input type="checkbox" name="show_phone" id="show_phone" tabindex="0" class="hidden" {{ settings.phone.show|ifthen(true,'checked') }} >
+                <label>{{ labels.show }}</label>
+            </div>
+            <div class="ui checkbox from-settings ml-1">
+                <input type="checkbox" name="require_phone" id="require_phone" tabindex="0" class="hidden" {{ settings.phone.required|ifthen(true,'checked') }} >
+                <label>{{ labels.required }}</label>
+            </div>
+        </div>
+        <div class="field">
+            <label>{{ labels.captcha }}</label>
+            <div class="ui checkbox from-settings">
+                <input type="checkbox" name="show_captcha" id="show_captcha" tabindex="0" class="hidden" {{ settings.captcha.show|ifthen(true,'checked') }}>
+                <label>{{ labels.protect }}</label>
+            </div>
+        </div>
+    </div>
+    <div class="ui segment padded">
+        <div class="field">
+            <label>{{ labels.activation.title }}</label>
+            <div class="ui radio checkbox settings-checkbox">
+                <input type="radio" name="users.sugnup.activation" value="1" {{ activation|ifthen(1,'checked') }}>
+                <label>{{ labels.activation.immediately }}</label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox settings-checkbox">
+                <input type="radio" name="users.sugnup.activation" value="2" {{ activation|ifthen(2,'checked') }}>
+                <label>{{ labels.activation.confirmed }}</label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox settings-checkbox">
+                <input type="radio" name="users.sugnup.activation" value="3" {{ activation|ifthen(3,'checked') }}>
+                <label>{{ labels.activation.admin }}</label>
+            </div>
+        </div>
+    </div>   
+    <div class="field">
+        {{ component('components:buttons.page-url',{ url: '/signup', target: 'signup_page', class: 'fluid', label: buttons.signup }) }}           
+    </div>
+</div>
+{% endcomponent %}

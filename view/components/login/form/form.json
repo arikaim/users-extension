@@ -1,0 +1,24 @@
+{
+    "buttons": {
+        "login": {
+            "title": "Log in"
+        }
+    },
+    "fields": {
+        "user_name":{
+            "label": "Username",
+            "placeholder": "Enter Username"            
+        },
+        "email": {
+            "placeholder": "Enter Email",
+            "label": "Email"
+        },
+        "password":{
+            "placeholder": "Enter Password",
+            "label": "Password"
+        },
+        "remember": {
+            "label": "Remember Me"
+        }
+    }
+}

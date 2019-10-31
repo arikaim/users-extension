@@ -1,0 +1,12 @@
+<form class="ui form" id="reset_password_form" method="post">
+    <div class="field">
+        <label>{{ email.label }}</label>
+        <div class="ui left icon input">
+            <i class="icon envelope outline"></i>
+            <input type="text" name="email" id="email" {{ user_name.placeholder|attr("placeholder") }}>    
+        </div>
+    </div>                      
+    <button class="ui fluid large primary button submit-button">{{ buttons.submit }}</button>            
+    <div class="ui error message errors"></div>
+    <div class="ui message olive hidden"></div>    
+</form>

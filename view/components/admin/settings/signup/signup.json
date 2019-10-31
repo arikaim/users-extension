@@ -1,0 +1,26 @@
+{
+    "title": {
+        "content": "Signup",
+        "icon": "user plus"
+    },
+    "buttons": {
+        "signup": "Signup Page"
+    },
+    "labels": {
+        "name": "Name",
+        "email": "Email",
+        "username": "Username",
+        "phone": "Phone",     
+        "captcha": "Captcha",
+        "required": "Required",
+        "show": "Show",
+        "activation": {
+            "title": "Activation",
+            "immediately": "Immediately after user signup",
+            "confirmed": "After users email is confirmed",
+            "admin": "Manually by admin"
+        },
+        "verification": "Send email verification",
+        "protect": "Protect signup form with captcha"
+    }   
+}

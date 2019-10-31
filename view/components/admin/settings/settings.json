@@ -1,0 +1,15 @@
+{
+    "labels": {
+        "login": "Login",
+        "signup": "Signup",
+        "protected": "User page",
+        "notifications": "Notifications"
+    },
+    "title": {
+        "content": "Settings",
+        "icon": "cogs"
+    },
+    "captcha": {
+        "content": "Use CAPTCHA in login form"
+    }
+}

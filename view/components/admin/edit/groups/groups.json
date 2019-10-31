@@ -1,0 +1,9 @@
+{
+    "title": {
+        "content": "Groups",
+        "icon": "users"
+    },
+    "messages": {
+        "empty": "User does not belong to any group."
+    }
+}

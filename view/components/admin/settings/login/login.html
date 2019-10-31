@@ -1,0 +1,35 @@
+{% set login_with = getOption('users.login.with',1) %}
+{% set captcha_protect = getOption('users.login.captcha.protect',true) %}
+
+{% component 'components:tabs.vertical.content' %}
+<div class="ui equal width form" id="settings_form">  
+    <div class="ui segment">
+        <div class="field mt-8">           
+            <div class="ui radio checkbox login-with">
+                <input type="radio" name="login_with" id="login_with_username" tabindex="0" class="hidden" {{ login_with|ifthen(1,'checked') }} value="1">
+                <label>{{ labels.username }}</label>
+            </div>
+        </div>
+        <div class="field">           
+            <div class="ui radio checkbox login-with">
+                <input type="radio" name="login_with" id="login_with_email" tabindex="0" class="hidden" {{ login_with|ifthen(2,'checked') }} value="2">
+                <label>{{ labels.email }}</label>
+            </div>        
+        </div>       
+        <div class="field">           
+            <div class="ui radio checkbox login-with">
+                <input type="radio" name="login_with" id="login_with_username_email" tabindex="0" class="hidden" {{ login_with|ifthen(3,'checked') }} value="3">
+                <label>{{ labels.combined }}</label>
+            </div>
+        </div>
+    </div>
+    <div class="ui field segment">
+        <label>{{ labels.captcha }}</label>
+        <div class="ui checkbox" id="captcha_protect">
+            <input type="checkbox" name="show_captcha" tabindex="0" class="hidden" value="true" {{ captcha_protect|ifthen(true,'checked') }}>
+            <label>{{ labels.protect }}</label>
+        </div>
+    </div>       
+    {{ component('components:buttons.page-url',{ url: '/login', target: 'login_page', class: 'fluid', label: buttons.login }) }}    
+</div>
+{% endcomponent %}

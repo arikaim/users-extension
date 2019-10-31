@@ -1,0 +1,21 @@
+{% set user = service('auth').getUser() %}
+<div class="ui block header mt-4">
+    <i class="icon dashboard outline olive mini"></i>
+    <h4 class="content">{{ title }}</h4>
+</div>
+<div class="ui cards">     
+    <div class="ui card">
+        <div class="content">
+            <h4>
+                <i class="info circle icon"></i>
+                {{ labels.info }}
+            </h4>
+        </div>
+        <div class="content">
+            <h4>{{ labels.login }}</h4>
+            <div class="">{{ user.date_login|dateTimeFormat }}</div>
+            <h4>{{ labels.signup }}</h4>
+            <div class="">{{ user.date_created|dateTimeFormat }}</div>
+        </div>
+    </div>
+</div>

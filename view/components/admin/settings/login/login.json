@@ -1,0 +1,16 @@
+{
+    "title": {
+        "content": "Login Settings",
+        "icon": "sign in"
+    },
+    "labels": {    
+        "captcha": "Captcha",  
+        "email": "Login with email",
+        "username": "Login with username",
+        "combined": "Login with email and user name",
+        "protect": "Protect login form with captcha"       
+    },
+    "buttons": {
+        "login": "Login Page"
+    }
+}

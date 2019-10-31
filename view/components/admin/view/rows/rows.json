@@ -1,0 +1,10 @@
+{
+    "labels": {
+        "empty": "No users",
+        "status": {
+            "active": "active",
+            "disabled": "disabled"
+        },
+        "cp": "Control Panel"
+    }
+}

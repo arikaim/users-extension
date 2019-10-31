@@ -1,0 +1,9 @@
+{
+    "email": {
+        "label": "Email"
+    },
+    "buttons": {
+        "submit": "Submit",
+        "login_page": "Open Login Page"
+    }
+}

@@ -1,0 +1,18 @@
+{% set user = createModel('Users').findById(uuid) %}
+{% component 'components:tabs.vertical.content' %}
+    <div class="ui mt-8">
+        {% if user.groups is empty %}
+        <div class="ui message">
+            {{ messages.empty }}
+        </div>
+        {% else %}
+        <div class="ui list">
+            {% for group in user.groups %}
+            <div class="item">
+                {{ group.group.title }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+{% endcomponent %}

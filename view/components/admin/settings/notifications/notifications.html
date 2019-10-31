@@ -1,0 +1,28 @@
+{% set send_signup_email = service('options').get('users.notifications.email.signup') %}
+{% set send_welcome_email = service('options').get('users.notifications.email.welcome') %}
+{% set send_verification_email = service('options').get('users.notifications.email.verification') %}
+
+{% component 'components:tabs.vertical.content' %}           
+<form class="ui equal width form" id="notifications_settings_form">  
+    <div class="ui segment padded">
+        <div class="field">                     
+            <div class="ui checkbox settings-checkbox">
+                <input type="checkbox" name="users.notifications.email.signup" id="send_signup_email" tabindex="0" {{ send_signup_email|ifthen(true,'checked') }}>
+                <label>{{ labels.fields.welcome }}</label>
+            </div>
+        </div>
+        <div class="field">                     
+            <div class="ui checkbox settings-checkbox">
+                <input type="checkbox" name="users.notifications.email.welcome" id="send_welcome_email" tabindex="0" {{ send_welcome_email|ifthen(true,'checked') }}>
+                <label>{{ labels.fields.signup }}</label>
+            </div>
+        </div>
+        <div class="field">                  
+            <div class="ui checkbox settings-checkbox">
+                <input type="checkbox" name="users.notifications.email.verification" id="send_verification_email" tabindex="0" {{ send_verification_email|ifthen(true,'checked') }}>
+                <label>{{ labels.fields.verification }}</label>
+            </div>
+        </div>               
+    </div>
+</form>
+{% endcomponent %}

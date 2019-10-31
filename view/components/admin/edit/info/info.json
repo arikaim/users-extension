@@ -1,0 +1,11 @@
+{
+    "title": {
+        "content": "Info",
+        "icon": "info"
+    },
+    "labels": {
+        "date_created": "Date Created",
+        "date_updated": "Date Updated",
+        "date_login": "Date Last Login"        
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "include": {
+        "js": [
+            "system:admin.access-tokens"           
+        ]
+    },
+    "access": {
+        "auth": "session",
+        "permission": "ControlPanel:full"
+    }
+}

@@ -1,0 +1,17 @@
+{% set user = createModel('Users').findById(uuid) %}
+{% component 'components:tabs.vertical.content' %}
+    <div class="ui mt-8 form">
+        <div class="field">
+            <label>{{ labels.date_created }}</label>
+            <p>{{ user.date_created|dateTimeFormat }}</p>
+        </div>
+        <div class="field">
+            <label>{{ labels.date_login }}</label>
+            <p>{{ user.date_login|emptyLabel('-')|dateTimeFormat }}</p>
+        </div>
+        <div class="field">
+            <label>{{ labels.date_updated }}</label>
+            <p>{{ user.date_updated|emptyLabel('-')|dateTimeFormat }}</p>
+        </div>
+    </div>
+{% endcomponent %}

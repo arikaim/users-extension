@@ -1,0 +1,18 @@
+{% set users_count = 0 %}
+<div class="ui header">
+    <i class="icon user outline"></i>
+    {{ labels.title }}
+</div>
+<div class="ui divider"></div>
+<div class="content">
+    <div class="ui horizontal small statistics">
+        <div class="olive statistic">
+            <div class="value">
+                {{ users_count }}
+            </div>
+            <div class="label">
+                {{ labels.users }} 
+            </div>
+        </div>           
+    </div>
+</div>

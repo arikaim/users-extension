@@ -1,0 +1,20 @@
+{
+    "labels": {
+        "view": {
+            "content": "View"
+        },            
+        "add": {
+            "content": "Add"
+        },
+        "edit": {
+            "content": "Edit"
+        },
+        "settings": {
+            "content": "Settings"
+        }
+    },
+    "message": {
+        "title": "Confirm",
+        "description": "Uninstall extension "
+    }
+}

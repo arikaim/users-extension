@@ -1,0 +1,25 @@
+<div class="ui block header m-6">
+    User 
+</div>
+<div class="ui" id="edit_user_content">
+    {% if uuid is not null %}
+        {% set params = { uuid: uuid } %}
+        {% set items = [ 
+            { title: labels.details, component: 'users::admin.edit.details', icon: 'edit', active: true, params: params },
+            { title: labels.password, component: 'users::admin.edit.password', icon: 'lock', params: params },
+            { title: labels.tokens, component: 'users::admin.edit.tokens', icon: 'tags', params: params },
+            { title: labels.api, component: 'users::admin.edit.api', icon: 'code', params: params },
+            { title: labels.permissions, component: 'users::admin.edit.permissions', icon: 'unlock', params: params },
+            { title: labels.groups, component: 'users::admin.edit.groups', icon: 'users', params: params },
+            { title: labels.info, component: 'users::admin.edit.info', icon: 'info', params: params }
+        ] %}
+
+        {{  component('components:tabs.vertical',{ 
+                items: items, 
+                menu: { id: 'edit_user_tabs' }, 
+                item_class: 'edit-tab-item',
+                content: { id: 'edit_user', component: 'users::admin.edit.details', params: params } 
+            })
+        }}
+    {% endif %}
+</div>
