@@ -19,7 +19,7 @@ class DashboardItemSubscriber extends EventSubscriber
 {
     public function __construct() 
     {
-        $this->subscribe('dashboard.get.items','users');
+        $this->subscribe('dashboard.get.items');
     }
 
     public function execute($event)
