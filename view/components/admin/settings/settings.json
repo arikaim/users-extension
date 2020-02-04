@@ -3,7 +3,7 @@
         "login": "Login",
         "signup": "Signup",
         "protected": "User page",
-        "notifications": "Notifications"
+        "notifications": "Emails"
     },
     "title": {
         "content": "Settings",

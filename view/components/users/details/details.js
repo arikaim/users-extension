@@ -1,10 +1,13 @@
 $(document).ready(function() {
-    arikaim.ui.form.onSubmit('#create_user_form',function() {
-       return users.changeDetails({ formId: '#create_user_form' });
+
+    arikaim.ui.form.onSubmit('#user_details_form',function() {
+       return users.changeDetails('#user_details_form');
     },function(result) {       
-        arikaim.ui.form.showMessage({
-            selector: '#message',
+        arikaim.ui.form.showMessage({           
             message: result.message
         });
+    },function(error) {
+
     });
+
 });

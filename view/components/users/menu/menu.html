@@ -1,24 +1,23 @@
-<div class="ui vertical fluid rigt pointing menu">
-    <a class="item active edit-tab-item" component="users::users.dashboard">
-        <i class="left floated icon dashboard"></i>
-        {{ items.dashboard }}
-    </a>
-    <a class="item edit-tab-item" component="users::users.details">
-        <i class="left floated icon edit"></i>
-        {{ items.details }}
-    </a>
-    <a class="item edit-tab-item" component="users::users.password">
-        <i class="left floated icon lock"></i>
-        {{ items.change_password }}
-    </a>
-    <!--
-    <a class="item edit-tab-item" component="users::users.settings">
-        <i class="left floated icon cogs"></i>
-        {{ items.settings }}
-    </a>
-    -->
-    <a class="item edit-tab-item" component="users::users.logout">
-        <i class="left icon sign out"></i>
-        {{ items.logout }}
-    </a>
+<div class="ui menu vertical {{ class }}">
+    {% if service('access').isLogged() == true %}
+        <a class="item active user-menu-item" component="users>users.dashboard">
+            <i class="icon dashboard {{ icon_class }}"></i>
+            {{ items.dashboard }}
+        </a>
+        <a class="item user-menu-item" component="users>users.details">
+            <i class="icon edit {{ icon_class }}"></i>
+            {{ items.details }}
+        </a>
+        <a class="item user-menu-item" component="users>users.password">
+            <i class="icon lock {{ icon_class }}"></i>
+            {{ items.change_password }}
+        </a>       
+        {{ content }}
+        <a class="item user-menu-item" component="users>users.logout">
+            <i class="icon sign out {{ icon_class }}"></i>
+            {{ items.logout }}
+        </a>
+    {% else %}
+    {{ content }}
+    {% endif %}
 </div>

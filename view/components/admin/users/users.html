@@ -1,0 +1,17 @@
+{% set items = [ 
+    { title: labels.view,component: 'users::admin.users.view',icon: 'list', active: true },
+    { title: labels.add,component: 'users::admin.users.add',icon: 'plus' },
+    { id: 'edit_user',title: labels.edit,component: 'users::admin.users.edit',icon: 'edit' }    
+] %}
+
+{{ component('components:tabs.vertical',{ 
+        items: items, 
+        menu: { id: 'users_menu' }, 
+        item_class: 'users-tab-item',
+        content: {
+            id: 'users_content',
+            component: 'users::admin.users.view',
+            params: params 
+        } 
+   })
+}}

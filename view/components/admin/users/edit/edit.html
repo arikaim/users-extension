@@ -1,0 +1,12 @@
+{% component 'components:tabs.vertical.content' %}
+{% set class = 'sixteen wide column' %}
+{% set panel_class = '' %}
+<div class="ui segment pt-4">   
+    {{ component('users::admin.users.dropdown',{ selected: uuid }) }}
+</div>
+<div class="mt-10 ml-4" id="edit_user_menu">
+    {% if uuid is not null %}
+        {{ component('users::admin.users.edit.menu',{ uuid: uuid }) }}
+    {% endif %}
+</div>
+{% endcomponent %}

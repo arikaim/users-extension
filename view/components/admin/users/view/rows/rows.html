@@ -1,0 +1,49 @@
+{% component 'components:view.rows' %}
+    {% set users = createModel('Users') %}
+    {% if show_deleted != true %}
+        {% set users = users.getNotDeletedQuery() %}
+    {% else %}
+        {% set users = users.softDeletedQuery() %}
+    {% endif %}
+    {% set items = users.join('user_details', 'users.id', '=', 'user_details.user_id', 'left outer').select('users.*','user_details.*','users.uuid as uuid','users.id as id') %}   
+    {% set items = paginate(items,'users') %}
+    {% for item in items.getItems() %}   
+    <tr id="row_{{ item.uuid }}">             
+        <td>          
+            {% if item.isDeleted() == false %}
+            <div class="ui icon basic mini buttons">
+                <button class="ui icon button edit-button" uuid="{{ item.uuid }}">
+                    <i class="icon edit"></i>
+                </button>
+                {% if access().hasControlPanelAccess(item.id) == false %}
+                <button class="ui icon button delete-button" uuid="{{ item.uuid }}" data-title="{{ (item.user_name is empty) ? item.email : item.user_name }}">
+                    <i class="icon trash orange"></i>
+                </button>
+                {% endif %}
+            </div>
+            {% else %}
+            <button class="ui icon basic button mini restore-button" uuid="{{ item.uuid }}"  {{ labels.restore|attr('title') }}>
+                <i class="trash restore olive alternate icon"></i>
+            </button>
+            {% endif %}
+        </td>
+        <td>{{ item.date_created|dateFormat }}</td>
+        <td>{{ item.date_login|dateFormat }}</td>       
+        <td>          
+            {% if item.isDeleted() == false %}
+            {{ component('components:status.dropdown',{ status: item.status, uuid: item.uuid }) }} 
+            {% else %}
+            <div class="ui red basic label">{{ labels.deleted }}</div>
+            {% endif %}  
+        </td>
+        <td>{{ item.user_name }}</td>
+        <td>{{ item.email }}</td>       
+        <td>{{ item.first_name }} {{ item.last_name }}</td>
+        <td class="center aligned">           
+            {% if control_panel == true %}
+                <div class="ui label blue mini basic">{{ labels.cp }}</div>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+{% endcomponent %}

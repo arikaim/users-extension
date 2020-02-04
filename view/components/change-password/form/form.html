@@ -1,8 +1,10 @@
-{% set button_class = (button_class is empty) ? 'large fluid primary': button_class %}
+{% set button_class = (button_class is empty) ? 'large fluid primary button': button_class %}
 
-<form class="ui form" id="change_password_form"> 
+<form class="ui form" id="change_password_form">    
     <input type="hidden" name="token" value="{{ token }}">
+    {% if uuid is not empty %}
     <input type="hidden" name="uuid" value="{{ uuid }}">
+    {% endif %}
     <div class="field required">
         <label>{{ fields.password.label }}</label>
         <div class="ui left icon right action input">
@@ -23,8 +25,5 @@
             </a> 
         </div>  
     </div>      
-    <div class="mt-4">&nbsp;</div>            
-    <button class="ui button submit-button {{ button_class }}">{{ buttons.submit }}</button>            
-    <div class="ui error message errors"></div>
-    <div class="ui message olive hidden done-mesage" id="message"></div>    
+    {{ component('components:form.footer',{ button_class: button_class , button_title: buttons.submit  }) }}  
 </form>

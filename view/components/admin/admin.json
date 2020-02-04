@@ -3,18 +3,17 @@
         "view": {
             "content": "View"
         },            
-        "add": {
-            "content": "Add"
-        },
-        "edit": {
-            "content": "Edit"
-        },
         "settings": {
             "content": "Settings"
+        },
+        "trash": {
+            "content": "Recycle Bin"
         }
     },
-    "message": {
-        "title": "Confirm",
-        "description": "Uninstall extension "
-    }
+    "messages": {
+        "remove": {
+            "title": "Confirm Remove",
+            "content": "Confirm remove user '<b><% title %></b>'."
+        }
+    }      
 }

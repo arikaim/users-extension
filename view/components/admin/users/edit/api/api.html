@@ -1,0 +1,11 @@
+{% set user = createModel('Users').findById(uuid) %}
+
+{% component 'components:tabs.vertical.content' %}
+    <div class="ui mt-8">
+        {% if api is empty %}
+        <div class="ui message">
+            {{ messages.empty }}
+        </div>
+        {% endif %}
+    </div>
+{% endcomponent %}

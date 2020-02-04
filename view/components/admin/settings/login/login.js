@@ -15,4 +15,11 @@ $(document).ready(function() {
             options.save('users.login.captcha.protect',false);
         }   
     });
+
+    arikaim.ui.form.onSubmit('#settings_form',function() {
+        var redirectUrl = $('#redirect').val();
+        return options.save('users.login.redirect',redirectUrl);
+    },function(result) {
+        arikaim.ui.form.showMessage(result.message);
+    });
 });

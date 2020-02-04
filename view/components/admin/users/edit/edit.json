@@ -1,0 +1,9 @@
+{
+    "title": {
+        "content": "Edit User",
+        "icon": "user outline blue"
+    },
+    "labels": {
+        "user": "User"
+    }
+}

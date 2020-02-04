@@ -1,0 +1,20 @@
+{% component 'components:layout' %}
+    {{ component('users>navbar') }}
+    <div class="ui container mt-20">       
+        <div class="ui very basic segment">
+            <div class="ui left close rail">
+                <div class="ui very basic segment">
+                    <div class="ui block header mt-4">
+                        <i class="icon user"></i>
+                        <h4 class="content">{{ title }}</h4>
+                    </div>
+                    {{ component('users>users.menu',{ class: 'fluid' }) }}        
+                </div>
+            </div>
+            <div id="user_area_content" class="min-h-full">
+                {{ component('users>users.dashboard') }}        
+            </div>
+        </div>
+    </div>
+    {{ component('users>footer') }}
+{% endcomponent %}

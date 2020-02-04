@@ -1,14 +1,3 @@
-/**
- *  Arikaim
- *  
- *  @copyright  Copyright (c) Konstantin Atanasov <info@arikaim.com>
- *  @license    http://www.arikaim.com/license
- *  http://www.arikaim.com
- *  
- *  Extension: Users
- *  Component: users::signup.form
- */
-
 $(document).ready(function() { 
     arikaim.ui.viewPasswordButton('.view-password');
     
@@ -25,18 +14,13 @@ $(document).ready(function() {
                 rules: [{ type: "minLength[4]" }]
             },
             repeat_password: {
-                rules: [{ type: "minLength[4]" }]
+                rules: [
+                    { type: "minLength[4]" },
+                    { type: "match[password]" }
+                ]
             }
         }
     };
 
-    arikaim.ui.form.addRules("#signup_form",rules);
-
-    arikaim.ui.form.onSubmit('#signup_form',function() {
-        return users.signup('#signup_form');
-    },function(result) {     
-        console.log(result);
-    },function(errors) {
-        console.log(errors);
-    });
+    arikaim.ui.form.addRules("#signup_form",rules);   
 });

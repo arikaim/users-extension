@@ -1,0 +1,19 @@
+{% set params = { uuid: uuid } %}
+{% set items = [ 
+    { title: labels.details, component: 'users::admin.users.edit.details', icon: 'edit', active: true, params: params },
+    { title: labels.password, component: 'users::admin.users.edit.password', icon: 'lock', params: params },
+    { title: labels.tokens, component: 'users::admin.users.edit.tokens', icon: 'tags', params: params },    
+    { title: labels.permissions, component: 'users::admin.users.edit.permissions', icon: 'unlock', params: params },
+    { title: labels.groups, component: 'users::admin.users.edit.groups', icon: 'users', params: params },
+    { title: labels.info, component: 'users::admin.users.edit.info', icon: 'info', params: params }
+] %}
+
+{{  component('components:tabs.vertical',{ 
+        items: items, 
+        menu_column: 'two',
+        content_column: 'fourteen',
+        menu: { id: 'edit_user_tabs' }, 
+        item_class: 'edit-tab-item',
+        content: { id: 'edit_user_content', component: 'users::admin.users.edit.details', params: params } 
+    })
+}}

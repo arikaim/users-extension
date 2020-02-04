@@ -1,0 +1,14 @@
+{
+    "add": "User added successfully.",
+    "update": "User details saved successfully.",
+    "delete": "User deleted successfully.",  
+    "password": "User password chnaged successfully", 
+    "restore": "User restored successfully",
+    "errors": {
+        "delete": "Can't delete user",
+        "add": "Can't add user",   
+        "update": "Can't save user details",
+        "password": "Can't change user password",
+        "restore": "Can't restore user"      
+    }
+}

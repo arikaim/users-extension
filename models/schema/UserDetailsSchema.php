@@ -3,7 +3,7 @@
  * Arikaim
  *
  * @link        http://www.arikaim.com
- * @copyright   Copyright (c) 2017-2019 Konstantin Atanasov <info@arikaim.com>
+ * @copyright   Copyright (c)  Konstantin Atanasov <info@arikaim.com>
  * @license     http://www.arikaim.com/license
  * 
 */
@@ -21,7 +21,7 @@ class UserDetailsSchema extends Schema
      *
      * @var string
      */
-    protected $table_name = "user_details";
+    protected $tableName = "user_details";
 
     /**
      * Create table
@@ -35,10 +35,12 @@ class UserDetailsSchema extends Schema
         $table->id();
         $table->prototype('uuid');  
         $table->userId();
+        $table->string('avatar')->nullable(true);
         $table->string('first_name')->nullable(true);
         $table->string('last_name')->nullable(true);           
         $table->string('phone')->nullable(true);   
-        $table->string('phone_2')->nullable(true);   
+        $table->string('phone_2')->nullable(true);  
+        $table->integer('email_status')->nullable(true)->default(0);  
         // indexes
         $table->unique('user_id');   
     }

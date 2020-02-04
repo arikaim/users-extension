@@ -1,8 +1,9 @@
 {% set login_with = getOption('users.login.with',1) %}
 {% set captcha_protect = getOption('users.login.captcha.protect',true) %}
+{% set redirect = getOption('users.login.redirect','') %}
 
 {% component 'components:tabs.vertical.content' %}
-<div class="ui equal width form" id="settings_form">  
+<form class="ui equal width form" id="settings_form">  
     <div class="ui segment">
         <div class="field mt-8">           
             <div class="ui radio checkbox login-with">
@@ -30,6 +31,13 @@
             <label>{{ labels.protect }}</label>
         </div>
     </div>       
-    {{ component('components:buttons.page-url',{ url: '/login', target: 'login_page', class: 'fluid', label: buttons.login }) }}    
-</div>
+    <div class="field">           
+        <label>{{ labels.redirect }}</label>
+        <div class="ui labeled input">
+            <div class="ui label">{{ base_url }}/</div>
+            <input type="text" name="redirect" id="redirect" value="{{ redirect }}" placeholder="{{ placeholder.redirect }}">     
+        </div> 
+    </div>
+    {{ component('components:form.footer') }}
+</form>
 {% endcomponent %}

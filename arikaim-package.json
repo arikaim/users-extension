@@ -2,19 +2,18 @@
     "title": "Users",
     "name": "user",
     "package-type": "extension",
-    "class": "Users",
     "type": "user",
     "description": "Users management",
     "short-description": "Users",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "private-repository": true,
-    "repository": "https://github.com/arikaim/users-extension.git",
+    "repository": "https://github.com/arikaim-repository/users-extension.git",
     "position": "2",
     "admin-menu": {        
         "title": "Users",
         "page-title": "Users",
-        "icon": "user",
-        "page-icon": "user",      
+        "icon": "user friends",
+        "page-icon": "user friends",      
         "component": "users::admin"        
     }
 }

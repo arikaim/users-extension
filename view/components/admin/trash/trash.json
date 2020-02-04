@@ -1,0 +1,34 @@
+{   
+    "buttons": {
+        "empty": {
+            "content": "Empty",
+            "title": "Permanently delete all users from recycle bin."
+        },
+        "restore": {
+            "content": "Restore",
+            "title": "Restore all deleted users."
+        }       
+    },
+    "labels": {
+        "trash": "Trash"
+    },
+    "columns": {        
+        "actions": "Actions",
+        "edit": "Edit",
+        "status": "Status",
+        "user_name": "Username",
+        "email": "Email",
+        "phone": "Phone",
+        "created": "Date Signup",
+        "last_login": "Date Login",
+        "permissions": "Permissions",
+        "name": "Name",
+        "type": "Type"        
+    },
+    "messages": {
+        "empty": {
+            "title": "Empty Trash",
+            "description": "Permanently delete all users from recycle bin."
+        }
+    }
+}

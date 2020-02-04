@@ -1,7 +1,7 @@
 {
     "title": {
         "content": "User Protected Area",
-        "icon": "lock outline"
+        "icon": "lock"
     },
     "labels": {
         "page": "Page"

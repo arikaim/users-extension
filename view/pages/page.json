@@ -1,0 +1,18 @@
+{
+    "include": {  
+        "components": [
+            
+        ],           
+        "css": [
+            
+        ],        
+        "library": [
+            "jquery",               
+            "arikaim",      
+            "arikaim-ui",          
+            "fomantic",
+            "tailwind"
+        ],
+        "loader": "components:loader.dimmer.light"
+    }
+}

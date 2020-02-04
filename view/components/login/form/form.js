@@ -1,13 +1,3 @@
-/**
- *  Arikaim
- *  
- *  @copyright  Copyright (c) Konstantin Atanasov <info@arikaim.com>
- *  @license    http://www.arikaim.com/license
- *  http://www.arikaim.com
- * 
- *  Extension: Users
- */
-
 $(document).ready(function() {
     arikaim.ui.viewPasswordButton('.view-password','#password');
 
@@ -21,20 +11,5 @@ $(document).ready(function() {
                 rules: [{ type: "empty" }]
             }
         }
-    });
-
-    arikaim.ui.form.onSubmit('#login_form',function() {
-        return users.login();
-    },function(result) {   
-        if (isEmpty(result.redirect_url) == false) {
-            arikaim.page.load(result.redirect_url);
-        }      
-    },function(errors) {
-        if (users.getLoginAttempts() > 0) {          
-            arikaim.page.loadContent({
-                id : 'captcha_panel',
-                component: 'captcha::code'
-            });
-        }
-    });
+    });   
 });

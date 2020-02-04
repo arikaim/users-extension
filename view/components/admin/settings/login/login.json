@@ -8,7 +8,11 @@
         "email": "Login with email",
         "username": "Login with username",
         "combined": "Login with email and user name",
-        "protect": "Protect login form with captcha"       
+        "protect": "Protect login form with captcha",
+        "redirect": "Redirect Url"       
+    },
+    "placeholder": {
+        "redirect": "Enter redirect url"       
     },
     "buttons": {
         "login": "Login Page"

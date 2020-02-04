@@ -1,8 +1,6 @@
 {
     "buttons": {
-        "save": {
-            "content": "Register"
-        }
+        "save": "Register"           
     },
     "fields": {
         "user_name":{

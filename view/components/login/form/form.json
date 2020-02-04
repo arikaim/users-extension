@@ -13,6 +13,10 @@
             "placeholder": "Enter Email",
             "label": "Email"
         },
+        "both":{
+            "label": "Username or Email",
+            "placeholder": "Enter Username or Email"            
+        },
         "password":{
             "placeholder": "Enter Password",
             "label": "Password"

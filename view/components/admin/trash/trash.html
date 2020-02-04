@@ -1,0 +1,28 @@
+{% set deletedUsers = createModel('Users').getDeletedCount() %}  
+{% set disabled = (deletedUsers == 0) ? 'disabled' : '' %}
+<div class="ui mt-8">
+    <button class="ui basic orange mini button empty-trash {{ disabled }} trash-button" {{ buttons.empty.title|attr('title') }}>
+        <i class="icon trash alternate outline orange"></i>
+        {{ buttons.empty.content }}
+    </button>
+</div>
+<table class="ui compact stackable borderless basic table">
+    <thead class="table-head">
+        <tr>           
+            <th class="collapsing center aligned">{{ columns.actions }}</th>
+            <th class="one wide">{{ columns.created }}</th>
+            <th class="one wide">{{ columns.last_login }}</th>               
+            <th class="collapsing one wide">{{ columns.status }}</th>
+            <th class="collapsing two wide">{{ columns.user_name }}</th>
+            <th class="collapsing two wide">{{ columns.email }}</th>              
+            <th>{{ columns.name }}</th>  
+            <th class="collapsing one wide">{{ columns.phone }}</th>    
+        </tr>
+    </thead>
+    <tbody id="items_rows" component="users::admin.users.view.rows" namespace="trash">
+        {{ component("users::admin.users.view.rows",{ show_deleted: true }) }}
+    </tbody>
+</table>
+<div id="paginator">
+
+</div>

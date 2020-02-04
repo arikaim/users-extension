@@ -1,9 +1,0 @@
-{
-    "title": {
-        "content": "REST API Access",
-        "icon": "code"
-    },
-    "messages": {
-        "empty": "Api access credintails for this user not created."
-    }
-}

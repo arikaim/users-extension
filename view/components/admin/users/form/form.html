@@ -1,0 +1,73 @@
+{% if uuid is not empty %}
+    {% set user = createModel('Users').findById(uuid) %}
+    {% set userDetails = createModel('UserDetails','users').findByColumn(user.id,'user_id') %}   
+{% endif %}
+<form class="ui equal width form" id="create_user_form">  
+    <input type="hidden" name="uuid" id="uuid" value="{{ uuid }}">  
+    <div class="field required">
+        <label>{{ fields.user_name.label }}</label>
+        <div class="ui left icon input">
+            <i class="icon user outline"></i>
+            <input type="text" name="user_name" id="user_name" {{ fields.user_name.placeholder|attr('placeholder') }} value="{{ user.user_name }}"> 
+        </div>
+    </div>   
+    <div class="field">
+        <label>{{ fields.email.label }}</label>
+        <div class="ui left icon input">
+            <i class="icon mail outline"></i>
+            <input type="text" name="email" id="email" {{ fields.email.placeholder|attr('placeholder') }} value="{{ user.email }}">  
+        </div>
+    </div>  
+    <div class="ui horizontal divider"></div>   
+    <h4 class="ui header title">
+        {{ labels.details }}
+    </h4>
+    <div class="ui content segment padded">           
+        <div class="two fields">
+            <div class="field">
+                <label>{{ fields.first_name.label }}</label>
+                <input name="first_name" id="first_name" placeholder="{{ fields.first_name.placeholder }}" type="text" value="{{ userDetails.first_name }}">
+            </div>
+            <div class="field">
+                <label>{{ fields.last_name.label }}</label>
+                <input name="last_name" id="last_name" placeholder="{{ fields.last_name.placeholder }}" type="text" value="{{ userDetails.last_name }}">
+            </div>
+        </div>
+        <div class="two fields">
+            <div class="field">
+                <label>{{ fields.phone.label }}</label>
+                <input name="phone" id="phone" placeholder="{{ fields.phone.placeholder }}" type="text" value="{{ userDetails.phone }}">
+            </div>
+            <div class="field">
+                <label>{{ fields.phone2.label }}</label>
+                <input name="phone_2" id="phone_2" placeholder="{{ fields.last_name.placeholder }}" type="text" value="{{ userDetails.phone_2 }}">
+            </div>
+        </div>
+    </div>    
+    {% if edit == false %}
+    <div class="ui horizontal divider"></div>   
+    <div class="two fields mt-4">    
+        <div class="field required">
+            <label>{{ fields.password.label }}</label>
+            <div class="ui left icon right action input">
+                <i class="icon lock"></i>
+                <input class="password-field" type="password" name="password" id="password" {{ fields.password.placeholder|attr('placeholder') }} value=""> 
+                <a class="ui icon basic link button view-password">               
+                    <i class="eye slash outline icon"></i>
+                </a>  
+            </div>
+        </div>    
+        <div class="field required">
+            <label>{{ fields.repeat_password.label }}</label>
+            <div class="ui left icon right action input">
+                <i class="icon lock"></i>
+                <input class="password-field" type="password" name="repeat_password" id="repeat_password" {{ fields.repeat_password.placeholder|attr('placeholder') }} value="">
+                <a class="ui icon basic link button view-password">               
+                    <i class="eye slash outline icon"></i>
+                </a> 
+            </div>  
+        </div>  
+    </div>            
+    {% endif %}
+    {{ component('components:form.footer') }}    
+</form>

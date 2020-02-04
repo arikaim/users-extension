@@ -1,6 +1,7 @@
 {
     "email": {
-        "label": "Email"
+        "label": "Email",
+        "placeholder": "Enter your email address"
     },
     "buttons": {
         "submit": "Submit",

@@ -6,8 +6,11 @@ $(document).ready(function() {
             password: {
                 rules: [{ type: "minLength[4]" }]
             },
-            repeat_password: {
-                rules: [{ type: "minLength[4]" }]
+            repeat_password: {              
+                rules: [
+                    { type: "minLength[4]" },
+                    { type: "match[password]" }
+                ]
             }
         }
     });

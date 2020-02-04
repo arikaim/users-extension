@@ -3,10 +3,8 @@
         <label>{{ email.label }}</label>
         <div class="ui left icon input">
             <i class="icon envelope outline"></i>
-            <input type="text" name="email" id="email" {{ user_name.placeholder|attr("placeholder") }}>    
+            <input type="text" name="email" id="email" {{ email.placeholder|attr("placeholder") }}>    
         </div>
     </div>                      
-    <button class="ui fluid large primary button submit-button">{{ buttons.submit }}</button>            
-    <div class="ui error message errors"></div>
-    <div class="ui message olive hidden"></div>    
+    {{ component('components:form.footer',{ button_class: 'button primary', button_title: buttons.submit }) }}   
 </form>

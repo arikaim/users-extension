@@ -1,0 +1,11 @@
+{
+    "labels": {
+        "details": "Details",
+        "password": "Password",
+        "tokens": "Tokens",
+        "api": "API access",
+        "permissions": "Permissions",
+        "groups": "Groups",
+        "info": "Info"
+    }
+}

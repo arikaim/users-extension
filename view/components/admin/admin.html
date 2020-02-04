@@ -1,12 +1,12 @@
 {% set items = [ 
-    { id: 'view_button', title: labels.view.content, component: 'users::admin.view', icon: 'grid layout', active: true },
-    { id: 'edit_button', title: labels.edit.content, component: 'users::admin.edit', icon: 'edit' },
-    { id: 'add_button', title: labels.add.content, component: 'users::admin.add', icon: 'user outline plus' },
-    { id: 'settings_button', title: labels.settings.content, component: 'users::admin.settings', icon: 'cogs' }  
+    { id: 'view_button', title: labels.view.content, component: 'users::admin.users', icon: 'grid layout', active: true },
+    { id: 'settings_button', title: labels.settings.content, component: 'users::admin.settings', icon: 'cogs' },
+    { id: 'trash_button', title: labels.trash.content, component: 'users::admin.trash', icon: 'trash' }    
 ] %}
 
 {{  component('components:tabs',{ 
         items: items,
-        content: { component: 'users::admin.view' } 
+        menu: { component: 'system:admin.extensions.menu.actions', extension: 'users' },
+        content: { component: 'users::admin.users' } 
     })
 }}

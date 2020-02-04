@@ -1,0 +1,9 @@
+{
+    "title": {
+        "content": "API Access",
+        "icon": "code"
+    },
+    "messages": {
+        "empty": "No Api access tokens for this user."
+    }
+}
