@@ -4,6 +4,7 @@
  *  @license    http://www.arikaim.com/license
  *  http://www.arikaim.com
  */
+'use strict';
 
 function UsersAdmin() {
     var self = this;
@@ -31,6 +32,10 @@ function UsersAdmin() {
 
     this.delete = function(uuid, onSuccess, onError) {
         return arikaim.delete('/api/users/admin/delete/' + uuid,onSuccess,onError);          
+    };
+
+    this.deleteAvatar = function(uuid, onSuccess, onError) {
+        return arikaim.delete('/api/users/admin/avatar/delete/' + uuid,onSuccess,onError);          
     };
 
     this.init = function() {

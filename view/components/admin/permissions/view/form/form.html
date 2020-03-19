@@ -1,0 +1,15 @@
+{% if uuid is not empty %}
+    {% set permission = createModel('Permissions').findById(uuid) %}  
+{% endif %}
+<form class="ui equal width form" id="permission_form">  
+    <input type="hidden" name="uuid" id="uuid" value="{{ uuid }}">  
+    <div class="field required">
+        <label>{{ fields.name.label }}</label>       
+        <input type="text" name="name" id="name" {{ fields.name.placeholder|attr('placeholder') }} value="{{ permission.name }}">         
+    </div>   
+    <div class="field">
+        <label>{{ fields.description.label }}</label>
+        <textarea name="description" id="description" rows="7" cols="7" {{ fields.description.placeholder|attr('placeholder') }}>{{ permission.description }}</textarea>       
+    </div>  
+    {{ component('components:form.footer') }}    
+</form>

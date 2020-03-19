@@ -1,0 +1,11 @@
+{
+    "include": {
+        "js": [
+            "users::admin.groups"
+        ]
+    },
+    "access": {
+        "auth": "session",
+        "permission": "ControlPanel:full"           
+    }
+}

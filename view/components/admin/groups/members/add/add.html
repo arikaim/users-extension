@@ -1,0 +1,7 @@
+<div class="mt-2">
+    <div class="ui divider"></div>
+    {{ component('users::admin.users.dropdown',{ icon: 'blue' }) }}
+    <div class="ui button green icon add-group-member" {{ labels.add|attr('title') }} uuid="{{ uuid }}">
+        <i class="plus icon"></i>
+    </div>
+</div>

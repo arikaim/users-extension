@@ -1,0 +1,9 @@
+{
+    "labels": {
+        "add": "Add",
+        "view": "View",    
+        "edit": "Edit",
+        "permissions": "Permissions",
+        "members": "Members"     
+    }        
+}

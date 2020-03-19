@@ -1,0 +1,22 @@
+{% set id = id|default('permissions_dropdown') %}
+{% set name = name|default('permissions') %}
+{% set model = createModel('Permissions') %}
+{% set permissions = model.getListQuery() %}
+{% if editable == true %}
+{% set permissions = permissions.where('editable','=',1) %}
+{% endif %}
+{% if selected is not empty %}
+    {% set selected = model.findById(selected) %}
+{% endif %}
+{% set selectet_text = (selected is empty) ? labels.select : selected.title %}
+<div class="ui search selection dropdown permissions-dropdown" id="{{ id }}">
+    <input name="{{ name }}" type="hidden">
+    <i class="icon unlock {{ icon }}"></i> 
+    <div class="default text">{{ selectet_text }}</div>
+    <i class="dropdown icon"></i>
+    <div class="menu">
+        {% for item in permissions.get() %}
+        <div class="item" data-value="{{ item.uuid }} ">{{ item.title }}</div>
+        {% endfor %}
+    </div>
+</div>

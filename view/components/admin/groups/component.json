@@ -1,0 +1,11 @@
+{   
+    "include": {
+        "js": [
+            "users::admin.permissions"
+        ]
+    },
+    "access": {
+        "auth": "session",
+        "permission": "ControlPanel:full"
+    }
+}

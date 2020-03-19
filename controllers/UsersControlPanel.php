@@ -10,17 +10,21 @@
 namespace Arikaim\Extensions\Users\Controllers;
 
 use Arikaim\Core\Db\Model;
-use Arikaim\Core\Controllers\ApiController;
+use Arikaim\Core\Controllers\ControlPanelApiController;
 
 use Arikaim\Core\Controllers\Traits\Status;
 use Arikaim\Core\Controllers\Traits\SoftDelete;
+use Arikaim\Core\Controllers\Traits\FileUpload;
+use Arikaim\Core\Controllers\Traits\FileDownload;
 
 /**
  * Users control panel api controler
 */
-class UsersControlPanel extends ApiController
+class UsersControlPanel extends ControlPanelApiController
 {
     use Status,
+        FileUpload,
+        FileDownload,
         SoftDelete;
 
     /**
@@ -44,6 +48,113 @@ class UsersControlPanel extends ApiController
     }
 
     /**
+     * Delete avatar
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param Validator $data
+     * @return Psr\Http\Message\ResponseInterface
+    */
+    public function deleteAvatarController($request, $response, $data) 
+    { 
+        $this->onDataValid(function($data) { 
+            $user = Model::Users()->findByid($data['uuid']);
+            $details = Model::UserDetails('users')->findOrCreate($user->id);
+
+            $details->deleteAvatarImage();
+            $result = $details->update(['avatar' => null]);
+
+            $this->setResponse($result,function() use($user) {                  
+                $this
+                    ->message('avatar.delete')
+                    ->field('uuid',$user->uuid);                  
+            },'errors.avatar.delete');               
+        });
+        $data->validate();
+
+    }
+
+    /**
+     * View avatar
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param Validator $data
+     * @return Psr\Http\Message\ResponseInterface
+    */
+    public function viewAvatar($request, $response, $data) 
+    { 
+        $this->requireControlPanelPermission();
+
+        $uuid = $data->get('uuid');
+        $user = Model::Users()->findById($uuid);
+        $details = Model::UserDetails('users')->findOrCreate($user->id);
+        $avatarImage = $details->getAvatarImagePath();
+       
+        return $this->viewImage($response,$avatarImage);
+    }
+
+    /**
+     * Upload avatar
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param Validator $data
+     * @return Psr\Http\Message\ResponseInterface
+    */
+    public function uploadAvatarController($request, $response, $data) 
+    {        
+        $this->onDataValid(function($data) use ($request) {          
+            $uuid = $data->get('uuid');
+
+            $user = Model::Users()->findById($uuid);
+            if (is_object($user) == false) {
+                $this->error('Not valid user id');
+                return;
+            }
+            $details = Model::UserDetails('users')->findOrCreate($user->id);
+            if (is_object($details) == false) {
+                $this->error('User details not exists.');
+                return;
+            }
+
+            $result = $details->createStorageFolder();
+            if ($result === false) {
+                $this->error("Can't create user storage directory.");
+                return;
+            }
+            $destinationPath = $details->getUserStoragePath();
+        
+            $files = $this->uploadFiles($request,$destinationPath);
+
+            // process uploaded files
+            $avatar = null;
+            foreach ($files as $item) {               
+                if (empty($item['error']) == false) {
+                    continue;
+                }
+
+                if (empty($details->avatar) == false) {
+                    // remove prev avatar
+                    $details->deleteAvatarImage();
+                }  
+                // set avatar image           
+                $avatar = $item['name'];                  
+                $details->update(['avatar' => $avatar]);               
+            }
+           
+            $this->setResponse(is_array($files),function() use($uuid,$avatar) {                  
+                $this
+                    ->message('avatar.upload')
+                    ->field('uuid',$uuid)
+                    ->field('avatar',$avatar);                                                
+            },'errors.avatar.upload');   
+
+        });
+        $data->validate();   
+    }
+
+    /**
      * Add user
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
@@ -53,8 +164,6 @@ class UsersControlPanel extends ApiController
     */
     public function addController($request, $response, $data) 
     {       
-        $this->requireControlPanelPermission();
-
         $this->onDataValid(function($data) { 
             $user = Model::Users()->createUser($data['user_name'],$data['password'],$data['email']);
             if (is_object($user) == true) {
@@ -87,8 +196,6 @@ class UsersControlPanel extends ApiController
     */
     public function changePasswordController($request, $response, $data) 
     {
-        $this->requireControlPanelPermission();
-        
         $this->onDataValid(function($data) { 
             $password = $data->get('password');
             $user = Model::Users()->findById($data->get('uuid'));
@@ -120,9 +227,7 @@ class UsersControlPanel extends ApiController
      * @return Psr\Http\Message\ResponseInterface
     */
     public function updateController($request, $response, $data) 
-    { 
-        $this->requireControlPanelPermission();
-        
+    {  
         $user = Model::Users()->findById($data->get('uuid'));
 
         $this->onDataValid(function($data) use($user) {
@@ -161,11 +266,12 @@ class UsersControlPanel extends ApiController
     {
         $this->requireControlPanelPermission();
 
-        $this->onDataValid(function($data) {
-          
+        $this->onDataValid(function($data) {          
             $search = $data->get('query','');
             $size = $data->get('size',15);
-            $model = Model::Users()->where('user_name','like',"%$search%")->take($size)->get();
+            
+            $model = Model::Users()->getNotDeletedQuery();
+            $model = $model->where('user_name','like',"%$search%")->take($size)->get();
           
             $this->setResponse(is_object($model),function() use($model) {     
                 $items = [];
@@ -192,8 +298,6 @@ class UsersControlPanel extends ApiController
     */
     public function emptyTrashController($request, $response, $data)
     {
-        $this->requireControlPanelPermission();
-
         $accessTokens = Model::AccessTokens();
         $userDetails = Model::UserDetails('users');
 
@@ -202,8 +306,8 @@ class UsersControlPanel extends ApiController
         foreach ($users as $user) {
             // delete tokens
             $accessTokens->deleteUserToken($user->id,null);
-            $userDetails->where('user_id','=',$user->id)->delete();
-            $user->delete();
+            $userDetails->deleteUserDetails($user->id);
+            $user->deleteUser();
         }
     }
 }

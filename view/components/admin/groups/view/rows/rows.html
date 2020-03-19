@@ -1,0 +1,35 @@
+{% component 'components:view.rows' %}
+    {% set groups = createModel('UserGroups') %}   
+    {% set groups = groups.orderBy('title') %}
+    {% set items = paginate(groups,'groups') %}
+
+    {% for item in items.getItems() %}   
+    <tr id="row_{{ item.uuid }}">             
+        <td>                     
+            <div class="ui icon basic mini buttons">
+                <button class="ui icon button edit-button" uuid="{{ item.uuid }}">
+                    <i class="icon edit"></i>
+                </button>      
+                <button class="ui icon button permissions-button" uuid="{{ item.uuid }}">
+                    <i class="icon unlock"></i>
+                </button>         
+                <button class="ui icon button delete-button" uuid="{{ item.uuid }}" data-title="{{ item.title }}">
+                    <i class="icon trash orange"></i>
+                </button>               
+            </div>           
+        </td>
+        <td class="center aligned">
+            {{ item.members.count() }}
+        </td>
+        <td>
+            <div class="ui label basic">{{ item.slug }}</div>
+        </td>
+        <td>
+            {{ item.title }}
+        </td>       
+        <td>          
+           {{ item.description }}
+        </td>       
+    </tr>
+    {% endfor %}
+{% endcomponent %}

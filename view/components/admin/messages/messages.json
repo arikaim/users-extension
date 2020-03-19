@@ -4,11 +4,55 @@
     "delete": "User deleted successfully.",  
     "password": "User password chnaged successfully", 
     "restore": "User restored successfully",
+    "avatar": {
+        "delete": "Avatar removed successfully.",
+        "upload": "Avatar uploaded successfully."
+    },
+    "groups": {
+        "add": "Group added successfully.",
+        "update": "Group details saved successfully.",
+        "delete": "Group deleted successfully.",
+        "members": {
+            "add": "Group member added successfully.",
+            "remove": "Group member removed successfully."
+        }
+    },
+    "permission": {
+        "add": "Permission created successfully.",
+        "update": "Permission saved successfully.",
+        "delete": "Permission deleted successfully.",
+        "deny": "Permission removed successfully.",
+        "grant": "Permission added successfully."
+    },
     "errors": {
         "delete": "Can't delete user",
         "add": "Can't add user",   
         "update": "Can't save user details",
         "password": "Can't change user password",
-        "restore": "Can't restore user"      
+        "restore": "Can't restore user",
+        "groups": {
+            "add": "Can't add group.",
+            "update": "Can't update group.",
+            "delete": "Can't delete group.",
+            "members": {
+                "add": "Can't add group member.",
+                "remove": "Can't remove group member."
+            }
+        },
+        "permission": {
+            "used": "Can't remove, permission is used",
+            "editable": "Permission is not edibale",
+            "exits": "Error: Permission exists",
+            "add": "Can't create permission.",
+            "update": "Can't update permission.",
+            "delete": "Can't delete permission.",
+            "deny": "Can't remove permission.",
+            "grant": "Can't add permission.",
+            "admin": "ControlPanel permission is protected"
+        },
+        "avatar": {
+            "delete": "Can't remove avatar.",
+            "upload": "Can't upload avatar."
+        }
     }
 }

@@ -1,0 +1,19 @@
+{% set items = [ 
+    { title: labels.view,component: 'users::admin.groups.view',icon: 'list', active: true },
+    { title: labels.add,component: 'users::admin.groups.add',icon: 'plus' },
+    { id: 'edit_group_button',title: labels.edit,component: 'users::admin.groups.edit',icon: 'edit' },   
+    { id: 'group_permissions_tab',title: labels.permissions,component: 'users::admin.groups.permissions',icon: 'lock' },    
+    { id: 'group_members_tab',title: labels.members,component: 'users::admin.groups.members',icon: 'user friends' }    
+] %}
+
+{{ component('components:tabs.vertical',{ 
+        items: items, 
+        menu: { id: 'groups_menu' }, 
+        item_class: 'groups-tab-item',
+        content: {
+            id: 'groups_content',
+            component: 'users::admin.groups.view',
+            params: params 
+        } 
+   })
+}}

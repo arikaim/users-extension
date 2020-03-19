@@ -2,13 +2,15 @@
 {% set tokens = createModel('AccessTokens').getUserTokens(user.id) %}
 
 {% component 'components:tabs.vertical.content' %}
+{% set class = 'sixteen wide column' %}
 <table class="ui very basic mini table fluid">
     <thead>
-        <th class="collapsing"></th>
+        <th>{{ labels.action }}</th>
+        <th>{{ labels.type }}</th>
+        <th>{{ labels.status }}</th>
         <th>{{ labels.created }}</th>
         <th>{{ labels.expired_date }}</th>
-        <th>{{ labels.token }}</th>
-        <th>{{ labels.action }}</th>
+        <th>{{ labels.token }}</th>       
     </thead>
     <tbody>
         {% if tokens is empty %}
@@ -19,21 +21,24 @@
         {% for token in tokens %}
         {% set expired_class = (token.expired == true) ? 'error' : 'positive' %}
         <tr class="{{ expired_class }}" id="{{ token.uuid }}">
-            <td class="collapsing">
-                {% if token.expired == true %}
-                    <i class="icon exclamation" title="{{ labels.expired }}"></i>
-                {% else %}
-                    <i class="ion olive check"></i>
-                {% endif %}
-            </td>
-            <td>{{ token.date_created|dateTimeFormat }}</td>
-            <td>{{ token.date_expired|dateTimeFormat }}</td>
-            <td>{{ token.token }}</td>
             <td>
                 <button class="ui mini basic icon button delete-token" uuid="{{ token.uuid }}">
                     <i class="icon trash orange"></i>                  
                 </button>
             </td>
+            <td>
+                {{ component('users::admin.users.edit.tokens.type',{ type: token.type }) }}
+            </td>  
+            <td>
+                {% if token.expired == true %}
+                    <div class="ui red basic label">{{ labels.expired }}</div>                  
+                {% else %}
+                    <div class="ui green basic label">{{ labels.active }}</div>                   
+                {% endif %}
+            </td>
+            <td>{{ token.date_created|dateTimeFormat }}</td>
+            <td>{{ token.date_expired|dateTimeFormat }}</td>
+            <td>{{ token.token }}</td>           
         </tr>            
         {% endfor %}
     </tbody>

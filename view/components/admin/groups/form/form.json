@@ -1,0 +1,12 @@
+{    
+    "fields": {
+        "title":{
+            "label": "Name",
+            "placeholder": "Enter group name"            
+        },
+        "description": {
+            "placeholder": "Enter group description",
+            "label": "Description"
+        }        
+    }  
+}

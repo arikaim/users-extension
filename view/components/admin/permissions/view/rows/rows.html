@@ -1,0 +1,39 @@
+{% set permissions = createModel('Permissions') %}
+{% set permissions = permissions.orderBy('name').get() %}
+
+{% for item in permissions %}
+<div class="item" id="item_{{ item.uuid }}"> 
+    <div class="left floated content">
+        {% if item.editable == true %}
+        <button class="ui mini icon basic button delete-permission" uuid="{{ item.uuid }}" data-title="{{ item.name }}">
+            <i class="icon trash orange"></i>
+        </button> 
+        <button class="ui mini icon basic button edit-permission" uuid="{{ item.uuid }}">
+            <i class="icon edit"></i>
+        </button> 
+        {% else %}
+        <div class="ui label horizontal basic">
+            <span class="ui text blue">{{ labels.readonly }}</span>
+        </div>
+        {% endif %}       
+    </div>
+    <div class="right floated content">
+        {% if item.slug is not empty %}
+        <div class="ui label horizontal basic">           
+            <span class="ui text grey">{{ labels.slug }}</span>
+            <div class="detail">{{ item.slug }}</div>
+        </div>
+        {% endif %}
+        {% if item.extension_name is not empty %}
+        <div class="ui label horizontal basic">           
+            <span class="ui text grey">{{ labels.extension }}</span>
+            <div class="detail">{{ item.extension_name }}</div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="content">        
+        <div class="header">{{ item.name }}</div>             
+        {{ item.description  }}
+    </div>                
+</div>
+{% endfor %}

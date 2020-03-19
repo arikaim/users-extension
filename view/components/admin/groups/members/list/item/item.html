@@ -1,0 +1,14 @@
+{% if user_name is empty %}
+    {% set member = createModel('UserGroupMembers').findById(uuid) %}  
+    {% set user_name = (member.user.user_name is empty) ? member.user.email : member.user.user_name %}
+{% endif %}
+<div class="item" id="item_{{ uuid }}"> 
+    <div class="left floated content">
+        <button class="ui mini icon basic button remove-group-member" uuid="{{ uuid }}">
+            <i class="icon trash orange"></i>
+        </button> 
+    </div>
+    <div class="content">               
+        {{ user_name }}      
+    </div>                
+</div>

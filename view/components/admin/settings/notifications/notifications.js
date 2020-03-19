@@ -1,3 +1,5 @@
+'use strict';
+
 $(document).ready(function() {
     $('.settings-checkbox').checkbox({
         onChange: function() {

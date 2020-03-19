@@ -1,0 +1,11 @@
+{
+    "columns": {        
+        "actions": "Actions",
+        "name": "Name",
+        "slug": "Slug",
+        "description": "Description",
+        "members": "Members",
+        "edit": "Edit",
+        "view": "View Members"       
+    }
+}

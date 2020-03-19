@@ -27,6 +27,7 @@ class UsersSubscriber extends EventSubscriber implements EventSubscriberInterfac
     {
         $this->subscribe('user.signup','signup');
         $this->subscribe('user.login','login');
+        $this->subscribe('user.logout','logout');
     }
 
     /**
@@ -37,32 +38,28 @@ class UsersSubscriber extends EventSubscriber implements EventSubscriberInterfac
      */
     public function signup($event)
     {
-        $params = $event->getParameters();
+        $user = $event->getParameters(); 
         $sendWelcomeEmail = Arikaim::options()->get('users.notifications.email.welcome',false);
         $adminNotification = Arikaim::options()->get('users.notifications.email.signup',false);
-
-        if ($sendWelcomeEmail == true && Utils::isEmail($params['email']) == true) {
+        
+        if (($sendWelcomeEmail == true) && (Utils::isEmail($user['email']) == true)) {
             // send welcome email to user
             Arikaim::mailer()->create()
-                ->loadComponent('users>emails.welcome',$params)
-                ->to($params['email'])
+                ->loadComponent('users>users.emails.welcome',$user)
+                ->to($user['email'])
                 ->send();
         }
 
         if ($adminNotification == true) {
             $adminUser = Model::Users()->getControlPanelUser();
-            if (Utils::isEmail($adminUser->email) == true){
+            if (Utils::isEmail($adminUser->email) == true) {
                 // send email to admin
                 Arikaim::mailer()->create()
-                    ->loadComponent('users>emails.signup',$params)
+                    ->loadComponent('users>users.emails.signup',$user)
                     ->to($adminUser->email)
                     ->send();
             }
         }
-        
-        print_r($params);
-        echo "send:$sendWelcomeEmail";
-
     }
 
     /**
@@ -73,6 +70,17 @@ class UsersSubscriber extends EventSubscriber implements EventSubscriberInterfac
      */
     public function login($event)
     {
-       
+         // your code here
+    }
+
+    /**
+     * Run post logout action
+     *
+     * @param EventInterface $event
+     * @return void
+     */
+    public function logout($event)
+    {
+        // your code here
     }
 }

@@ -12,7 +12,8 @@
     "labels": {
         "trash": "Trash"
     },
-    "columns": {        
+    "columns": {   
+        "avatar": "Avatar",     
         "actions": "Actions",
         "edit": "Edit",
         "status": "Status",

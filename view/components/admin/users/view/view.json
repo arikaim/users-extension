@@ -5,6 +5,7 @@
         "status": "Status",
         "user_name": "Username",
         "email": "Email",
+        "avatar": "Avatar",
         "phone": "Phone",
         "created": "Date Signup",
         "last_login": "Date Login",

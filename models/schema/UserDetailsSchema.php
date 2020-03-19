@@ -10,6 +10,7 @@
 namespace Arikaim\Extensions\Users\Models\Schema;
 
 use Arikaim\Core\Db\Schema;
+use Arikaim\Core\Db\Model;
 
 /**
  * UserDetails db table schema
@@ -41,6 +42,7 @@ class UserDetailsSchema extends Schema
         $table->string('phone')->nullable(true);   
         $table->string('phone_2')->nullable(true);  
         $table->integer('email_status')->nullable(true)->default(0);  
+        $table->integer('public_profile')->nullable(true);
         // indexes
         $table->unique('user_id');   
     }
@@ -53,5 +55,29 @@ class UserDetailsSchema extends Schema
     */
     public function update($table) 
     {        
+    }
+
+    /**
+     * Insert or update rows in table
+     *
+     * @param Seed $seed
+     * @return void
+     */
+    public function seeds($seed)
+    {  
+        $permissions = Model::Permissions();
+        $permissionRelations = Model::PermissionRelations();
+        $groups = Model::UserGroups();
+
+        // Pro members      
+        $groups->createGroup('Pro members','Pro members users.');
+        $permissions->createPermission('Pro Members','Pro members features.');
+        $permissionRelations->setGroupPermission('pro-members',['read','write','delete','execute'],'pro-members');
+
+        // Premium members
+        $groups->createGroup('Premium members','Premium members users.');
+        $permissions->createPermission('Premium Members','Premium members features.');
+        $permissionRelations->setGroupPermission('pro-members',['read','write','delete','execute'],'premium-members');
+        $permissionRelations->setGroupPermission('premium-members',['read','write','delete','execute'],'premium-members');
     }
 }

@@ -1,0 +1,14 @@
+{% if group is empty %}
+    {% set group = createModel('UserGroups').findById(uuid) %}    
+{% endif %}
+<div class="item" id="item_{{ group.uuid }}"> 
+    <div class="left floated content">
+        <button class="ui mini icon basic button remove-group-member" uuid="{{ group.uuid }}" relation-uuid="{{ relation_uuid }}">
+            <i class="icon trash orange"></i>
+        </button> 
+    </div>
+    <div class="content">               
+        <div class="header">{{ group.title }}</div>
+        {{ group.description }}
+    </div>                
+</div>

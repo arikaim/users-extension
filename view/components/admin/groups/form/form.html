@@ -1,0 +1,15 @@
+{% if uuid is not empty %}
+    {% set group = createModel('UserGroups').findById(uuid) %}  
+{% endif %}
+<form class="ui equal width form" id="group_form">  
+    <input type="hidden" name="uuid" id="uuid" value="{{ uuid }}">  
+    <div class="field required">
+        <label>{{ fields.title.label }}</label>       
+        <input type="text" name="title" id="title" {{ fields.title.placeholder|attr('placeholder') }} value="{{ group.title }}">         
+    </div>   
+    <div class="field">
+        <label>{{ fields.description.label }}</label>
+        <textarea name="description" id="description" rows="7" cols="7" {{ fields.description.placeholder|attr('placeholder') }}>{{ group.description }}</textarea>       
+    </div>  
+    {{ component('components:form.footer') }}    
+</form>

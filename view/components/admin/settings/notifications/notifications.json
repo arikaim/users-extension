@@ -8,7 +8,7 @@
         "fields": {
             "signup": "Send email notificaiton for user signup",
             "welcome": "Send welcome email to user",
-            "verification": "Send email verification to user"
+            "verification": "Send email confirmation to user"
         }
     },
     "buttons": {

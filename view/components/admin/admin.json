@@ -1,8 +1,14 @@
 {
     "labels": {
         "view": {
-            "content": "View"
-        },            
+            "content": "Users"
+        },   
+        "groups": {
+            "content": "Groups"
+        }, 
+        "permissions": {
+            "content": "Permissions"
+        },         
         "settings": {
             "content": "Settings"
         },
@@ -14,6 +20,14 @@
         "remove": {
             "title": "Confirm Remove",
             "content": "Confirm remove user '<b><% title %></b>'."
+        },
+        "permisison_remove": {
+            "title": "Confirm Remove",
+            "content": "Confirm remove permisison '<b><% title %></b>'."
+        },
+        "group_remove": {
+            "title": "Confirm Remove",
+            "content": "Confirm remove group '<b><% title %></b>'."
         }
     }      
 }

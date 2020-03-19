@@ -1,14 +1,18 @@
 <div class="ui menu vertical {{ class }}">
     {% if service('access').isLogged() == true %}
-        <a class="item active user-menu-item" component="users>users.dashboard">
+        <a class="item {{ (selected == '') ? 'active' : '' }} user-menu-item" component="users>users.dashboard">
             <i class="icon dashboard {{ icon_class }}"></i>
             {{ items.dashboard }}
         </a>
-        <a class="item user-menu-item" component="users>users.details">
+        <a class="item {{ (selected == 'details') ? 'active' : '' }} user-menu-item" component="users>users.details">
             <i class="icon edit {{ icon_class }}"></i>
             {{ items.details }}
         </a>
-        <a class="item user-menu-item" component="users>users.password">
+        <a class="item {{ (selected == 'avatar') ? 'active' : '' }} user-menu-item" component="users>users.avatar">         
+            <i class="user circle outline icon {{ icon_class }}"></i>
+            {{ items.avatar }}
+        </a>
+        <a class="item {{ (selected == 'change-password') ? 'active' : '' }} user-menu-item" component="users>users.password">
             <i class="icon lock {{ icon_class }}"></i>
             {{ items.change_password }}
         </a>       
@@ -18,6 +22,6 @@
             {{ items.logout }}
         </a>
     {% else %}
-    {{ content }}
+        {{ content }}
     {% endif %}
 </div>

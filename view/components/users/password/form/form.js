@@ -1,3 +1,5 @@
+'use strict';
+
 $(document).ready(function() {
     arikaim.ui.viewPasswordButton('.view-password');
     arikaim.ui.form.addRules("#change_password_form",{

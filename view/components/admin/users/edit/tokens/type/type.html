@@ -1,0 +1,10 @@
+{% if type == 0 %}
+    {% set label = labels.page %}
+{% elseif type == 1 %}
+    {% set label = labels.login %}
+{% elseif type == 2 %}
+    {% set label = labels.api %}
+{% elseif type == 3 %}
+    {% set label = labels.oauth %}
+{% endif %}
+<div class="ui basic label">{{ label }}</div>

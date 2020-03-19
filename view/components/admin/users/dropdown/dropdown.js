@@ -1,3 +1,5 @@
+'use strict';
+
 $(document).ready(function() {  
     $('.users-dropdown').dropdown({
         apiSettings: {     

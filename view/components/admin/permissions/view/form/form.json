@@ -1,0 +1,12 @@
+{    
+    "fields": {
+        "name":{
+            "label": "Name",
+            "placeholder": "Enter permission name"            
+        },
+        "description": {
+            "placeholder": "Enter permission description",
+            "label": "Description"
+        }        
+    }  
+}

@@ -4,19 +4,24 @@
  *  @license    http://www.arikaim.com/license
  *  http://www.arikaim.com
  */
+'use strict';
 
 function UsersView() {
     var self = this;
 
     this.init = function() {
-        paginator.init('users_rows',"users::admin.view.rows",'users');         
+        order.init('users_rows','users::admin.users.view.rows','users');
+        paginator.init('users_rows',"users::admin.users.view.rows",'users');         
+        search.init({
+            id: 'users_rows',
+            component: 'users::admin.users.view.rows',
+            event: 'user.search.load'
+        },'users')  
         
-        $('.actions').dropdown({});        
-        search.init('users',null,{ id: 'users_rows', component_name: 'users::admin.view.rows' });
-
-        arikaim.ui.button('#select_all',function(element) {      
-            arikaim.ui.selectAll(element);                
-        });         
+        arikaim.events.on('user.search.load',function(result) {      
+            paginator.reload();
+            self.initRows();    
+        },'userSearch');                   
     };
 
     this.initRows = function() {

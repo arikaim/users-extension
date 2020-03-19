@@ -1,6 +1,7 @@
 {
     "labels": {
         "details": "Details",
+        "avatar": "Avatar",
         "password": "Password",
         "tokens": "Tokens",
         "api": "API access",

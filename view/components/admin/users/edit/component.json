@@ -1,0 +1,12 @@
+{
+    "include": {
+        "js": [
+            "components:upload",
+            "users::admin.permissions"
+        ]
+    },
+    "access": {
+        "auth": "session",
+        "permission": "ControlPanel:full"           
+    }
+}

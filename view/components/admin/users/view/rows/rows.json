@@ -3,6 +3,8 @@
         "deleted": "Deleted",
         "empty": "No users",
         "restore": "Restore",
+        "active": "Active",
+        "confirmed": "Confirmed",
         "status": {
             "active": "active",
             "disabled": "disabled"

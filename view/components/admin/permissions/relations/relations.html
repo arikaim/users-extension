@@ -1,0 +1,18 @@
+{% if type == 'user' %}
+    {% set model = createModel('Users').findById(uuid) %}
+{% else %}
+    {% set model = createModel('UserGroups').findById(uuid) %}
+{% endif %}
+
+{% set permissions = createModel('PermissionRelations').getRelationsQuery(model.id,type) %}
+{% if uuid is not empty %}
+    <div class="ui middle aligned divided list" id="permissions_list" uuid="{{ model.uuid }}" type="{{ type }}">        
+        {% if permissions is empty %}
+            <div class="item">..</div>
+        {% endif %}     
+        {% for item in permissions.get() %}   
+            {{ component('users::admin.permissions.relations.item',{ item: item, relation_id: model.id }) }}     
+        {% endfor %}
+    </div>
+    {{ component('users::admin.permissions.add',{ uuid: uuid, type: type }) }}
+{% endif %}

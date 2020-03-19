@@ -1,0 +1,10 @@
+{% component 'components:tabs.vertical.content' %}
+{% set class = 'sixteen wide column' %}
+{% set panel_class = '' %}
+
+<div class="mt-10">
+   <div class="ui middle aligned divided list">
+    {{ component('users::admin.permissions.view.rows') }}
+   </div>
+</div>
+{% endcomponent %}

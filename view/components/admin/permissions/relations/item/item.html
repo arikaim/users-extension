@@ -1,0 +1,14 @@
+{% if item is empty %}
+    {% set item = createModel('PermissionRelations').getRelationsQuery(relation_id,type).where('uuid','=',uuid).first() %}
+{% endif %}
+<div class="item" id="item_{{ item.uuid }}"> 
+    <div class="left floated content">
+        <button class="ui mini icon basic button delete-permission" uuid="{{ item.uuid }}">
+            <i class="icon trash orange"></i>
+        </button> 
+    </div>
+    <div class="content">               
+        {{ component('users::admin.permissions.label',{ item: item, class: 'header' }) }}
+        {{ item.permission.description  }}
+    </div>                
+</div>

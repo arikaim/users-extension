@@ -1,0 +1,28 @@
+{% component 'components:tabs.vertical.content' %}
+{% set class = 'sixteen wide column' %}
+{% set panel_class = '' %}
+<div class="ui stackable text menu">
+    <div class="item right floated">
+        {{ component('components:paginator.dropdown',{ namespace: 'groups' }) }}
+    </div>
+</div>
+<div class="ui mt-2">
+    <table class="ui compact stackable selectable borderless basic table">
+        <thead class="table-head">
+            <tr>             
+                <th class="collapsing center aligned">{{ columns.actions }}</th>
+                <th class="collapsing one wide center aligned">{{ columns.members }}</th>   
+                <th class="collapsing two wide">{{ columns.slug }}</th>   
+                <th class="collapsing four wide">{{ columns.name }}</th>
+                <th class="ten wide">{{ columns.description }}</th>                                                 
+            </tr>
+        </thead>
+        <tbody id="group_rows" component="users::admin.groups.view.rows" namespace="groups">
+            {{ component('users::admin.groups.view.rows') }}
+        </tbody>
+    </table>
+    <div id="paginator">
+        {{ component("components:paginator",{ namespace: 'groups' }) }}
+    </div>
+</div>
+{% endcomponent %}

@@ -13,6 +13,8 @@ use Arikaim\Core\Db\Model;
 use Arikaim\Core\Controllers\ApiController;
 use Arikaim\Core\Http\Url;
 use Arikaim\Core\Utils\Utils;
+use Arikaim\Core\Http\Cookie;
+use Arikaim\Core\Arikaim;
 
 use Arikaim\Core\Controllers\Traits\AccessToken;
 use Arikaim\Core\Controllers\Traits\Captcha;
@@ -57,14 +59,16 @@ class UsersApi extends ApiController
         }
        
         $this->onDataValid(function($data) use($settings) { 
+            $sendConfirmEmail = $this->get('options')->get('users.notifications.email.verification',false);
+            
             $model = Model::Users();
-            $user_name = $data->get('user_name',null);
+            $userName = $data->get('user_name',null);
             $email = $data->get('email',null);
             $password = $data->get('password',null);
 
             // verify username
             if ($settings['username']['required'] == true) {
-                if ($model->hasUserName($user_name) == true) {
+                if ($model->hasUserName($userName) == true) {
                     $this->error('errors.username');   
                     return;
                 }
@@ -76,7 +80,7 @@ class UsersApi extends ApiController
                     return;
                 }
             }
-            $user = $model->createUser($user_name,$password,$email);
+            $user = $model->createUser($userName,$password,$email);
             if (is_object($user) == false) {
                 $this->error('errors.signup');   
                 return;
@@ -84,9 +88,14 @@ class UsersApi extends ApiController
            
             $result = Model::UserDetails('users')->saveDetails($user->id,$data->toArray());
 
+            if ($result == true && $sendConfirmEmail == true) {
+                // send confirm email to user
+                $this->sendConfirmationEmail($user->toArray());
+            }
+
             $this->setResponse($result,function() use($user) {   
                 // dispatch event
-                $this->get('event')->dispatch('user.signup',$user->toArray());                              
+                $this->get('event')->dispatch('user.signup',$user->toArray());     
                 $this
                     ->message('signup')
                     ->field('uuid',$user->uuid)
@@ -180,10 +189,21 @@ class UsersApi extends ApiController
             $credentials = $this->resolveLoginCredentials($loginWith,$data);
             $result = $this->get('access')->authenticate($credentials);
                        
-            $this->setResponse($result,function() {  
+            $this->setResponse($result,function() use ($remember) {  
                 $user = $this->get('access')->getUser();  
                 Model::Users()->findById($user['uuid'])->updateLoginDate();
-              
+                
+                if ($remember == true) {
+                    // remember user login                                
+                    Cookie::add('user',$user['uuid']);
+                    $accessToken = $this->get('access')->withProvider('token')->createToken($user['id'],1,4800);   
+                    Cookie::add('token',$accessToken['token']);                                  
+                } else {                  
+                    // remove token
+                    Cookie::delete('user');
+                    Cookie::delete('token');                   
+                }
+
                 $redirectUrl = $this->get('options')->get('users.login.redirect',null); 
                 $redirectUrl = (empty($redirectUrl) == false) ? Url::BASE_URL . '/' . $redirectUrl : Url::BASE_URL;             
                 // dispatch event
@@ -229,11 +249,12 @@ class UsersApi extends ApiController
             }
             $properties = [
                 'user'                => $user->toArray(),
+                'domain'              => Arikaim::getDomain(),
                 'reset_password_url'  => $this->createProtectedUrl($user->id,'change-password')
             ];
 
             $result = $this->get('mailer')->create()
-                ->loadComponent('users>emails.reset-password',$properties)
+                ->loadComponent('users>users.emails.reset-password',$properties)
                 ->to($user->email)
                 ->send();
 
@@ -257,7 +278,18 @@ class UsersApi extends ApiController
     */
     public function logoutController($request, $response, $data)
     {
+        $user = $this->get('access')->getUser(); 
+
+        // remove token
+        Cookie::delete('user');
+        Cookie::delete('token');      
+
         $this->get('access')->logout();  
+        
+        if (empty($user) == false) {
+            // dispatch logout event
+            $this->get('event')->dispatch('user.login',$user);
+        }
 
         $redirectUrl = $this->get('options')->get('users.logout.redirect',null); 
         $redirectUrl = (empty($redirectUrl) == false) ? Url::BASE_URL . '/' . $redirectUrl : Url::BASE_URL;      
@@ -280,7 +312,7 @@ class UsersApi extends ApiController
             $user = $this->get('access')->getUser(); 
             
             if ($user === false) {
-                $this->error('errors.token');
+                $this->error('errors.password');
                 return;               
             }
 
@@ -333,5 +365,25 @@ class UsersApi extends ApiController
         }
 
         return $credentials;
+    }
+
+    /**
+     * Send confirm email to user
+     *
+     * @param array $user
+     * @return boolean
+     */
+    public function sendConfirmationEmail(array $user)
+    {
+        $properties = [
+            'user'              => $user,
+            'domain'            => Arikaim::getDomain(),
+            'confirm_email_url' => $this->createProtectedUrl($user['id'],'email/confirm')
+        ];
+
+        return $this->get('mailer')->create()
+            ->loadComponent('users>users.emails.confirmation',$properties)
+            ->to($user['email'])
+            ->send();        
     }
 }

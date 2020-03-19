@@ -1,16 +1,8 @@
-{% set user = createModel('Users').findById(uuid) %}
 {% component 'components:tabs.vertical.content' %}
-{% set permissions = access().getUserPermissions(user.id) %}
-<div class="ui mt-8">  
-    <div class="ui list">
-        {% if permissions is empty %}
-            <div class="item">..</div>
-        {% endif %}     
-        {% for item in permissions %}     
-        <div class="item pl-2">                  
-            {{ component('users::admin.users.edit.permissions.label',{ item: item }) }}
-        </div>
-        {% endfor %}
-    </div>
+{% set user = createModel('Users').findById(uuid) %}
+<div class="ui mt-8"> 
+    {% if uuid is not empty %} 
+        {{ component('users::admin.permissions.relations',{ type: 'user', uuid: user.uuid }) }}
+    {% endif %}
 </div>
 {% endcomponent %}

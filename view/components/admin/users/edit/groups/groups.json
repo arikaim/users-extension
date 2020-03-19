@@ -3,6 +3,9 @@
         "content": "Groups",
         "icon": "users"
     },
+    "labels": {
+        "add": "Add user to group"
+    },
     "messages": {
         "empty": "User does not belong to any group."
     }

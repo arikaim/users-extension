@@ -6,6 +6,10 @@ Manage users.
   * Login page.
   * Signup page.
   * Password recovery page. 
+  * Upload avatar image
+  * reCaptcha protection.
+  * User groups
+  * Group and user permissions.
   * Member area.
     * Change password
     * Chnage user details
@@ -29,10 +33,3 @@ Manage users.
   
 #### Requirements 
   * [Arikaim CMS](https://github.com/arikaim/arikaim)
-
-
-
-#### Version 
-    - 1.0.2
-
-Arikaim CMS Users Extension

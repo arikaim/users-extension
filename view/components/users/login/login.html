@@ -1,0 +1,24 @@
+<div id="login_panel">
+    <div class="ui raised card fluid">   
+        <div class="content">
+            <h2 class="ui dividing header">
+            {{ title }}
+            </h2>
+            {{ component('users>users.login.form') }}
+        </div>    
+    </div>
+    <div class="ui horizontal list">
+        <div class="item">            
+            <a class="inline" id="forgotten_button">
+                <i class="unlock alternate icon"></i>                
+                {{ links.forgotten }}
+            </a>
+        </div>
+        <div class="item">          
+            <a class="inline" id="signup_button" href="{{ getPageUrl('signup.page','users') }}">
+                <i class="user plus icon"></i>                
+                {{ links.signup }}
+            </a>
+        </div>
+    </div>
+</div>

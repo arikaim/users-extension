@@ -1,18 +1,23 @@
-{% set user = createModel('Users').findById(uuid) %}
 {% component 'components:tabs.vertical.content' %}
-    <div class="ui mt-8">
-        {% if user.groups is empty %}
-        <div class="ui message">
-            {{ messages.empty }}
-        </div>
-        {% else %}
-        <div class="ui list">
-            {% for group in user.groups %}
-            <div class="item">
-                {{ group.group.title }}
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
+{% set user = createModel('Users').findById(uuid) %}
+<div class="ui mt-8">
+    {% if user.groups is empty %}
+    <div class="ui message">
+        {{ messages.empty }}
     </div>
+    {% else %}
+    <div class="ui list" id="groups_list">
+        {% for item in user.groups %}              
+            {{ component('users::admin.users.edit.groups.item',{ group: item.group, relation_uuid: item.uuid  }) }}       
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+<div class="ui segment pt-4">      
+    {{ component('users::admin.groups.dropdown',{ icon: 'blue' }) }}
+    <div class="ui button icon green add-group-button" title="{{ labels.add }}" uuid="{{ user.uuid }}">
+        <i class="icon plus"></i>
+    </div>
+</div>
 {% endcomponent %}

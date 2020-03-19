@@ -8,6 +8,10 @@
             "placeholder": "Enter Email",
             "label": "Email"
         },
+        "public": {
+            "placeholder": "Public profile",
+            "label": "Public profile"
+        },
         "password":{
             "placeholder": "Enter Password",
             "label": "Password"

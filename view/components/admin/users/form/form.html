@@ -1,6 +1,6 @@
 {% if uuid is not empty %}
     {% set user = createModel('Users').findById(uuid) %}
-    {% set userDetails = createModel('UserDetails','users').findByColumn(user.id,'user_id') %}   
+    {% set user_details = createModel('UserDetails','users').findByColumn(user.id,'user_id') %}   
 {% endif %}
 <form class="ui equal width form" id="create_user_form">  
     <input type="hidden" name="uuid" id="uuid" value="{{ uuid }}">  
@@ -17,7 +17,14 @@
             <i class="icon mail outline"></i>
             <input type="text" name="email" id="email" {{ fields.email.placeholder|attr('placeholder') }} value="{{ user.email }}">  
         </div>
-    </div>  
+    </div>        
+    {{  component('components:form.fields.checkbox',{ 
+            value: user_details.public_profile, 
+            name: 'public_profile',
+            label: fields.public.label
+        }) 
+    }}  
+
     <div class="ui horizontal divider"></div>   
     <h4 class="ui header title">
         {{ labels.details }}
@@ -26,21 +33,21 @@
         <div class="two fields">
             <div class="field">
                 <label>{{ fields.first_name.label }}</label>
-                <input name="first_name" id="first_name" placeholder="{{ fields.first_name.placeholder }}" type="text" value="{{ userDetails.first_name }}">
+                <input name="first_name" id="first_name" placeholder="{{ fields.first_name.placeholder }}" type="text" value="{{ user_details.first_name }}">
             </div>
             <div class="field">
                 <label>{{ fields.last_name.label }}</label>
-                <input name="last_name" id="last_name" placeholder="{{ fields.last_name.placeholder }}" type="text" value="{{ userDetails.last_name }}">
+                <input name="last_name" id="last_name" placeholder="{{ fields.last_name.placeholder }}" type="text" value="{{ user_details.last_name }}">
             </div>
         </div>
         <div class="two fields">
             <div class="field">
                 <label>{{ fields.phone.label }}</label>
-                <input name="phone" id="phone" placeholder="{{ fields.phone.placeholder }}" type="text" value="{{ userDetails.phone }}">
+                <input name="phone" id="phone" placeholder="{{ fields.phone.placeholder }}" type="text" value="{{ user_details.phone }}">
             </div>
             <div class="field">
                 <label>{{ fields.phone2.label }}</label>
-                <input name="phone_2" id="phone_2" placeholder="{{ fields.last_name.placeholder }}" type="text" value="{{ userDetails.phone_2 }}">
+                <input name="phone_2" id="phone_2" placeholder="{{ fields.last_name.placeholder }}" type="text" value="{{ user_details.phone_2 }}">
             </div>
         </div>
     </div>    

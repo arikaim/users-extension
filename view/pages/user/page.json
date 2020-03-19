@@ -1,14 +1,11 @@
 {
     "include": {
-        "js": "users::users",
-        "library": [         
-            "jquery",               
-            "arikaim",      
-            "arikaim-ui",          
-            "fomantic",
-            "tailwind"
+        "components": [    
+            "users::users"        
         ],
-        "loader": "components:loader.dimmer.light"
+        "library": [                   
+            "filepond"
+        ]
     },
     "access": {
         "auth": "session"

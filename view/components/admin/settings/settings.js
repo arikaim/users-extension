@@ -1,14 +1,10 @@
 /**
  *  Arikaim
- *  
  *  @copyright  Copyright (c) Konstantin Atanasov <info@arikaim.com>
  *  @license    http://www.arikaim.com/license
  *  http://www.arikaim.com
- *  
- *  Extension: Users
- *  Component: users::admin.settings
  */
-
+'use strict';
 
 function UserSettings() {    
 
@@ -16,8 +12,8 @@ function UserSettings() {
        arikaim.ui.tab('.settings-tab-item','settings_tab')
     };
 
-    this.getSignupSettings = function(form_id) {
-        return result = {
+    this.getSignupSettings = function() {
+        return {
             name: {
                 show: $('#show_name').prop('checked'),
                 required: $('#require_name').prop('checked'),

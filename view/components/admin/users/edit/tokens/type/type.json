@@ -1,0 +1,8 @@
+{
+    "labels": {
+        "page": "Page",
+        "api": "Api Access",
+        "login": "Login",
+        "oauth": "OAuth"
+    }
+}

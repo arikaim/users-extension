@@ -1,3 +1,4 @@
+{% import systemMacro('orderBy.html') as order %}
 {% component 'components:tabs.vertical.content' %}
 {% set class = 'sixteen wide column' %}
 {% set panel_class = '' %}
@@ -12,13 +13,26 @@
 <div class="ui mt-2">
     <table class="ui compact stackable selectable borderless basic table">
         <thead class="table-head">
-            <tr>             
+            <tr>   
+                <th class="collapsing center aligned">{{ columns.avatar }}</th>          
                 <th class="collapsing center aligned">{{ columns.actions }}</th>
-                <th class="one wide">{{ columns.created }}</th>
+                <th class="one wide">
+                    {{ order.orderByLink('users','date_created') }}
+                    {{ columns.created }}
+                </th>
                 <th class="one wide">{{ columns.last_login }}</th>               
-                <th class="collapsing one wide">{{ columns.status }}</th>
-                <th class="collapsing two wide">{{ columns.user_name }}</th>
-                <th class="collapsing two wide">{{ columns.email }}</th>              
+                <th class="collapsing one wide">
+                    {{ order.orderByLink('users','status') }}
+                    {{ columns.status }}
+                </th>               
+                <th class="collapsing two wide">
+                    {{ order.orderByLink('users','user_name') }}
+                    {{ columns.user_name }}
+                </th>
+                <th class="collapsing two wide">
+                    {{ order.orderByLink('users','email') }}
+                    {{ columns.email }}
+                </th>              
                 <th>{{ columns.name }}</th>  
                 <th class="collapsing one wide">{{ columns.phone }}</th>          
             </tr>
