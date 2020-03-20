@@ -16,8 +16,7 @@
         "show": "Show",
         "activation": {
             "title": "Activation",
-            "immediately": "Immediately after user signup",
-            "confirmed": "After users email is confirmed",
+            "immediately": "Immediately after user signup",           
             "admin": "Manually by admin"
         },
         "verification": "Send email verification",

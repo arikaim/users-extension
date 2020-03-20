@@ -59,9 +59,17 @@ class Users extends Controller
      * @param Validator $data
      * @return Psr\Http\Message\ResponseInterface
     */
-    public function logoutPage($request, $response, $data) 
+    public function logout($request, $response, $data) 
     {        
-        $this->get('access')->logout();                  
+        $this->get('access')->logout();   
+        // remove token
+        Cookie::delete('user');
+        Cookie::delete('token');    
+
+        $redirectUrl = $this->get('options')->get('users.logout.redirect',null); 
+        $redirectUrl = (empty($redirectUrl) == false) ? Url::BASE_URL . '/' . $redirectUrl : Url::BASE_URL;  
+
+        return $response->withHeader('Location',$redirectUrl);
     }
 
     /**

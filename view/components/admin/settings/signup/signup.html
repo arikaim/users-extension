@@ -63,22 +63,13 @@
                 <input type="radio" name="users.sugnup.activation" value="1" {{ activation|ifthen(1,'checked') }}>
                 <label>{{ labels.activation.immediately }}</label>
             </div>
-        </div>
+        </div>       
         <div class="field">
             <div class="ui radio checkbox settings-checkbox">
                 <input type="radio" name="users.sugnup.activation" value="2" {{ activation|ifthen(2,'checked') }}>
-                <label>{{ labels.activation.confirmed }}</label>
-            </div>
-        </div>
-        <div class="field">
-            <div class="ui radio checkbox settings-checkbox">
-                <input type="radio" name="users.sugnup.activation" value="3" {{ activation|ifthen(3,'checked') }}>
                 <label>{{ labels.activation.admin }}</label>
             </div>
         </div>
-    </div>   
-    <div class="field">
-        {{ component('components:buttons.page-url',{ url: '/signup', target: 'signup_page', class: 'fluid', label: buttons.signup }) }}           
-    </div>
+    </div>      
 </div>
 {% endcomponent %}

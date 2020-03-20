@@ -60,7 +60,8 @@ class UsersApi extends ApiController
        
         $this->onDataValid(function($data) use($settings) { 
             $sendConfirmEmail = $this->get('options')->get('users.notifications.email.verification',false);
-            
+            $activation = $this->get('options')->get('users.sugnup.activation',1);
+
             $model = Model::Users();
             $userName = $data->get('user_name',null);
             $email = $data->get('email',null);
@@ -85,7 +86,11 @@ class UsersApi extends ApiController
                 $this->error('errors.signup');   
                 return;
             } 
-           
+            if ($activation == 2) {
+                // set user PENDING status
+                $user->setStatus(4);
+            }
+
             $result = Model::UserDetails('users')->saveDetails($user->id,$data->toArray());
 
             if ($result == true && $sendConfirmEmail == true) {
