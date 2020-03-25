@@ -97,7 +97,12 @@ class Users extends Extension
         $this->createOption('users.notifications.email.signup',true);
         $this->createOption('users.notifications.email.welcome',true);
         $this->createOption('users.notifications.email.verification',false);
-        
+        // sign in with 
+        $this->createOption('users.sign.with.github',false);
+        $this->createOption('users.sign.with.facebook',false);
+        $this->createOption('users.sign.with.google',false);
+        $this->createOption('users.sign.with.twitter',false);
+
         // Relation map 
         $this->addRelationMap('user','Users');
 

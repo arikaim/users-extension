@@ -5,7 +5,7 @@
     "type": "user",
     "description": "Users management",
     "short-description": "Users",
-    "version": "1.1.4",
+    "version": "1.2.0",
     "private-repository": true,
     "repository": "https://github.com/arikaim-repository/users-extension.git",
     "position": "2",

@@ -31,6 +31,42 @@
             <label>{{ labels.protect }}</label>
         </div>
     </div>       
+    {% if hasExtension('oauth') == true %}
+    <div class="ui field segment">
+        <label>{{ labels.oauth }}</label>
+        {% set with_facebook = getOption('users.sign.with.facebook',false) %}
+        {{  component('components:option.checkbox',{ 
+                name: 'users.sign.with.facebook',
+                value: with_facebook,
+                label: labels.facebook 
+            }) 
+        }}
+        <div class="mt-2"></div>
+        {% set with_github = getOption('users.sign.with.github',false) %}
+        {{  component('components:option.checkbox',{ 
+                name: 'users.sign.with.github',
+                value: with_github,
+                label: labels.github 
+            }) 
+        }}
+        <div class="mt-2"></div>
+        {% set with_twitter = getOption('users.sign.with.twitter',false) %}
+        {{  component('components:option.checkbox',{ 
+                name: 'users.sign.with.twitter',
+                value: with_twitter,
+                label: labels.twitter 
+            }) 
+        }}
+        <div class="mt-2"></div>
+        {% set with_google = getOption('users.sign.with.google',false) %}
+        {{  component('components:option.checkbox',{ 
+                name: 'users.sign.with.google',
+                value: with_google,
+                label: labels.google 
+            }) 
+        }}
+    </div> 
+    {% endif %}
     <div class="field">           
         <label>{{ labels.redirect }}</label>
         <div class="ui labeled input">

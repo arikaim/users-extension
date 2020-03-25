@@ -4,7 +4,12 @@
         "icon": "sign in"
     },
     "labels": {    
-        "captcha": "Captcha",  
+        "captcha": "Captcha", 
+        "oauth": "Sign in with", 
+        "facebook": "Facebook",
+        "github": "GitHub",
+        "twitter": "Twitter",
+        "google": "Google",
         "email": "Login with email",
         "username": "Login with username",
         "combined": "Login with email and user name",

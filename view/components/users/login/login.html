@@ -5,6 +5,14 @@
             {{ title }}
             </h2>
             {{ component('users>users.login.form') }}
+            {% if hasExtension('oauth') == true %}                            
+                {{  component('users>users.connect.buttons',{ 
+                        button_class: 'basic icon primary',
+                        class: 'fluid',
+                        hide_button_title: true 
+                    }) 
+                }}
+            {% endif %}
         </div>    
     </div>
     <div class="ui horizontal list">

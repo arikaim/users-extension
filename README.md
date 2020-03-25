@@ -3,6 +3,7 @@
 Manage users.
 
 #### Features
+  * Login with Twitter, Github, Google, Facebook
   * Login page.
   * Signup page.
   * Password recovery page. 

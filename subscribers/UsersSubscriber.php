@@ -70,7 +70,7 @@ class UsersSubscriber extends EventSubscriber implements EventSubscriberInterfac
      */
     public function login($event)
     {
-         // your code here
+        // your code here
     }
 
     /**
