@@ -163,7 +163,7 @@ class Users extends Controller
                 }                                             
             }
 
-            return $this->pageLoad($request, $response, $data,'users>login');
+            return $this->pageLoad($request, $response, $data,'users>user.login');
         }
     
         return $response->withHeader('Location',$redirectPath);
