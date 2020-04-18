@@ -1,8 +1,6 @@
 'use strict';
 
 $(document).ready(function() { 
-    $('.users-dropdown').dropdown({});
-
     arikaim.ui.button('.add-group-member',function(element) {
         var groupUuid = $(element).attr('uuid');
         var userUuid = $('.users-dropdown').dropdown('get value');

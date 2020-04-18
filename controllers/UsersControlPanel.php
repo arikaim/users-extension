@@ -268,15 +268,16 @@ class UsersControlPanel extends ControlPanelApiController
 
         $this->onDataValid(function($data) {          
             $search = $data->get('query','');
+            $dataField = $data->get('data_field','uuid');
             $size = $data->get('size',15);
             
             $model = Model::Users()->getNotDeletedQuery();
             $model = $model->where('user_name','like',"%$search%")->take($size)->get();
           
-            $this->setResponse(is_object($model),function() use($model) {     
+            $this->setResponse(is_object($model),function() use($model,$dataField) {     
                 $items = [];
                 foreach ($model as $item) {
-                    $items[] = ['name' => $item['user_name'],'value' => $item['uuid']];
+                    $items[] = ['name' => $item['user_name'],'value' => $item[$dataField]];
                 }
                 $this                    
                     ->field('success',true)

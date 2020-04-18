@@ -1,4 +1,3 @@
-{% set users = createModel('Users') %}
 <div class="ui card raised">
     <h3 class="bg-gray-300 p-4">
         <i class="icon user blue"></i>
@@ -8,11 +7,7 @@
         <div class="ui divider horizontal"> 
             <i class="chart bar outline icon"></i>
         </div>    
-        <div class="ui mini horizontal teal statistics">
-            <div class="statistic">
-                <div class="value">{{ users.count() }}</div>
-                <div class="label">{{ labels.users }}</div>
-            </div>                          
+        <div id="users_stats">
         </div>
     </div>
 </div>

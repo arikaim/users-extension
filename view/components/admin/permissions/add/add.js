@@ -9,7 +9,6 @@ $(document).ready(function() {
         var permissionUuid = $('.permissions-dropdown').dropdown('get value');  
 
         permissions.grantPermission(uuid,permissionUuid,type,function(result) {
-           
             return arikaim.page.loadContent({
                 id: 'permissions_list',
                 params: { 

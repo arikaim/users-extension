@@ -195,7 +195,7 @@ class UserDetails extends Model
     {
         $path = $this->getAvatarImagePath();
 
-        return ($path === false) ? true : Arikaim::storage()->delete($path,false);
+        return ($path === false) ? true : Arikaim::storage()->delete($path);
     }
 
     /**

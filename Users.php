@@ -56,7 +56,7 @@ class Users extends Extension
         $this->addApiRoute('PUT','/api/users/admin/change-password','UsersControlPanel','changePassword','session'); 
         $this->addApiRoute('PUT','/api/users/admin/status','UsersControlPanel','setStatus','session'); 
         $this->addApiRoute('DELETE','/api/users/admin/delete/{uuid}','UsersControlPanel','softDelete','session'); 
-        $this->addApiRoute('GET','/api/users/admin/list/[{query}]','UsersControlPanel','getList','session');  
+        $this->addApiRoute('GET','/api/users/admin/list/{data_field}/[{query}]','UsersControlPanel','getList','session');  
         // avatar
         $this->addApiRoute('POST','/api/users/admin/avatar/upload','UsersControlPanel','uploadAvatar','session'); 
         $this->addApiRoute('DELETE','/api/users/admin/avatar/delete/{uuid}','UsersControlPanel','deleteAvatar','session'); 
