@@ -11,6 +11,7 @@ namespace Arikaim\Extensions\Users\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Arikaim\Core\Utils\File;
 use Arikaim\Core\Arikaim;
 use Arikaim\Core\View\Html\Page;
 
@@ -98,14 +99,14 @@ class UserDetails extends Model
     /**
      * Find or create user details row
      *
-     * @param integer $id
+     * @param integer $userId
      * @return Model|false
      */
-    public function findOrCreate($id)
+    public function findOrCreate($userId)
     {
-        $model = $this->where('user_id','=',$id)->first();
+        $model = $this->where('user_id','=',$userId)->first();
         
-        return (is_object($model) == true) ? $model : $this->create(['user_id' => $id]);          
+        return (is_object($model) == true) ? $model : $this->create(['user_id' => $userId]);          
     } 
 
     /**
@@ -158,7 +159,13 @@ class UserDetails extends Model
      */
     public function createStorageFolder()
     {
-        return ($this->hasStorageFolder() == false) ? Arikaim::storage()->createDir($this->getUserStoragePath()) : true;       
+        if ($this->hasStorageFolder() == false) {
+            $result = Arikaim::storage()->createDir($this->getUserStoragePath());
+            File::setWritable($this->getUserStoragePath());
+            return $result;
+        }
+
+        return true;
     }
 
     /**
