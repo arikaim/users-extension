@@ -103,9 +103,6 @@ class Users extends Extension
         $this->createOption('users.sign.with.google',false);
         $this->createOption('users.sign.with.twitter',false);
 
-        // Relation map 
-        $this->addRelationMap('user','Users');
-
         $signupSettings = [
             'name'       => ['show' => false,'required' => false],
             'email'      => ['show' => true,'required'  => true],
