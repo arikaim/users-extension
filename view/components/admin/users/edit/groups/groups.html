@@ -2,16 +2,15 @@
 {% set user = createModel('Users').findById(uuid) %}
 <div class="ui mt-8">
     {% if user.groups is empty %}
-    <div class="ui message">
+    <div class="ui message" id="no_groups_message">
         {{ messages.empty }}
     </div>
-    {% else %}
+    {% endif %}
     <div class="ui list" id="groups_list">
         {% for item in user.groups %}              
             {{ component('users::admin.users.edit.groups.item',{ group: item.group, relation_uuid: item.uuid  }) }}       
         {% endfor %}
-    </div>
-    {% endif %}
+    </div>  
 </div>
 
 <div class="ui segment pt-4">      

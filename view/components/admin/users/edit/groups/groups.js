@@ -10,6 +10,7 @@ $(document).ready(function() {
         var userUuid = $(element).attr('uuid');
 
         groupsAdmin.addMember(groupUuid,userUuid,function(result) {
+            $('#no_groups_message').remove();
             return arikaim.page.loadContent({
                 id : 'groups_list',
                 params: {
@@ -24,7 +25,6 @@ $(document).ready(function() {
         },function(error) {
             initGroupList(); 
         });
-       
     });
 
     function initGroupList() {
