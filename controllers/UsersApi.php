@@ -35,7 +35,7 @@ class UsersApi extends ApiController
      */
     public function init()
     {
-        $this->loadMessages('users::messages');
+        $this->loadMessages('users>users.messages');
     }
 
     /**
@@ -161,8 +161,8 @@ class UsersApi extends ApiController
         });        
         $data          
             ->addRule('text:min=2','first_name')
-            ->addRule('unique:model=Users|field=user_name|exclude=' . $user['user_name'],'user_name','Username exist')
-            ->addRule('unique:model=Users|field=email|exclude=' . $user['email'],'email','Email exist')
+            ->addRule('unique:model=Users|field=user_name|exclude=' . $user['user_name'],'user_name',$this->getMessage('errors.username'))
+            ->addRule('unique:model=Users|field=email|exclude=' . $user['email'],'email',$this->getMessage('errors.email'))
             ->validate();     
     }
 

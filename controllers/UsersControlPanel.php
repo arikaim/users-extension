@@ -181,7 +181,7 @@ class UsersControlPanel extends ControlPanelApiController
             ->addRule('text:min=2|required','user_name')
             ->addRule('text:min=4|required','password')
             ->addRule('unique:model=Users|field=email|required','email')
-            ->addRule('unique:model=Users|field=user_name|required','user_name')
+            ->addRule('unique:model=Users|field=user_name|required','user_name','Username exist')
             ->addRule('equal:value=' . $data->get('password'),'repeat_password')
             ->validate();       
     }
