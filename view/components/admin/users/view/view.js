@@ -67,4 +67,5 @@ var usersView = new UsersView();
 
 $(document).ready(function() {
     usersView.init();
+    usersView.initRows();
 });
