@@ -1,6 +1,19 @@
 'use strict';
 
 $(document).ready(function() {
+
+    arikaim.ui.form.addRules("#login_form",{
+        inline: false,
+        fields: {
+            password: {
+                rules: [{ type: "minLength[4]" }]
+            },
+            user_name: {
+                rules: [{ type: "empty" }]
+            }
+        }
+    });   
+    
     arikaim.ui.button('#forgotten_button',function(element) {
         return arikaim.page.loadContent({
             id : 'login_panel',
