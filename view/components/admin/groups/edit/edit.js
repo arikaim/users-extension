@@ -2,6 +2,7 @@
 
 $(document).ready(function() { 
     function initEditGroupForm() {
+        arikaim.ui.form.addRules("#group_form");
         arikaim.ui.form.onSubmit('#group_form',function() {
             return groupsAdmin.update('#group_form');
         },function(result) {

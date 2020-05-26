@@ -5,7 +5,7 @@
     <input type="hidden" name="uuid" id="uuid" value="{{ uuid }}">  
     <div class="field required">
         <label>{{ fields.name.label }}</label>       
-        <input type="text" name="name" id="name" {{ fields.name.placeholder|attr('placeholder') }} value="{{ permission.name }}">         
+        <input rule="minLength[2]" type="text" name="name" id="name" {{ fields.name.placeholder|attr('placeholder') }} value="{{ permission.name }}">         
     </div>   
     <div class="field">
         <label>{{ fields.description.label }}</label>

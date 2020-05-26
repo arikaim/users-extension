@@ -19,6 +19,7 @@ $(document).ready(function() {
     });
 
     function initEditPermissionForm() {
+        arikaim.ui.form.addRules("#permission_form");  
         arikaim.ui.form.onSubmit('#permission_form',function() {
             return permissions.update('#permission_form');
         },function(result) {         

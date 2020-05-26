@@ -1,6 +1,18 @@
 'use strict';
 
 $(document).ready(function() {
+    arikaim.ui.form.addRules("#user_details_form",{
+        inline: false,
+        fields: {
+            user_name: {
+                rules: [{ type: 'minLength[2]' }]
+            },
+            email: {
+                rules: [{ type: 'email' }]
+            }
+        }
+    });  
+
     arikaim.ui.form.onSubmit('#user_details_form',function() {
        return users.changeDetails('#user_details_form');
     },function(result) {       
