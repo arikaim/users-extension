@@ -161,6 +161,8 @@ class UsersApi extends ApiController
         });        
         $data          
             ->addRule('text:min=2','first_name')
+            ->addRule('htmlTags','first_name',$this->getMessage('errors.html'))
+            ->addRule('htmlTags','last_name',$this->getMessage('errors.html'))
             ->addRule('unique:model=Users|field=user_name|exclude=' . $user['user_name'],'user_name',$this->getMessage('errors.username'))
             ->addRule('unique:model=Users|field=email|exclude=' . $user['email'],'email',$this->getMessage('errors.email'))
             ->validate();     
