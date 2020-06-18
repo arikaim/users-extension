@@ -14,11 +14,14 @@ use Illuminate\Database\Eloquent\Model;
 use Arikaim\Core\Utils\File;
 use Arikaim\Core\Arikaim;
 use Arikaim\Core\View\Html\Page;
+use Arikaim\Extensions\Users\Models\UserType;
+use Arikaim\Extensions\Users\Models\UserOptions;
 
 use Arikaim\Core\Db\Traits\Find;
 use Arikaim\Core\Db\Traits\Status;
 use Arikaim\Core\Db\Traits\Uuid;
 use Arikaim\Core\Db\Traits\UserRelation;
+use Arikaim\Core\Db\Traits\Options\OptionsRelation;
 
 /**
  * Users details model
@@ -27,6 +30,7 @@ class UserDetails extends Model
 {
     use Uuid,
         Find,
+        OptionsRelation,
         UserRelation,
         Status;
     
@@ -43,6 +47,7 @@ class UserDetails extends Model
         'email_status',
         'phone',
         'phone_2',
+        'type_id',
         'public_profile'
     ];
     
@@ -61,6 +66,40 @@ class UserDetails extends Model
      * @var boolean
      */
     public $timestamps = false;
+
+    /**
+     * Options class name
+     *
+     * @var string
+     */
+    protected $optionsClass = UserOptions::class;
+
+    /**
+     * Options primary key
+     *
+     * @var string
+     */
+    protected $optionsPrimaryKey = 'user_id';
+
+    /**
+     * Get options type name
+     *
+     * @return string|null
+     */
+    public function getOptionsType()
+    {
+        return $this->type->slug;
+    }
+
+    /**
+     * Get user type relation
+     *
+     * @return Relation
+     */
+    public function type()
+    {
+        return $this->belongsTo(UserType::class,'type_id');
+    } 
 
     /**
      * Delete user details

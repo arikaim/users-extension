@@ -11,6 +11,7 @@ Manage users.
   * reCaptcha protection.
   * User groups
   * Group and user permissions.
+  * User Options
   * Member area.
     * Change password
     * Chnage user details
@@ -18,6 +19,9 @@ Manage users.
     * Add user
     * Edit user
     * Suspend user account
+    * Options
+    * Groups
+    * Permissions
     * Settings 
       * Login 
         * Login with user name , email or both

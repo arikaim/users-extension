@@ -50,7 +50,11 @@
                 <input name="phone_2" id="phone_2" placeholder="{{ fields.phone2.placeholder }}" type="text" value="{{ user_details.phone_2 }}">
             </div>
         </div>
-    </div>    
+    </div>  
+    <div class="five wide field">
+        <label>{{ fields.type.label }}</label>
+        {{ component('users::admin.type',{ selected: user_details.type_id }) }}
+    </div>  
     {% if edit == false %}
     <div class="ui horizontal divider"></div>   
     <div class="two fields mt-4">    
@@ -76,5 +80,6 @@
         </div>  
     </div>            
     {% endif %}
+   
     {{ component('components:form.footer') }}    
 </form>

@@ -1,0 +1,11 @@
+{
+    "title": {
+        "content" : "Options",
+        "icon": "sliders horizontal"
+    },
+    "labels": {
+        "options": "Options",
+        "default": "Default",
+        "type": "User Type"
+    }
+}

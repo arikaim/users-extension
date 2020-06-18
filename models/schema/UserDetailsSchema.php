@@ -36,6 +36,7 @@ class UserDetailsSchema extends Schema
         $table->id();
         $table->prototype('uuid');  
         $table->userId();
+        $table->relation('type_id','user_type',true);
         $table->string('avatar')->nullable(true);
         $table->string('first_name')->nullable(true);
         $table->string('last_name')->nullable(true);           
@@ -55,6 +56,9 @@ class UserDetailsSchema extends Schema
     */
     public function update($table) 
     {        
+        if ($this->hasColumn('type_id') == false) {
+            $table->relation('type_id','user_type',true);
+        } 
     }
 
     /**

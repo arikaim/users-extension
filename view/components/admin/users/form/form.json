@@ -35,6 +35,10 @@
         "phone2": {
             "label": "Phone 2",
             "placeholder": "Enter Phone 2"
+        },
+        "type": {
+            "label": "User Type",
+            "placeholder": "Select User Type"
         }
     },
     "labels": {

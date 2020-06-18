@@ -61,12 +61,15 @@ class UsersApi extends ApiController
         $this->onDataValid(function($data) use($settings) { 
             $sendConfirmEmail = $this->get('options')->get('users.notifications.email.verification',false);
             $activation = $this->get('options')->get('users.sugnup.activation',1);
-
+            
             $model = Model::Users();
             $userName = $data->get('user_name',null);
             $email = $data->get('email',null);
             $password = $data->get('password',null);
 
+            // user type
+            $data['type_id'] = $this->getUserTypeId($data->get('user_type_slug',null));
+            
             // verify username
             if ($settings['username']['required'] == true) {
                 if ($model->hasUserName($userName) == true) {
@@ -91,15 +94,20 @@ class UsersApi extends ApiController
                 $user->setStatus(4);
             }
 
-            $result = Model::UserDetails('users')->saveDetails($user->id,$data->toArray());
+            $userDetails = Model::UserDetails('users');
+            $result = $userDetails->saveDetails($user->id,$data->toArray());
 
             if ($result == true && $sendConfirmEmail == true) {
                 // send confirm email to user
-                $this->sendConfirmationEmail($user->toArray());
+                $this->sendConfirmationEmail($user->toArray());               
             }
 
-            $this->setResponse($result,function() use($user) {   
-                // dispatch event
+            $this->setResponse($result,function() use($user,$userDetails) { 
+                // create options
+                $userDetails = $userDetails->findOrCreate($user->id);
+                $userDetails->createOptions();  
+
+                // dispatch event              
                 $this->get('event')->dispatch('user.signup',$user->toArray());     
                 $this
                     ->message('signup')
@@ -392,5 +400,26 @@ class UsersApi extends ApiController
             ->loadComponent('users>users.emails.confirmation',$properties)
             ->to($user['email'])
             ->send();        
+    }
+
+    /**
+     * Get user type Id
+     *
+     * @param string|integer|null $typeSlug
+     * @return int|null
+     */
+    public function getUserTypeId($typeSlug = null)
+    {
+        if (empty($typeSlug) == true) {
+            return null;
+        }
+
+        if (is_numeric($typeSlug) == true) {
+            return $typeSlug;
+        }
+
+        $userType = Model::create('UserType','users')->findBySlug($typeSlug);
+        
+        return (is_object($userType) == true) ? $userType->id : null;
     }
 }

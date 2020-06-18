@@ -1,0 +1,9 @@
+{% component 'components:tabs.vertical.content' %}  
+{% set default_user_type = getOption('users.default.type',null) %}
+<div class="ui mt-4 form">
+    <div class="five wide field">
+        <label>{{ labels.type }}</label>
+        {{ component('users::admin.type',{ selected: default_user_type }) }}
+    </div>
+</div>
+{% endcomponent %}

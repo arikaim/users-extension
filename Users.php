@@ -82,8 +82,12 @@ class Users extends Extension
         $this->addApiRoute('PUT','/api/users/admin/permission/deny','PermissionsControlPanel','denyPermission','session');   
         
         // Create db tables
-        $this->createDbTable('UserDetailsSchema');
-      
+        $this->createDbTable('UserTypeSchema');
+        $this->createDbTable('UserDetailsSchema');     
+        $this->createDbTable('UserOptionTypeSchema');  
+        $this->createDbTable('UserOptionsSchema');  
+        $this->createDbTable('UserOptionsListSchema');  
+        
         // Events
         $this->registerEvent('user.login','Trigger after user login');
         $this->registerEvent('user.logout','Trigger after user logout');
@@ -97,6 +101,7 @@ class Users extends Extension
         $this->createOption('users.notifications.email.signup',true);
         $this->createOption('users.notifications.email.welcome',true);
         $this->createOption('users.notifications.email.verification',false);
+        $this->createOption('users.default.type',null);
         // sign in with 
         $this->createOption('users.sign.with.github',false);
         $this->createOption('users.sign.with.facebook',false);
