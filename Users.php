@@ -24,15 +24,15 @@ class Users extends Extension
     public function install()
     {
         // Pages            
-        $this->addPageRoute('/logout',"Users",'logout','users>user.logout',null,'logout.page'); 
-        $this->addPageRoute('/signup',"Users",'signup','users>user.signup',null,'signup.page'); 
-        $this->addPageRoute('/login',"Users",'login','users>user.login',null,'login.page');  
-        $this->addPageRoute('/change-password/{token}','Users','changePassword','users>user.change-password','token');  
-        $this->addPageRoute('/email/confirm/{token}','Users','emailConfirm','users>user.email-confirm','token');            
-        $this->addPageRoute('/user[/{menu}]','Users','userArea','users>user','session');
+        $this->addPageRoute('/logout',"Users",'logout','users>user.logout',null,'logout.page',true); 
+        $this->addPageRoute('/signup',"Users",'signup','users>user.signup',null,'signup.page',true); 
+        $this->addPageRoute('/login',"Users",'login','users>user.login',null,'login.page',true);  
+        $this->addPageRoute('/change-password/{token}','Users','changePassword','users>user.change-password','token','change.password.page',true);  
+        $this->addPageRoute('/email/confirm/{token}','Users','emailConfirm','users>user.email-confirm','token','email.confirm.page',true);            
+        $this->addPageRoute('/user[/{menu}[/{language:[a-z]{2}}/]]','Users','userArea','users>user','session','user.area.page',false);
         // set auth error redirect url
         $this->setRouteRedirectUrl('GET','/user[/{menu}]','/login');
-        $this->addPageRoute('/user/profile/{uuid}','Users','userProfile','users>user.profile');
+        $this->addPageRoute('/user/profile/{uuid}','Users','userProfile','users>user.profile',null,'user.profile.page',true);
         
         // Api 
         $this->addApiRoute('POST','/api/users/login','UsersApi','login');  

@@ -3,6 +3,7 @@
 Manage users.
 
 #### Features
+  * Multilanguage
   * Login with Twitter, Github, Google, Facebook
   * Login page.
   * Signup page.
