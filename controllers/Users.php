@@ -34,7 +34,7 @@ class Users extends Controller
         $data['user'] = $this->get('access')->getUser();
         if (empty($data['user']) == true) {
             $this->get('errors')->addError('ACCESS_DENIED');
-            return false;
+            return false;            
         }                
     }
 
