@@ -108,12 +108,12 @@ class UsersControlPanel extends ControlPanelApiController
             $uuid = $data->get('uuid');
 
             $user = Model::Users()->findById($uuid);
-            if (is_object($user) == false) {
+            if (\is_object($user) == false) {
                 $this->error('Not valid user id');
                 return;
             }
             $details = Model::UserDetails('users')->findOrCreate($user->id);
-            if (is_object($details) == false) {
+            if (\is_object($details) == false) {
                 $this->error('User details not exists.');
                 return;
             }
@@ -143,7 +143,7 @@ class UsersControlPanel extends ControlPanelApiController
                 $details->update(['avatar' => $avatar]);               
             }
            
-            $this->setResponse(is_array($files),function() use($uuid,$avatar) {                  
+            $this->setResponse(\is_array($files),function() use($uuid,$avatar) {                  
                 $this
                     ->message('avatar.upload')
                     ->field('uuid',$uuid)
@@ -166,8 +166,11 @@ class UsersControlPanel extends ControlPanelApiController
     {       
         $this->onDataValid(function($data) { 
             $user = Model::Users()->createUser($data['user_name'],$data['password'],$data['email']);
-            if (is_object($user) == true) {
-                $result = Model::UserDetails('users')->saveDetails($user->id,$data->toArray());
+            if (\is_object($user) == true) {
+                $userDetails = $data->toArray();
+                $userDetails['type_id'] = $data->get('type_id',null);
+               
+                $result = Model::UserDetails('users')->saveDetails($user->id,$userDetails);
                 $this->setResponse($result,function() use($user) {                  
                     $this
                         ->message('add')
@@ -177,11 +180,11 @@ class UsersControlPanel extends ControlPanelApiController
             } 
             $this->error('errors.add');           
         });
-        $data
-            ->addRule('text:min=2|required','user_name')
+        $data                  
+            ->addRule('regexp:exp=/^[A-Za-z][A-Za-z0-9]{4,32}$/|required','user_name',$this->getMessage('errors.username.valid'))
             ->addRule('text:min=4|required','password')
             ->addRule('unique:model=Users|field=email|required','email')
-            ->addRule('unique:model=Users|field=user_name|required','user_name','Username exist')
+            ->addRule('unique:model=Users|field=user_name|required','user_name',$this->getMessage('errors.username.exist'))
             ->addRule('equal:value=' . $data->get('password'),'repeat_password')
             ->validate();       
     }
@@ -274,7 +277,7 @@ class UsersControlPanel extends ControlPanelApiController
             $model = Model::Users()->getNotDeletedQuery();
             $model = $model->where('user_name','like',"%$search%")->take($size)->get();
           
-            $this->setResponse(is_object($model),function() use($model,$dataField) {     
+            $this->setResponse(\is_object($model),function() use($model,$dataField) {     
                 $items = [];
                 foreach ($model as $item) {
                     $items[] = ['name' => $item['user_name'],'value' => $item[$dataField]];

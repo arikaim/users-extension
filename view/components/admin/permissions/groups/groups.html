@@ -1,0 +1,7 @@
+{% set user = createModel('Users').findById(uuid) %}
+{% set model = createModel('PermissionRelations') %}
+
+{% for item in user.groups %}
+    {% set permissions = model.getGroupPermissions(item.group.id) %}   
+    {{ component('users::admin.permissions.groups.items',{ permissions: permissions }) }}
+{% endfor %}

@@ -25,6 +25,10 @@
         "grant": "Permission added successfully."
     },
     "errors": {
+        "username": {
+            "valid": "Username not valid",
+            "exist": "Username exists"
+        },
         "delete": "Can't delete user",
         "add": "Can't add user",   
         "update": "Can't save user details",

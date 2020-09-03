@@ -13,6 +13,10 @@
         {% for item in permissions.get() %}   
             {{ component('users::admin.permissions.relations.item',{ item: item, relation_id: model.id }) }}     
         {% endfor %}
-    </div>
+    </div>   
+    {% if show_group_permissions == true %}
+        <div class="ui horizontal divider">{{ labels.inherited }}</div>
+        {{ component('users::admin.permissions.groups',{ uuid: uuid }) }}
+    {% endif %}
     {{ component('users::admin.permissions.add',{ uuid: uuid, type: type }) }}
 {% endif %}

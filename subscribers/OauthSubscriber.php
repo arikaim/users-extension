@@ -12,7 +12,6 @@ namespace Arikaim\Extensions\Users\Subscribers;
 use Arikaim\Core\Events\EventSubscriber;
 use Arikaim\Core\Interfaces\Events\EventSubscriberInterface;
 use Arikaim\Core\Arikaim;
-use Arikaim\Core\Utils\Utils;
 use Arikaim\Core\Db\Model;
 
 /**

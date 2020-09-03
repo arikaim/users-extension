@@ -66,6 +66,7 @@ class UsersApi extends ApiController
             $userName = $data->get('user_name',null);
             $email = $data->get('email',null);
             $password = $data->get('password',null);
+            $options = $data->get('options',null);
 
             // user type
             $data['type_id'] = $this->getUserTypeId($data->get('user_type_slug',null));
@@ -73,7 +74,7 @@ class UsersApi extends ApiController
             // verify username
             if ($settings['username']['required'] == true) {
                 if ($model->hasUserName($userName) == true) {
-                    $this->error('errors.username');   
+                    $this->error('errors.username.exist');   
                     return;
                 }
             }
@@ -97,28 +98,29 @@ class UsersApi extends ApiController
             $userDetails = Model::UserDetails('users');
             $result = $userDetails->saveDetails($user->id,$data->toArray());
 
-            if ($result == true && $sendConfirmEmail == true) {
-                // send confirm email to user
-                $this->sendConfirmationEmail($user->toArray());               
-            }
-
-            $this->setResponse($result,function() use($user,$userDetails) { 
+            // send confirm email to user
+            $emailSend = ($result == true && $sendConfirmEmail == true) ? $this->sendConfirmationEmail($user->toArray()) : false;
+               
+            $this->setResponse($result,function() use($user,$userDetails,$options, $emailSend) { 
                 // create options
                 $userDetails = $userDetails->findOrCreate($user->id);
                 $userDetails->createOptions();  
 
-                // dispatch event              
-                $this->get('event')->dispatch('user.signup',$user->toArray());     
+                // dispatch event   
+                $params = $user->toArray();
+                $params['options'] = $options;
+                $this->get('event')->dispatch('user.signup',$params);  
                 $this
                     ->message('signup')
                     ->field('uuid',$user->uuid)
-                    ->field('email_send',false)
+                    ->field('email_send',$emailSend)
                     ->field('status',$user->status);                        
             },'errors.signup');                         
         });
         
         $repeatPassword = $data->get('repeat_password');
         $data           
+            ->addRule('regexp:exp=/^[A-Za-z][A-Za-z0-9]{4,32}$/|required','user_name',$this->getMessage('errors.username.valid'))
             ->addRule('text:min=4|required','repeat_password')
             ->addRule('text:min=4|required','password')
             ->addRule('equal:value=' . "$repeatPassword|required",'password',$this->getMessage('errors.repeat_password'));
@@ -396,10 +398,16 @@ class UsersApi extends ApiController
             'confirm_email_url' => $this->createProtectedUrl($user['id'],'email/confirm')
         ];
 
-        return $this->get('mailer')->create()
+        try {
+            $result = $this->get('mailer')->create()
             ->loadComponent('users>users.emails.confirmation',$properties)
             ->to($user['email'])
-            ->send();        
+            ->send();   
+        } catch (\Exception $e) {
+            return false;
+        }
+        
+        return $result;
     }
 
     /**

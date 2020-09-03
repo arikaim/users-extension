@@ -79,12 +79,12 @@ class UsersAvatarApi extends ApiController
 
         $this->onDataValid(function($data) use ($request,$user) {          
             $user = Model::Users()->findById($user['id']);
-            if (is_object($user) == false) {
+            if (\is_object($user) == false) {
                 $this->error('Not valid user id');
                 return;
             }
             $details = Model::UserDetails('users')->findOrCreate($user->id);
-            if (is_object($details) == false) {
+            if (\is_object($details) == false) {
                 $this->error('User details not exists.');
                 return;
             }
@@ -139,7 +139,7 @@ class UsersAvatarApi extends ApiController
         $user = $this->get('access')->getUser();      
          
         $user = Model::Users()->findById($user['uuid']);
-        if (is_object($user) == false) {
+        if (\is_object($user) == false) {
             // user not found
             return false;
         }
@@ -162,7 +162,7 @@ class UsersAvatarApi extends ApiController
     { 
         $uuid = $data->get('uuid');
         $user = Model::Users()->findById($uuid);
-        if (is_object($user) == false) {
+        if (\is_object($user) == false) {
             // user not found
             return false;
         }

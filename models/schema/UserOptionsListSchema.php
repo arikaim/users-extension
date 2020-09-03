@@ -11,7 +11,6 @@ namespace Arikaim\Extensions\Users\Models\Schema;
 
 use Arikaim\Core\Db\Schema;
 
-
 /**
  * User options list db table
  */

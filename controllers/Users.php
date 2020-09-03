@@ -84,12 +84,12 @@ class Users extends Controller
     { 
         $uuid = $data->get('uuid',null);
         $data['user'] = Model::Users()->findByid($uuid);
-        if (is_object($data['user']) == false) {           
+        if (\is_object($data['user']) == false) {           
             return false;
         }
 
         $data['details'] = Model::UserDetails('users')->findOrCreate($data['user']->id);      
-        if (is_object($data['details']) == false) {
+        if (\is_object($data['details']) == false) {
             return false;
         }
 
@@ -122,7 +122,7 @@ class Users extends Controller
     {            
         $user = $this->get('access')->getUser();      
         $details = Model::UserDetails('users')->findByColumn($user['id'],'user_id');
-        if (is_object($details) == false) {
+        if (\is_object($details) == false) {
             return false;
         }
 

@@ -88,7 +88,7 @@ class UserDetails extends Model
      */
     public function getOptionsType()
     {
-        return $this->type->slug;
+        return (\is_object($this->type) == true) ? $this->type->slug : null;
     }
 
     /**
@@ -110,7 +110,7 @@ class UserDetails extends Model
     public function deleteUserDetails($id)
     {
         $model = $this->where('user_id','=',$id)->first();
-        if (is_object($model) == false) {
+        if (\is_object($model) == false) {
             return false;
         }
 
@@ -132,7 +132,7 @@ class UserDetails extends Model
         $details['user_id'] = $userId;
         $model = $this->findByColumn($userId,'user_id');
 
-        return (is_object($model) == true) ? $model->update($details) : $this->create($details);
+        return (\is_object($model) == true) ? $model->update($details) : $this->create($details);
     }
 
     /**
@@ -145,7 +145,7 @@ class UserDetails extends Model
     {
         $model = $this->where('user_id','=',$userId)->first();
         
-        return (is_object($model) == true) ? $model : $this->create(['user_id' => $userId]);          
+        return (\is_object($model) == true) ? $model : $this->create(['user_id' => $userId]);          
     } 
 
     /**
@@ -188,7 +188,7 @@ class UserDetails extends Model
      */
     public function getNameAttribute()
     {
-        return trim($this->attributes['first_name'] . ' ' . $this->attributes['last_name']);
+        return \trim($this->attributes['first_name'] . ' ' . $this->attributes['last_name']);
     }
     
     /**

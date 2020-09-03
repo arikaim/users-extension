@@ -87,7 +87,7 @@ class GroupsControlPanel extends ControlPanelApiController
             $group = Model::UserGroups();
             $newGroup = $group->create($data->toArray());
         
-            $this->setResponse(is_object($newGroup),function() use($newGroup) {                  
+            $this->setResponse(\is_object($newGroup),function() use($newGroup) {                  
                 $this
                     ->message('groups.add')
                     ->field('uuid',$newGroup->uuid);                  
@@ -140,7 +140,7 @@ class GroupsControlPanel extends ControlPanelApiController
             $members = Model::UserGroupMembers();
             $member = $members->addMember($data['user_uuid'],$data['uuid']);
             
-            $this->setResponse(is_object($member),function() use($member) {                  
+            $this->setResponse(\is_object($member),function() use($member) {                  
                 $this
                     ->message('groups.members.add')
                     ->field('uuid',$member->uuid);                  

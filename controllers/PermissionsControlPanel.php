@@ -125,7 +125,7 @@ class PermissionsControlPanel extends ControlPanelApiController
                 'editable'    => true
             ]);
         
-            $this->setResponse(is_object($permission),function() use($permission) {                  
+            $this->setResponse(\is_object($permission),function() use($permission) {                  
                 $this
                     ->message('permission.add')
                     ->field('uuid',$permission->uuid);                  

@@ -2,6 +2,14 @@
 {% component 'components:tabs.vertical.content' %}
     <div class="ui mt-8 form">
         <div class="field">
+            <label>{{ labels.id }}</label>
+            <p>{{ user.id }}</p>
+        </div>
+        <div class="field">
+            <label>{{ labels.uuid }}</label>
+            <p>{{ user.uuid }}</p>
+        </div>
+        <div class="field">
             <label>{{ labels.date_created }}</label>
             <p>{{ user.date_created|dateTimeFormat }}</p>
         </div>

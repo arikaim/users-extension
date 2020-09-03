@@ -4,6 +4,8 @@
         "icon": "info"
     },
     "labels": {
+        "id": "Id",
+        "uuid": "Uuid",
         "date_created": "Date Created",
         "date_updated": "Date Updated",
         "date_login": "Date Last Login"        
