@@ -9,19 +9,48 @@
 function UsersView() {
     var self = this;
 
+
+    this.getSearchData = function() {
+
+    };
+    
     this.init = function() {
         order.init('users_rows','users::admin.users.view.rows','users');
-        paginator.init('users_rows',"users::admin.users.view.rows",'users');         
+        paginator.init('users_rows',"users::admin.users.view.rows",'users');    
+
         search.init({
             id: 'users_rows',
             component: 'users::admin.users.view.rows',
             event: 'user.search.load'
         },'users')  
         
+        $('.status-filter').dropdown({          
+            onChange: function(value) {      
+                var searchData = {
+                    search: {
+                        status: value,                       
+                    }          
+                }              
+                search.setSearch(searchData,'users',function(result) {                  
+                    self.loadList();
+                });               
+            }
+        });
+
         arikaim.events.on('user.search.load',function(result) {      
             paginator.reload();
             self.initRows();    
         },'userSearch');                   
+    };
+
+    this.loadList = function() {        
+        arikaim.page.loadContent({
+            id: 'users_rows',         
+            component: 'users::admin.users.view.rows'
+        },function(result) {
+            self.initRows();  
+            paginator.reload(); 
+        });
     };
 
     this.initRows = function() {

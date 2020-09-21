@@ -1,8 +1,8 @@
 {
     "include": {
         "js": [
-            "system:order",
-            "components:search"
+            "components:search",
+            "system:order"            
         ]
     },
     "access": {

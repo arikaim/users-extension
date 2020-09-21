@@ -23,6 +23,8 @@ Manage users.
     * Change password
     * Chnage user details
   * Control Panel
+    * Find user
+    * Filter users by status 
     * Add user
     * Edit user
     * Suspend user account

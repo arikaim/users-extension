@@ -169,7 +169,7 @@ class UsersControlPanel extends ControlPanelApiController
             if (\is_object($user) == true) {
                 $userDetails = $data->toArray();
                 $userDetails['type_id'] = $data->get('type_id',null);
-               
+        
                 $result = Model::UserDetails('users')->saveDetails($user->id,$userDetails);
                 $this->setResponse($result,function() use($user) {                  
                     $this
@@ -235,19 +235,17 @@ class UsersControlPanel extends ControlPanelApiController
 
         $this->onDataValid(function($data) use($user) {
             // save user 
+            $data['type_id'] = $data->get('type_id',null);
+
             $result = $user->update($data->toArray());
-            
-            if ($result !== false) {
-                // save user details
-                $result = Model::UserDetails('Users')->saveDetails($user->id,$data->toArray());
-                $this->setResponse($result,function() use($user) {                  
-                    $this
-                        ->message('update')
-                        ->field('uuid',$user->uuid);                  
-                },'errors.update');
-                return;
-            }
-            $this->error('errors.update');            
+        
+            // save user details
+            $result = Model::UserDetails('Users')->saveDetails($user->id,$data->toArray());
+            $this->setResponse($result,function() use($user) {                  
+                $this
+                    ->message('update')
+                    ->field('uuid',$user->uuid);                  
+            },'errors.update');                     
         });        
         $data
             ->addRule('exists:model=Users|field=uuid','uuid')

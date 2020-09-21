@@ -82,6 +82,23 @@ class UserDetails extends Model
     protected $optionsPrimaryKey = 'user_id';
 
     /**
+     * Get view avatar url
+     *
+     * @param bool $logged
+     * @param string|null $uuid
+     * @return string|null
+     */
+    public function getAvatarViewUrl($logged = false, $uuid = null)
+    {
+        if ($logged == true) {
+            return '/api/users/avatar/view';
+        }
+        $uuid = (empty($uuid) == true) ? $this->user->uuid : $uuid;
+
+        return ($this->isPublic() == true) ? '/users/avatar/view/' . $uuid : null;
+    }
+
+    /**
      * Get options type name
      *
      * @return string|null

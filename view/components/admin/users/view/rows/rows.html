@@ -1,10 +1,14 @@
 {% set users = createModel('Users') %}
+{% set status_filter = searchValue('status','users') %}
 {% if show_deleted != true %}
     {% set users = users.getNotDeletedQuery() %}
 {% else %}
     {% set users = users.softDeletedQuery() %}
 {% endif %}
 {{ createSearch('user_name','users','ilike:{value}%') }}
+{% if status_filter is not empty %}
+    {% set users = users.where('status','=',status_filter) %}
+{% endif %}
 {% set users = applyOrderBy(users,'users') %}
 {% set users = applySearch(users,'users') %}
 {% set users = users.join('user_details', 'users.id', '=', 'user_details.user_id', 'left outer').select('users.*','user_details.*','users.uuid as uuid','users.id as id') %}   
