@@ -90,6 +90,9 @@ class UserDetails extends Model
      */
     public function getAvatarViewUrl($logged = false, $uuid = null)
     {
+        if (empty($this->avatar) == true) {
+            return null;
+        }
         if ($logged == true) {
             return '/api/users/avatar/view';
         }
