@@ -1,7 +1,7 @@
 {
     "labels": {
         "deleted": "Deleted",
-        "empty": "No users",
+        "empty": "...",
         "restore": "Restore",
         "active": "Active",
         "confirmed": "Confirmed",

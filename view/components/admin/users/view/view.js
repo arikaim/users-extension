@@ -8,12 +8,7 @@
 
 function UsersView() {
     var self = this;
-
-
-    this.getSearchData = function() {
-
-    };
-    
+       
     this.init = function() {
         order.init('users_rows','users::admin.users.view.rows','users');
         paginator.init('users_rows',"users::admin.users.view.rows",'users');    

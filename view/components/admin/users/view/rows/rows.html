@@ -12,8 +12,14 @@
 {% set users = applyOrderBy(users,'users') %}
 {% set users = applySearch(users,'users') %}
 {% set users = users.join('user_details', 'users.id', '=', 'user_details.user_id', 'left outer').select('users.*','user_details.*','users.uuid as uuid','users.id as id') %}   
-
 {% set items = paginate(users,'users') %}
+
+{% if items.getItems()|length == 0 %}
+    <tr>
+        <td colspan="9">{{ labels.empty }}</td>
+    </tr>
+{% endif %}
+
 {% for item in items.getItems() %}   
 {% set control_panel_user = access().hasControlPanelAccess(item.id) %}
 <tr id="row_{{ item.uuid }}" class="{{ (control_panel_user == true) ? 'warning' : '' }}" title="{{ (control_panel_user == true) ? labels.cp : '' }}">             

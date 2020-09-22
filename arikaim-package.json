@@ -5,13 +5,14 @@
     "type": "user",
     "description": "Users management",
     "short-description": "Users",
-    "version": "1.4.1",
+    "version": "1.4.2",
     "private-repository": true,
     "repository": "https://github.com/arikaim-repository/users-extension.git",
     "position": "2",
     "require": {
         "extensions": [
-            "oauth:optional"
+            "oauth:optional",
+            "captcha:optional"
         ]
     },
     "admin-menu": {        
