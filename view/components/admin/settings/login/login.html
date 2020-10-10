@@ -3,6 +3,12 @@
 {% set redirect = getOption('users.login.redirect','') %}
 
 {% component 'components:tabs.vertical.content' %}
+
+{% if demo_mode == true %}
+<div class="ui warning message">
+    Save optins is disabeld in DEMO MODE!
+</div>
+{% endif %}
 <form class="ui equal width form" id="settings_form">  
     <div class="ui segment">
         <div class="field mt-8">           

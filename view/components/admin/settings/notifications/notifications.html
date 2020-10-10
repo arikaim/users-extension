@@ -2,7 +2,12 @@
 {% set send_welcome_email = getOption('users.notifications.email.welcome') %}
 {% set send_verification_email = getOption('users.notifications.email.verification') %}
 
-{% component 'components:tabs.vertical.content' %}           
+{% component 'components:tabs.vertical.content' %}       
+{% if demo_mode == true %}
+<div class="ui warning message">
+    Save optins is disabeld in DEMO MODE!
+</div>
+{% endif %}    
 <form class="ui equal width form" id="notifications_settings_form">  
     <div class="ui segment padded">
         <div class="field">                     

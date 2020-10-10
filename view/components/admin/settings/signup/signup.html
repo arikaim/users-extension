@@ -2,6 +2,11 @@
 {% set activation = getOption('users.sugnup.activation') %}
 
 {% component 'components:tabs.vertical.content' %}
+{% if demo_mode == true %}
+<div class="ui warning message">
+    Save optins is disabeld in DEMO MODE!
+</div>
+{% endif %}
 <div class="ui equal width form" id="settings_form">  
     <div class="ui segment padded">
         <div class="field">
