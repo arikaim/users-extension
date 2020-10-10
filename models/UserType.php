@@ -31,7 +31,7 @@ class UserType extends Model
      *
      * @var string
      */
-    protected $table = "user_type";
+    protected $table = 'user_type';
 
     /**
      * Fillable columns

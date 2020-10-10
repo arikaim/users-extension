@@ -24,7 +24,6 @@
             label: fields.public.label
         }) 
     }}  
-
     <div class="ui horizontal divider"></div>   
     <h4 class="ui header title">
         {{ labels.details }}
@@ -51,7 +50,7 @@
             </div>
         </div>
     </div>  
-    <div class="five wide field">
+    <div class="fluid field">
         <label>{{ fields.type.label }}</label>
         {{ component('users::admin.type',{ selected: user_details.type_id }) }}
     </div>  

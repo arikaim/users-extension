@@ -34,7 +34,7 @@ class UserOptions extends Model
      *
      * @var string
      */
-    protected $table = "user_options";
+    protected $table = 'user_options';
 
     /**
      * Visible columns
@@ -90,6 +90,11 @@ class UserOptions extends Model
         return $this->belongsTo(Users::class,'reference_id');
     }
 
+    /**
+     * user details relation
+     *
+     * @return Relation
+     */
     public function details()
     {
         return $this->belongsTo(UserDetails::class,'reference_id','user_id');

@@ -21,7 +21,7 @@ class UserOptionTypeSchema extends Schema
      *
      * @var string
      */
-    protected $tableName = "user_option_type";
+    protected $tableName = 'user_option_type';
 
     /**
      * Create table
@@ -32,7 +32,6 @@ class UserOptionTypeSchema extends Schema
     public function create($table) 
     {            
         $table->tableOptionType(function($table) {
-
         });
     }
 

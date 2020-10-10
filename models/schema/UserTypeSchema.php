@@ -22,7 +22,7 @@ class UserTypeSchema extends Schema
      *
      * @var string
      */
-    protected $tableName = "user_type";
+    protected $tableName = 'user_type';
 
     /**
      * Create table

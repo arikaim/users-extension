@@ -29,7 +29,7 @@ class UserOptionsList extends Model
      *
      * @var string
      */
-    protected $table = "user_options_list";
+    protected $table = 'user_options_list';
 
     /**
      * Disable timestamps

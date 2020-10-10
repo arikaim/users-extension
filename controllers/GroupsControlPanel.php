@@ -56,7 +56,7 @@ class GroupsControlPanel extends ControlPanelApiController
             
             $memebersCount = $group->members->count();
             if ($memebersCount > 0) {
-                $this->error("Group is not empty.");
+                $this->error('errors.groups.empty');
                 return;                
             }
 

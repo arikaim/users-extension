@@ -109,18 +109,18 @@ class UsersControlPanel extends ControlPanelApiController
 
             $user = Model::Users()->findById($uuid);
             if (\is_object($user) == false) {
-                $this->error('Not valid user id');
+                $this->error('errors.id');
                 return;
             }
             $details = Model::UserDetails('users')->findOrCreate($user->id);
             if (\is_object($details) == false) {
-                $this->error('User details not exists.');
+                $this->error('errors.details');
                 return;
             }
 
             $result = $details->createStorageFolder();
             if ($result === false) {
-                $this->error("Can't create user storage directory.");
+                $this->error('errors.storage');
                 return;
             }
             $destinationPath = $details->getUserStoragePath();
@@ -133,7 +133,6 @@ class UsersControlPanel extends ControlPanelApiController
                 if (empty($item['error']) == false) {
                     continue;
                 }
-
                 if (empty($details->avatar) == false) {
                     // remove prev avatar
                     $details->deleteAvatarImage();
@@ -217,7 +216,7 @@ class UsersControlPanel extends ControlPanelApiController
             ->addRule('exists:model=Users|field=uuid','uuid')
             ->addRule('text:min=4|required','repeat_password')
             ->addRule('text:min=4|required','password')
-            ->addRule('equal:value=' . "$repeat_password|required",'password','Password and repeat password does not match.')
+            ->addRule('equal:value=' . $repeat_password . '|required','password','Password and repeat password does not match.')
             ->validate();       
     }
 
@@ -273,7 +272,7 @@ class UsersControlPanel extends ControlPanelApiController
             $size = $data->get('size',15);
             
             $model = Model::Users()->getNotDeletedQuery();
-            $model = $model->where('user_name','like',"%$search%")->take($size)->get();
+            $model = $model->where('user_name','like','%' . $search . '%')->take($size)->get();
           
             $this->setResponse(\is_object($model),function() use($model,$dataField) {     
                 $items = [];
@@ -304,12 +303,12 @@ class UsersControlPanel extends ControlPanelApiController
         $userDetails = Model::UserDetails('users');
 
         $users = Model::Users()->softDeletedQuery()->get();
-
         foreach ($users as $user) {
             // delete tokens
             $accessTokens->deleteUserToken($user->id,null);
             $userDetails->deleteUserDetails($user->id);
             $user->deleteUser();
         }
+        $this->message('trash_empty');
     }
 }

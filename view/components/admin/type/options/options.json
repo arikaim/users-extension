@@ -1,0 +1,11 @@
+{
+    "title": {
+        "content": "Options Definitions",
+        "icon": "horizontal sliders blue"        
+    },
+    "labels": {
+        "empty": "No definded options for this user type.",
+        "type": "User Type",
+        "slug": "Slug"
+    }
+}

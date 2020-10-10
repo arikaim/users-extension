@@ -61,7 +61,7 @@ class UsersApi extends ApiController
         $this->onDataValid(function($data) use($settings) { 
             $sendConfirmEmail = $this->get('options')->get('users.notifications.email.verification',false);
             $activation = $this->get('options')->get('users.sugnup.activation',1);
-            
+           
             $model = Model::Users();
             $userName = $data->get('user_name',null);
             $email = $data->get('email',null);
@@ -86,7 +86,7 @@ class UsersApi extends ApiController
                 }
             }
             $user = $model->createUser($userName,$password,$email);
-            if (is_object($user) == false) {
+            if (\is_object($user) == false) {
                 $this->error('errors.signup');   
                 return;
             } 
@@ -98,13 +98,12 @@ class UsersApi extends ApiController
             $userDetails = Model::UserDetails('users');
             $result = $userDetails->saveDetails($user->id,$data->toArray());
 
-            // send confirm email to user
-            $emailSend = ($result == true && $sendConfirmEmail == true) ? $this->sendConfirmationEmail($user->toArray()) : false;
-               
-            $this->setResponse($result,function() use($user,$userDetails,$options, $emailSend) { 
+            $this->setResponse($result,function() use($user, $userDetails, $options, $sendConfirmEmail) { 
                 // create options
                 $userDetails = $userDetails->findOrCreate($user->id);
                 $userDetails->createOptions();  
+                // send confirm email to user
+                $emailSend = ($sendConfirmEmail === true) ? $this->sendConfirmationEmail($user->toArray()) : false;
 
                 // dispatch event   
                 $params = $user->toArray();
@@ -123,7 +122,7 @@ class UsersApi extends ApiController
             ->addRule('regexp:exp=/^[A-Za-z][A-Za-z0-9]{4,32}$/|required','user_name',$this->getMessage('errors.username.valid'))
             ->addRule('text:min=4|required','repeat_password')
             ->addRule('text:min=4|required','password')
-            ->addRule('equal:value=' . "$repeatPassword|required",'password',$this->getMessage('errors.repeat_password'));
+            ->addRule('equal:value=' . $repeatPassword . '|required','password',$this->getMessage('errors.repeat_password'));
 
         if ($settings['name']['required'] == true) {
            $data->addRule('name','text:min=2|required');
@@ -239,11 +238,11 @@ class UsersApi extends ApiController
 
         // user name
         if ($loginWith == 1 || $loginWith == 3) {
-            $data->addRule("text:min=2|required",'user_name');
+            $data->addRule('text:min=2|required','user_name');
         }
         // email
         if ($loginWith == 2 ) {
-            $data->addRule("email|required",'email');
+            $data->addRule('email|required','email');
         }
         $data->validate();               
     }
@@ -260,18 +259,17 @@ class UsersApi extends ApiController
     {  
         $this->onDataValid(function($data) {
             $user = Model::Users()->findByColumn($data->get('email'),'email');
-            if (is_object($user) == false) {
+            if (\is_object($user) == false) {
                 $this->error('errors.email.notvalid');
                 return;
             }
             $properties = [
-                'user'                => $user->toArray(),
-                'domain'              => Arikaim::getDomain(),
-                'reset_password_url'  => $this->createProtectedUrl($user->id,'change-password')
+                'user'               => $user->toArray(),
+                'domain'             => Arikaim::getDomain(),
+                'reset_password_url' => $this->createProtectedUrl($user->id,'change-password')
             ];
 
-            $result = $this->get('mailer')->create()
-                ->loadComponent('users>users.emails.reset-password',$properties)
+            $result = $this->get('mailer')->create('users>reset-password',$properties)                
                 ->to($user->email)
                 ->send();
 
@@ -281,7 +279,7 @@ class UsersApi extends ApiController
 
         });
         $data
-            ->addRule("exists:model=Users|field=email|required",'email',$this->getMessage('errors.not-valid'))
+            ->addRule('exists:model=Users|field=email|required','email',$this->getMessage('errors.not-valid'))
             ->validate();       
     }
 
@@ -346,7 +344,7 @@ class UsersApi extends ApiController
             ->addRule('exists:model=Users|field=uuid','uuid')
             ->addRule('text:min=4|required','repeat_password')
             ->addRule('text:min=4|required','password')
-            ->addRule('equal:value=' . $repeatPassword . "|required",'password','Password and repeat password does not match.')
+            ->addRule('equal:value=' . $repeatPassword . '|required','password','Password and repeat password does not match.')
             ->validate();
     }
 
@@ -399,10 +397,9 @@ class UsersApi extends ApiController
         ];
 
         try {
-            $result = $this->get('mailer')->create()
-            ->loadComponent('users>users.emails.confirmation',$properties)
-            ->to($user['email'])
-            ->send();   
+            $result = $this->get('mailer')->create('users>confirmation',$properties)           
+                ->to($user['email'])
+                ->send();   
         } catch (\Exception $e) {
             return false;
         }
@@ -422,12 +419,12 @@ class UsersApi extends ApiController
             return null;
         }
 
-        if (is_numeric($typeSlug) == true) {
+        if (\is_numeric($typeSlug) == true) {
             return $typeSlug;
         }
 
         $userType = Model::create('UserType','users')->findBySlug($typeSlug);
         
-        return (is_object($userType) == true) ? $userType->id : null;
+        return (\is_object($userType) == true) ? $userType->id : null;
     }
 }

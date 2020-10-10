@@ -6,6 +6,7 @@
     {% set users = users.softDeletedQuery() %}
 {% endif %}
 {{ createSearch('user_name','users','ilike:{value}%') }}
+{{ createSearch('email','users','ilike:{value}%','or') }}
 {% if status_filter is not empty %}
     {% set users = users.where('status','=',status_filter) %}
 {% endif %}

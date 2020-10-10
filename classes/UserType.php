@@ -1,0 +1,88 @@
+<?php
+/**
+ * Arikaim
+ *
+ * @link        http://www.arikaim.com
+ * @copyright   Copyright (c)  Konstantin Atanasov <info@arikaim.com>
+ * @license     http://www.arikaim.com/license
+ * 
+*/
+namespace Arikaim\Extensions\Users\Classes;
+
+use Arikaim\Core\Extension\Extension;
+use Arikaim\Core\Db\Model;
+use Arikaim\Core\Utils\Uuid;
+use Arikaim\Core\Db\Traits\Options\OptionType;
+
+/**
+ * User type options
+*/
+class UserType 
+{
+    /**
+     * Constructor
+     */
+    public function __construct() 
+    {
+    }
+
+    /**
+     * Create user type
+     *
+     * @param string $title
+     * @param string $slug
+     * @return void
+     */
+    public function create($title, $slug)
+    {
+        // Add user type
+        Model::seed('UserType','users',function($seed) use($title, $slug) {
+            $seed->create(['slug' => $slug],[
+                'uuid'   => Uuid::create(),
+                'title'  => $title,               
+                'status' => 1
+            ]); 
+        });
+    }
+
+    /**
+     * Create options definition
+     *
+     * @param string $configFile
+     * @param string $extensionName
+     * @return void
+     */
+    public function createOptionsDefinition($configFile, $extensionName) 
+    {
+        // Add options type definition
+        $items = Extension::loadJsonConfigFile($configFile,$extensionName);
+
+        Model::seed('UserOptionType','users',function($seed) use($items) {
+            $seed->createFromArray(['key'],$items,function($item) {
+                $item['uuid'] = Uuid::create();
+                $item['type'] = OptionType::getOptionTypeId($item['type']);
+                return $item;
+            });   
+        });
+    }
+
+    /**
+     * Create options list
+     *
+     * @param string $configFile
+     * @param string $extensionName
+     * @return void
+     */
+    public function createOptionsList($configFile, $extensionName) 
+    {
+        // Add options list 
+        $items = Extension::loadJsonConfigFile($configFile,$extensionName);
+
+        Model::seed('UserOptionsList','users',function($seed) use($items) {
+            $seed->createFromArray(['key','type_name'],$items,function($item) {
+                $item['uuid'] = Uuid::create(); 
+                return $item;
+            });    
+        });     
+    }
+}

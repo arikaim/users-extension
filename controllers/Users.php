@@ -139,7 +139,7 @@ class Users extends Controller
     */
     public function login($request, $response, $data)
     {                
-        $redirectPath = Url::BASE_URL . "/" . $this->get('options')->get('users.login.redirect');
+        $redirectPath = Url::BASE_URL . '/' . $this->get('options')->get('users.login.redirect');
 
         if ($this->get('access')->isLogged() == false) {
             $token = Cookie::get('token');

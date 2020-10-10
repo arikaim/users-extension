@@ -31,7 +31,7 @@ class UsersAvatarApi extends ApiController
      */
     public function init()
     {
-        $this->loadMessages('users::messages');
+        $this->loadMessages('users>users.messages');
     }
 
     /**
@@ -80,18 +80,18 @@ class UsersAvatarApi extends ApiController
         $this->onDataValid(function($data) use ($request,$user) {          
             $user = Model::Users()->findById($user['id']);
             if (\is_object($user) == false) {
-                $this->error('Not valid user id');
+                $this->error('errors.id');
                 return;
             }
             $details = Model::UserDetails('users')->findOrCreate($user->id);
             if (\is_object($details) == false) {
-                $this->error('User details not exists.');
+                $this->error('errors.details');
                 return;
             }
 
             $result = $details->createStorageFolder();
             if ($result === false) {
-                $this->error("Can't create user storage directory.");
+                $this->error('errors.storage');
                 return;
             }
             $destinationPath = $details->getUserStoragePath();
@@ -104,7 +104,6 @@ class UsersAvatarApi extends ApiController
                 if (empty($item['error']) == false) {
                     continue;
                 }
-
                 if (empty($details->avatar) == false) {
                     // remove prev avatar
                     $details->deleteAvatarImage();
@@ -169,7 +168,7 @@ class UsersAvatarApi extends ApiController
         $details = Model::UserDetails('users')->findOrCreate($user->id);
         if ($details->isPublic() == false) {
             // user profile is private
-            $this->error('Private user profile');
+            $this->error('errors.private');
             return $this->getResponse();
         }
         $avatarImage = $details->getAvatarImagePath();

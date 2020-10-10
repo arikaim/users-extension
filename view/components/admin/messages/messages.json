@@ -24,17 +24,22 @@
         "deny": "Permission removed successfully.",
         "grant": "Permission added successfully."
     },
+    "trash_empty": "Trash is empty",
     "errors": {
+        "id": "Not valid user id",
         "username": {
             "valid": "Username not valid",
             "exist": "Username exists"
         },
+        "details": "User details not exists.",
+        "storage": "Can't create user storage directory.",
         "delete": "Can't delete user",
         "add": "Can't add user",   
         "update": "Can't save user details",
         "password": "Can't change user password",
         "restore": "Can't restore user",
         "groups": {
+            "empty": "Group is not empty.",
             "add": "Can't add group.",
             "update": "Can't update group.",
             "delete": "Can't delete group.",

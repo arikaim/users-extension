@@ -21,7 +21,7 @@ class UserOptionsListSchema extends Schema
      *
      * @var string
      */
-    protected $tableName = "user_options_list";
+    protected $tableName = 'user_options_list';
 
     /**
      * Create table

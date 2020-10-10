@@ -8,7 +8,7 @@ Manage users.
   * [Arikaim CMS](https://github.com/arikaim/arikaim)
 
 
-#### Features
+#### Features 
   * Multilanguage
   * Login with Twitter, Github, Google, Facebook
   * Login page.

@@ -62,6 +62,5 @@ class OauthSubscriber extends EventSubscriber implements EventSubscriberInterfac
                 'driver' => $data['driver']
             ]);
         }
-
     }
 }

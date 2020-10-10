@@ -22,7 +22,7 @@ class UserDetailsSchema extends Schema
      *
      * @var string
      */
-    protected $tableName = "user_details";
+    protected $tableName = 'user_details';
 
     /**
      * Create table

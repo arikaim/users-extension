@@ -44,8 +44,7 @@ class UsersSubscriber extends EventSubscriber implements EventSubscriberInterfac
         
         if (($sendWelcomeEmail == true) && (Utils::isEmail($user['email']) == true)) {
             // send welcome email to user
-            Arikaim::mailer()->create()
-                ->loadComponent('users>users.emails.welcome',$user)
+            Arikaim::mailer()->create('users>welcome',$user)               
                 ->to($user['email'])
                 ->send();
         }
@@ -54,8 +53,7 @@ class UsersSubscriber extends EventSubscriber implements EventSubscriberInterfac
             $adminUser = Model::Users()->getControlPanelUser();
             if (Utils::isEmail($adminUser->email) == true) {
                 // send email to admin
-                Arikaim::mailer()->create()
-                    ->loadComponent('users>users.emails.signup',$user)
+                Arikaim::mailer()->create('users>signup',$user)                   
                     ->to($adminUser->email)
                     ->send();
             }

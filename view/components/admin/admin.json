@@ -8,6 +8,9 @@
         }, 
         "permissions": {
             "content": "Permissions"
+        },  
+        "type": {
+            "content": "User Types"
         },         
         "settings": {
             "content": "Settings"

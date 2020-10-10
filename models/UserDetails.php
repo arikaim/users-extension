@@ -12,7 +12,7 @@ namespace Arikaim\Extensions\Users\Models;
 use Illuminate\Database\Eloquent\Model;
 
 use Arikaim\Core\Utils\File;
-use Arikaim\Core\Arikaim;
+use Arikaim\Core\Utils\Path;
 use Arikaim\Core\View\Html\Page;
 use Arikaim\Extensions\Users\Models\UserType;
 use Arikaim\Extensions\Users\Models\UserOptions;
@@ -218,13 +218,14 @@ class UserDetails extends Model
      */
     public function createStorageFolder()
     {
+        $result = true;
         if ($this->hasStorageFolder() == false) {
-            $result = Arikaim::storage()->createDir($this->getUserStoragePath());
-            File::setWritable($this->getUserStoragePath());
-            return $result;
+            $path = $this->getUserStoragePath(false);
+            $result = File::makeDir($path);
+            File::setWritable($path);           
         }
 
-        return true;
+        return $result;
     }
 
     /**
@@ -234,22 +235,20 @@ class UserDetails extends Model
      */
     public function hasStorageFolder()
     {
-        return Arikaim::storage()->has($this->getUserStoragePath());
+        return File::exists($this->getUserStoragePath(false));
     }
 
     /**
      * Return avatar image path
      *
+     * @param bool $relative
      * @return string|false
      */
-    public function getAvatarImagePath()
+    public function getAvatarImagePath($relative = true)
     {
-        if (empty($this->avatar) == true) {
-            return false;
-        }
-        $path = $this->getUserStoragePath() . $this->avatar;
-
-        return (Arikaim::storage()->has($path) == true) ? $path : false;
+        $path = (empty($this->avatar) == true) ? false : $this->getUserStoragePath($relative) . $this->avatar;
+        
+        return $path;
     }
 
     /**
@@ -259,19 +258,22 @@ class UserDetails extends Model
      */
     public function deleteAvatarImage()
     {
-        $path = $this->getAvatarImagePath();
+        $path = $this->getAvatarImagePath(false);
 
-        return ($path === false) ? true : Arikaim::storage()->delete($path);
+        return ($path === false) ? true : File::delete($path);
     }
 
     /**
      * Get user storage relative path
      *
+     * @param bool $relative
      * @return string
      */
-    public function getUserStoragePath()
+    public function getUserStoragePath($relative = true)
     {
-        return DIRECTORY_SEPARATOR . 'users' . DIRECTORY_SEPARATOR . "user-" . $this->user->uuid . DIRECTORY_SEPARATOR;
+        $path = 'users' . DIRECTORY_SEPARATOR . 'user-' . $this->user->uuid . DIRECTORY_SEPARATOR;
+
+        return ($relative == true) ? $path : Path::STORAGE_PATH . $path;
     }
 
     /**

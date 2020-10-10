@@ -1,6 +1,6 @@
-{% set send_signup_email = service('options').get('users.notifications.email.signup') %}
-{% set send_welcome_email = service('options').get('users.notifications.email.welcome') %}
-{% set send_verification_email = service('options').get('users.notifications.email.verification') %}
+{% set send_signup_email = getOption('users.notifications.email.signup') %}
+{% set send_welcome_email = getOption('users.notifications.email.welcome') %}
+{% set send_verification_email = getOption('users.notifications.email.verification') %}
 
 {% component 'components:tabs.vertical.content' %}           
 <form class="ui equal width form" id="notifications_settings_form">  
