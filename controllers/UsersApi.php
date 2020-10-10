@@ -60,7 +60,7 @@ class UsersApi extends ApiController
        
         $this->onDataValid(function($data) use($settings) { 
             $sendConfirmEmail = $this->get('options')->get('users.notifications.email.verification',false);
-            $activation = $this->get('options')->get('users.sugnup.activation',1);
+            $activation = (int)$this->get('options')->get('users.sugnup.activation',1);
            
             $model = Model::Users();
             $userName = $data->get('user_name',null);
@@ -118,24 +118,26 @@ class UsersApi extends ApiController
         });
         
         $repeatPassword = $data->get('repeat_password');
+        
         $data           
-            ->addRule('regexp:exp=/^[A-Za-z][A-Za-z0-9]{4,32}$/|required','user_name',$this->getMessage('errors.username.valid'))
+            ->addRule('regexp:exp=/^[A-Za-z][A-Za-z0-9]{4,32}$/|required','user_name',$this->getMessage('errors.username.valid'))       
             ->addRule('text:min=4|required','repeat_password')
             ->addRule('text:min=4|required','password')
             ->addRule('equal:value=' . $repeatPassword . '|required','password',$this->getMessage('errors.repeat_password'));
 
-        if ($settings['name']['required'] == true) {
-           $data->addRule('name','text:min=2|required');
+        if ($settings['name']['required'] == 'true') {
+           $data->addRule('text:min=2|required','name');
         }
-        if ($settings['phone']['required'] == true) {
-            $data->addRule('phone','text:min=2|required');
+        if ($settings['phone']['required'] == 'true') {
+            $data->addRule('text:min=2|required','phone');
         }
-        if ($settings['email']['required'] == true) {
-            $data->addRule('email','email:|required');
+        if ($settings['email']['required'] == 'true') {
+            $data->addRule('email:|required','email');
         }
-        if ($settings['username']['required'] == true) {
-            $data->addRule('user_name','text:min=2|required');
+        if ($settings['username']['required'] == 'true') {
+            $data->addRule('text:min=2|required','user_name');
         }
+      
         $data->validate();       
     }
 

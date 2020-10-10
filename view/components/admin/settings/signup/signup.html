@@ -1,5 +1,5 @@
-{% set settings = service('options').get('users.signup.form') %}
-{% set activation = service('options').get('users.sugnup.activation') %}
+{% set settings = getOption('users.signup.form') %}
+{% set activation = getOption('users.sugnup.activation') %}
 
 {% component 'components:tabs.vertical.content' %}
 <div class="ui equal width form" id="settings_form">  
