@@ -59,6 +59,7 @@ class UsersApi extends ApiController
         }
        
         $this->onDataValid(function($data) use($settings) { 
+
             $sendConfirmEmail = $this->get('options')->get('users.notifications.email.verification',false);
             $activation = (int)$this->get('options')->get('users.sugnup.activation',1);
            
@@ -334,20 +335,22 @@ class UsersApi extends ApiController
             }
 
             $model = Model::Users()->findById($user['id']);
-
             $result = $model->changePassword($model->id,$password);
-            $this->setResponse($result,function() { 
-                $this->message('password'); 
-            },'errors.password');           
-
+            $uuid = $model->uuid;
+            $this->setResponse($result,function() use($uuid) {                         
+                $this                    
+                    ->message('password')->field('uuid',$uuid)
+                    ->field('uuid',$uuid);                                     
+            },'errors.password');                      
         });
+
         $repeatPassword = $data->get('repeat_password');
-        $data
+        $data        
             ->addRule('exists:model=Users|field=uuid','uuid')
             ->addRule('text:min=4|required','repeat_password')
             ->addRule('text:min=4|required','password')
             ->addRule('equal:value=' . $repeatPassword . '|required','password','Password and repeat password does not match.')
-            ->validate();
+            ->validate();       
     }
 
     /**
