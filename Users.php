@@ -99,8 +99,8 @@ class Users extends Extension
         $this->createOption('users.logout.redirect',null);
         $this->createOption('users.login.captcha.protect',true);
         $this->createOption('users.sugnup.activation',1);       
-        $this->createOption('users.notifications.email.signup',true);
-        $this->createOption('users.notifications.email.welcome',true);
+        $this->createOption('users.notifications.email.signup',false);
+        $this->createOption('users.notifications.email.welcome',false);
         $this->createOption('users.notifications.email.verification',false);
         $this->createOption('users.default.type',null);
         // sign in with 
@@ -112,7 +112,7 @@ class Users extends Extension
         $signupSettings = [
             'name'       => ['show' => false,'required' => false],
             'email'      => ['show' => true,'required'  => true],
-            'username'   => ['show' => false,'required' => false],         
+            'username'   => ['show' => true,'required'  => true],         
             'phone'      => ['show' => false,'required' => false],
             'captcha'    => ['show' => true,'required'  => true]                    
         ];

@@ -1,5 +1,5 @@
 {% set settings = getOption('users.signup.form') %}
-{% set activation = getOption('users.sugnup.activation') %}
+{% set activation = getOption('users.sugnup.activation')|number_format %}
 
 {% component 'components:tabs.vertical.content' %}
 {% if demo_mode == true %}
@@ -62,16 +62,16 @@
         </div>
     </div>
     <div class="ui segment padded">
-        <div class="field">
+        <div class="field">                 
             <label>{{ labels.activation.title }}</label>
             <div class="ui radio checkbox settings-checkbox">
-                <input type="radio" name="users.sugnup.activation" value="1" {{ activation|ifthen(1,'checked') }}>
+                <input type="radio" name="users.sugnup.activation" value="1" {{ (activation == '1') ? 'checked' : '' }}>
                 <label>{{ labels.activation.immediately }}</label>
             </div>
         </div>       
         <div class="field">
             <div class="ui radio checkbox settings-checkbox">
-                <input type="radio" name="users.sugnup.activation" value="2" {{ activation|ifthen(2,'checked') }}>
+                <input type="radio" name="users.sugnup.activation" value="2" {{ (activation == '2') ? 'checked' : '' }}>
                 <label>{{ labels.activation.admin }}</label>
             </div>
         </div>
