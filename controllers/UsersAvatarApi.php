@@ -114,7 +114,7 @@ class UsersAvatarApi extends ApiController
                 $result = (bool)$details->update(['avatar' => $avatar]);                            
             }
            
-            $this->setResponse(is_array($files),function() use($user,$avatar) {                  
+            $this->setResponse(\is_array($files),function() use($user,$avatar) {                  
                 $this
                     ->message('avatar.upload')
                     ->field('uuid',$user->uuid)
@@ -133,46 +133,32 @@ class UsersAvatarApi extends ApiController
      * @param Validator $data
      * @return Psr\Http\Message\ResponseInterface
     */
-    public function viewUserAvatar($request, $response, $data) 
-    { 
-        $user = $this->get('access')->getUser();      
-         
-        $user = Model::Users()->findById($user['uuid']);
-        if (\is_object($user) == false) {
-            // user not found
-            return false;
-        }
-        $details = Model::UserDetails('users')->findOrCreate($user['id']);
-       
-        $avatarImage = $details->getAvatarImagePath();
-       
-        return $this->viewImage($response,$avatarImage);       
-    }
-
-    /**
-     * View avatar
-     *
-     * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @param \Psr\Http\Message\ResponseInterface $response
-     * @param Validator $data
-     * @return Psr\Http\Message\ResponseInterface
-    */
     public function viewAvatar($request, $response, $data) 
     { 
-        $uuid = $data->get('uuid');
-        $user = Model::Users()->findById($uuid);
+        $model = Model::Users();
+        $userId = $this->getUserId(); 
+        
+        $userId = (empty($userId) == true) ? $data->get('uuid') : $userId;       
+        $user = $model->findById($userId);
+
         if (\is_object($user) == false) {
             // user not found
-            return false;
-        }
-        $details = Model::UserDetails('users')->findOrCreate($user->id);
-        if ($details->isPublic() == false) {
-            // user profile is private
-            $this->error('errors.private');
+            $this->error('Not valid user id.');
             return $this->getResponse();
         }
-        $avatarImage = $details->getAvatarImagePath();
        
+        $details = Model::UserDetails('users')->findOrCreate($user->id);
+        if (($details->isPublic() == false) && (empty($this->getUserId()) == true)) {
+            $this->error('Access denied.');
+            return $this->getResponse();
+        }
+
+        $avatarImage = $details->getAvatarImagePath();
+        if ($avatarImage === false) {
+            $this->error('No avatar image.');
+            return $this->getResponse();
+        }
+      
         return $this->viewImage($response,$avatarImage);       
     }
 }

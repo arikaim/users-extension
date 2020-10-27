@@ -1,4 +1,10 @@
 {   
+    "include": {
+        "js": [           
+            "components:search",
+            "system:order"            
+        ]
+    },
     "access": {
         "auth": "session",
         "redirect": "/admin",

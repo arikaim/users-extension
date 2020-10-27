@@ -2,7 +2,8 @@
     "include": {
         "js": [
             "components:upload",
-            "users::admin.permissions"
+            "users::admin.permissions",
+            "system:admin.orm.options"
         ]
     },
     "access": {

@@ -39,8 +39,10 @@ class UsersControlPanel extends ControlPanelApiController
 
     /**
      * Constructor
+     * 
+     * @param Container|null $container
      */
-    public function __construct($container) 
+    public function __construct($container = null) 
     {
         parent::__construct($container);
         $this->setModelClass('Users');
@@ -234,7 +236,7 @@ class UsersControlPanel extends ControlPanelApiController
 
         $this->onDataValid(function($data) use($user) {
             // save user 
-            $data['type_id'] = $data->get('type_id',null);
+            $data['type_id'] = (empty($data->get('type_id') == true)) ? 1 : $data->get('type_id');
 
             $result = $user->update($data->toArray());
         

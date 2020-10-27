@@ -329,8 +329,8 @@ class UsersApi extends ApiController
             $password = $data->get('password');
             $user = $this->get('access')->getUser(); 
             
-            if ($user === false) {
-                $this->error('errors.password');
+            if (\is_array($user) === false) {
+                $this->error('Access token not valid.');
                 return;               
             }
 

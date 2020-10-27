@@ -1,25 +1,29 @@
 {% set user = createModel('Users').findById(uuid) %}
 {% component 'components:tabs.vertical.content' %}
-    <div class="ui mt-8 form">
-        <div class="field">
-            <label>{{ labels.id }}</label>
-            <p>{{ user.id }}</p>
-        </div>
-        <div class="field">
-            <label>{{ labels.uuid }}</label>
-            <p>{{ user.uuid }}</p>
-        </div>
-        <div class="field">
-            <label>{{ labels.date_created }}</label>
-            <p>{{ user.date_created|dateTimeFormat }}</p>
-        </div>
-        <div class="field">
-            <label>{{ labels.date_login }}</label>
-            <p>{{ user.date_login|emptyLabel('-')|dateTimeFormat }}</p>
-        </div>
-        <div class="field">
-            <label>{{ labels.date_updated }}</label>
-            <p>{{ user.date_updated|emptyLabel('-')|dateTimeFormat }}</p>
-        </div>
+    <div class="ui mt-8">
+        <table class="ui definition table">
+            <tbody>
+                <tr>
+                    <td>{{ labels.id }}</td>
+                    <td>{{ user.id }}</td>
+                </tr>
+                <tr>
+                    <td>{{ labels.uuid }}</td>
+                    <td>{{ user.uuid }}</td>
+                </tr>
+                <tr>
+                    <td>{{ labels.date_created }}</td>
+                    <td>{{ user.date_created|dateTimeFormat }}</td>
+                </tr>
+                <tr>
+                    <td>{{ labels.date_login }}</td>
+                    <td>{{ user.date_login|emptyLabel('-')|dateTimeFormat }}</td>
+                </tr>
+                <tr>
+                    <td>{{ labels.date_updated }}</td>
+                    <td>{{ user.date_updated|emptyLabel('-')|dateTimeFormat }}</td>
+                </tr>
+            </tbody>
+        </table>      
     </div>
 {% endcomponent %}

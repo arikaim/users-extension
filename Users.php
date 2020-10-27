@@ -44,11 +44,9 @@ class Users extends Extension
         $this->addApiRoute('PUT','/api/users/update','UsersApi','changeDetails','session');   
         $this->addApiRoute('PUT','/api/users/profile/change-password','UsersApi','changePassword','session');      
         // avatar
-        $this->addApiRoute('GET','/api/users/avatar/view','UsersAvatarApi','viewUserAvatar','session'); 
+        $this->addApiRoute('GET','/api/users/avatar/view/[{uuid}]','UsersAvatarApi','viewAvatar',null); 
         $this->addApiRoute('POST','/api/users/avatar/upload','UsersAvatarApi','uploadAvatar','session'); 
-        $this->addApiRoute('DELETE','/api/users/avatar/delete','UsersAvatarApi','deleteAvatar','session'); 
-        // for public profile
-        $this->addApiRoute('GET','/users/avatar/view/{uuid}','UsersAvatarApi','viewAvatar'); 
+        $this->addApiRoute('DELETE','/api/users/avatar/delete','UsersAvatarApi','deleteAvatar','session');        
         // options
         $this->addApiRoute('PUT','/api/users/options','UsersOptionsApi','save','session'); 
         $this->addApiRoute('PUT','/api/users/option/save','UsersOptionsApi','saveOption','session'); 

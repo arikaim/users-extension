@@ -83,22 +83,16 @@ class UserDetails extends Model
 
     /**
      * Get view avatar url
-     *
-     * @param bool $logged
+     *    
      * @param string|null $uuid
-     * @return string|null
+     * @return string
      */
-    public function getAvatarViewUrl($logged = false, $uuid = null)
+    public function getAvatarViewUrl($uuid = null)
     {
-        if (empty($this->avatar) == true) {
-            return null;
-        }
-        if ($logged == true) {
-            return '/api/users/avatar/view';
-        }
-        $uuid = (empty($uuid) == true) ? $this->user->uuid : $uuid;
+        $uuid = $uuid ?? (\is_object($this->user) == true) ? $this->user->uuid : '';
+        $path = '/api/users/avatar/view/';
 
-        return ($this->isPublic() == true) ? '/users/avatar/view/' . $uuid : null;
+        return ($this->isPublic() == true) ? $path . $uuid : $path;
     }
 
     /**

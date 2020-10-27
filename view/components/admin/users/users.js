@@ -7,8 +7,7 @@
 'use strict';
 
 function UsersAdmin() {
-    var self = this;
-
+    
     this.add = function(formId, onSuccess, onError) {
         return arikaim.post('/api/users/admin/add',formId,onSuccess,onError);         
     };
