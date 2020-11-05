@@ -118,11 +118,12 @@ class UserDetails extends Model
     /**
      * Delete user details
      * 
-     * @param string|integer $id User id
+     * @param integer|null $id User id
      * @return boolean
      */
-    public function deleteUserDetails($id)
+    public function deleteUserDetails($id = null)
     {
+        $id = $id ?? $this->id;
         $model = $this->where('user_id','=',$id)->first();
         if (\is_object($model) == false) {
             return false;
@@ -130,7 +131,9 @@ class UserDetails extends Model
 
         // delete avatar
         $model->deleteAvatarImage();
-        
+        // delete options
+        $model->options()->delete();
+
         return $model->delete();
     }   
 
@@ -161,6 +164,17 @@ class UserDetails extends Model
         
         return (\is_object($model) == true) ? $model : $this->create(['user_id' => $userId]);          
     } 
+
+    /**
+     * Find user details
+     *
+     * @param int $userId
+     * @return Model|null
+     */
+    public function findDetails($userId)
+    {
+        return $this->where('user_id','=',$userId)->first();
+    }
 
     /**
      * Return true if profile is public
