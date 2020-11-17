@@ -12,8 +12,8 @@ namespace Arikaim\Extensions\Users\Controllers;
 use Arikaim\Core\Controllers\Controller;
 use Arikaim\Core\Db\Model;
 use Arikaim\Core\Http\Cookie;
-use Arikaim\Core\Http\Url;
 use Arikaim\Core\Http\Session;
+use Arikaim\Core\Http\Url;
 
 /**
  * Users pages controler
@@ -28,14 +28,17 @@ class Users extends Controller
      * @param Validator $data
      * @return Psr\Http\Message\ResponseInterface
     */
-    public function userAreaPage($request, $response, $data) 
+    public function userArea($request, $response, $data) 
     { 
         // get current auth user
         $data['user'] = $this->get('access')->getUser();
         if (empty($data['user']) == true) {
             $this->get('errors')->addError('ACCESS_DENIED');
             return false;            
-        }                
+        }            
+        $response = $this->noCacheHeaders($response);
+
+        return $this->pageLoad($request, $response, $data,'users>user');
     }
 
     /**
@@ -48,6 +51,10 @@ class Users extends Controller
     */
     public function signupPage($request, $response, $data) 
     {        
+        // remove token
+        Cookie::delete('user');
+        Cookie::delete('token');    
+
         $this->get('access')->logout();            
     }
 
@@ -60,16 +67,27 @@ class Users extends Controller
      * @return Psr\Http\Message\ResponseInterface
     */
     public function logout($request, $response, $data) 
-    {        
-        $this->get('access')->logout();   
+    {       
+        $user = $this->get('access')->getUser(); 
+
         // remove token
         Cookie::delete('user');
         Cookie::delete('token');    
 
-        $redirectUrl = $this->get('options')->get('users.logout.redirect',null); 
+        $this->get('access')->logout();   
+        $this->get('cache')->clear();
+      
+        Session::destroy();
+
+        if (empty($user) == false) {
+            // dispatch logout event
+            $this->get('event')->dispatch('user.logout',$user);
+        }
+
+        $redirectUrl = $this->get('options')->get('users.logout.redirect',''); 
         $redirectUrl = (empty($redirectUrl) == false) ? Url::BASE_URL . '/' . $redirectUrl : Url::BASE_URL;  
 
-        return $response->withHeader('Location',$redirectUrl);
+        return $this->withRedirect($response,$redirectUrl);  
     }
 
     /**
@@ -138,34 +156,16 @@ class Users extends Controller
      * @return Psr\Http\Message\ResponseInterface
     */
     public function login($request, $response, $data)
-    {                
-        $redirectPath = Url::BASE_URL . '/' . $this->get('options')->get('users.login.redirect');
-
+    {       
+        $response = $this->noCacheHeaders($response);
+       
         if ($this->get('access')->isLogged() == false) {
-            $token = Cookie::get('token');
-          
-            if (empty($token) == false) {
-                // try login with token    
-                $tokenStorageProvider = Model::AccessTokens();   
-                if ($tokenStorageProvider->getType($token) == 1) {
-                    // login with token
-                    $this->get('access')->withProvider('token',$tokenStorageProvider);
-                    $result = $this->get('access')->authenticate(['token' => $token]);
-                  
-                    if ($result == true) {        
-                        $authId = $this->get('access')->getUser()->getAuthId();
-                        Session::set('auth.id',$authId);
-                        Session::set('auth.login.time',time());
-                        Session::remove('auth.login.attempts');      
-                                       
-                        return $response->withHeader('Location',$redirectPath);
-                    }         
-                }                                             
-            }
-
             return $this->pageLoad($request, $response, $data,'users>user.login');
         }
-    
-        return $response->withHeader('Location',$redirectPath);
+        
+        $redirectUrl = $this->get('options')->get('users.login.redirect','');
+        $redirectUrl = (empty($redirectUrl) == false) ? Url::BASE_URL . '/' . $redirectUrl : Url::BASE_URL;  
+
+        return $this->withRedirect($response,$redirectUrl);
     }
 }

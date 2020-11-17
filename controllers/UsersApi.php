@@ -14,6 +14,7 @@ use Arikaim\Core\Controllers\ApiController;
 use Arikaim\Core\Http\Url;
 use Arikaim\Core\Utils\Utils;
 use Arikaim\Core\Http\Cookie;
+use Arikaim\Core\Http\Session;
 use Arikaim\Core\Arikaim;
 
 use Arikaim\Core\Controllers\Traits\AccessToken;
@@ -204,7 +205,6 @@ class UsersApi extends ApiController
 
         $this->onDataValid(function($data) use($loginWith,$loginAttempts) {  
             $remember = $data->get('remember',false);
-            
             $credentials = $this->resolveLoginCredentials($loginWith,$data);
             $result = $this->get('access')->authenticate($credentials);
                        
@@ -217,10 +217,10 @@ class UsersApi extends ApiController
                     Cookie::add('user',$user['uuid']);
                     $accessToken = $this->get('access')->withProvider('token')->createToken($user['id'],1,4800);   
                     Cookie::add('token',$accessToken['token']);                                  
-                } else {                  
+                } else {       
                     // remove token
                     Cookie::delete('user');
-                    Cookie::delete('token');                   
+                    Cookie::delete('token');                  
                 }
 
                 $redirectUrl = $this->get('options')->get('users.login.redirect',null); 
@@ -303,13 +303,16 @@ class UsersApi extends ApiController
         Cookie::delete('token');      
 
         $this->get('access')->logout();  
+        $this->get('cache')->clear();
         
+        Session::destroy();
+
         if (empty($user) == false) {
             // dispatch logout event
-            $this->get('event')->dispatch('user.login',$user);
+            $this->get('event')->dispatch('user.logout',$user);
         }
 
-        $redirectUrl = $this->get('options')->get('users.logout.redirect',null); 
+        $redirectUrl = $this->get('options')->get('users.logout.redirect',''); 
         $redirectUrl = (empty($redirectUrl) == false) ? Url::BASE_URL . '/' . $redirectUrl : Url::BASE_URL;      
         
         $this->field('redirect_url',$redirectUrl);        
