@@ -1,0 +1,21 @@
+{% set id = id|default('groups_dropdown') %}
+{% set name = name|default('groups') %}
+{% set language = language|default(null) %}
+{% set size = size|default(15) %}
+{% set model = createModel('UserGroups') %}
+{% set groups = model.orderBy('title') %}
+{% if selected is not empty %}
+    {% set selected = model.findByid(selected) %}
+{% endif %}
+{% set selectet_text = (selected is empty) ? labels.select : selected.title %}
+<div class="ui search selection dropdown groups-dropdown {{ class }}" id="{{ id }}">
+    <input name="{{ name }}" type="hidden">
+    <i class="icon users {{ icon }}"></i> 
+    <div class="default text">{{ selectet_text }}</div>
+    <i class="dropdown icon"></i>
+    <div class="menu">
+        {% for item in groups.get() %}
+        <div class="item" data-value="{{ item.uuid }} ">{{ item.title }}</div>
+        {% endfor %}
+    </div>
+</div>

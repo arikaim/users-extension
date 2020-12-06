@@ -117,6 +117,8 @@ class Users extends Extension
             'captcha'    => ['show' => true,'required'  => true]                    
         ];
         $this->createOption('users.signup.form',$signupSettings);
+        // Reports
+        $this->createReport();
     }
     
     /**

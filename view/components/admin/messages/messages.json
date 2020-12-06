@@ -31,6 +31,10 @@
             "valid": "Username not valid",
             "exist": "Username exists"
         },
+        "email": {
+            "valid": "Email not valid",
+            "exist": "Email are used."
+        },
         "details": "User details not exists.",
         "storage": "Can't create user storage directory.",
         "delete": "Can't delete user",

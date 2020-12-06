@@ -169,7 +169,8 @@ class UsersControlPanel extends ControlPanelApiController
             $user = Model::Users()->createUser($data['user_name'],$data['password'],$data['email']);
             if (\is_object($user) == true) {
                 $userDetails = $data->toArray();
-                $userDetails['type_id'] = $data->get('type_id',null);
+                $typeId = $data->get('type_id',null);
+                $userDetails['type_id'] = (empty($typeId) == true) ? null : $typeId;
         
                 $result = Model::UserDetails('users')->saveDetails($user->id,$userDetails);
                 $this->setResponse($result,function() use($user) {                  
@@ -184,7 +185,7 @@ class UsersControlPanel extends ControlPanelApiController
         $data                  
             ->addRule('regexp:exp=/^[A-Za-z][A-Za-z0-9]{4,32}$/|required','user_name',$this->getMessage('errors.username.valid'))
             ->addRule('text:min=4|required','password')
-            ->addRule('unique:model=Users|field=email|required','email')
+            ->addRule('unique:model=Users|field=email|required','email',$this->getMessage('errors.email.exist'))
             ->addRule('unique:model=Users|field=user_name|required','user_name',$this->getMessage('errors.username.exist'))
             ->addRule('equal:value=' . $data->get('password'),'repeat_password')
             ->validate();       
@@ -305,12 +306,17 @@ class UsersControlPanel extends ControlPanelApiController
         $userDetails = Model::UserDetails('users');
 
         $users = Model::Users()->softDeletedQuery()->get();
+    
         foreach ($users as $user) {
+
+            // dispatch event user.before.delete
+            $this->get('event')->dispatch('user.before.delete',$user->toArray());
             // delete tokens
             $accessTokens->deleteUserToken($user->id,null);
             $userDetails->deleteUserDetails($user->id);
             $user->deleteUser();
         }
+
         $this->message('trash_empty');
     }
 }

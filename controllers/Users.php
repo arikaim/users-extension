@@ -30,6 +30,7 @@ class Users extends Controller
     */
     public function userArea($request, $response, $data) 
     { 
+        $language = $this->getPageLanguage($data);
         // get current auth user
         $data['user'] = $this->get('access')->getUser();
         if (empty($data['user']) == true) {
@@ -38,7 +39,7 @@ class Users extends Controller
         }            
         $response = $this->noCacheHeaders($response);
 
-        return $this->pageLoad($request, $response, $data,'users>user');
+        return $this->pageLoad($request,$response,$data,'users>user',$language);
     }
 
     /**
@@ -157,10 +158,11 @@ class Users extends Controller
     */
     public function login($request, $response, $data)
     {       
+        $language = $this->getPageLanguage($data);
         $response = $this->noCacheHeaders($response);
        
         if ($this->get('access')->isLogged() == false) {
-            return $this->pageLoad($request, $response, $data,'users>user.login');
+            return $this->pageLoad($request,$response,$data,'users>user.login',$language);
         }
         
         $redirectUrl = $this->get('options')->get('users.login.redirect','');

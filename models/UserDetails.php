@@ -118,24 +118,39 @@ class UserDetails extends Model
     /**
      * Delete user details
      * 
-     * @param integer|null $id User id
-     * @return boolean
+     * @param integer|null $userId User id
+     * @return bool
      */
-    public function deleteUserDetails($id = null)
+    public function deleteUserDetails($userId = null)
     {
-        $id = $id ?? $this->id;
-        $model = $this->where('user_id','=',$id)->first();
-        if (\is_object($model) == false) {
-            return false;
-        }
-
-        // delete avatar
-        $model->deleteAvatarImage();
+        $userId = $userId ?? $this->user_id;
+        $model = $this->where('user_id','=',$userId)->first();
+             
         // delete options
-        $model->options()->delete();
-
-        return $model->delete();
+        if (\is_object($model) == true) {
+            $model->deleteUserOptions($userId);
+        } else {
+            $this->deleteUserOptions($userId);
+        }
+       
+        return (\is_object($model) == true) ? $model->delete() : true;           
     }   
+
+    /**
+     * Delete user options
+     *
+     * @param int|null $userId
+     * @return bool
+     */
+    public function deleteUserOptions($userId = null)
+    {
+        $userId = $userId ?? $this->user_id;
+
+        $model = new UserOptions();
+        $model = $model->where('reference_id','=',$userId);
+
+        return (\is_object($model) == true) ? $model->delete() : true;
+    }
 
     /**
      * Save user details
