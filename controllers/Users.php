@@ -33,9 +33,8 @@ class Users extends Controller
         $language = $this->getPageLanguage($data);
         // get current auth user
         $data['user'] = $this->get('access')->getUser();
-        if (empty($data['user']) == true) {
-            $this->get('errors')->addError('ACCESS_DENIED');
-            return false;            
+        if (empty($data['user']) == true) {         
+            return $this->withRedirect($response,'/login');              
         }            
         $response = $this->noCacheHeaders($response);
 
