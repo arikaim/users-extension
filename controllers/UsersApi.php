@@ -16,9 +16,12 @@ use Arikaim\Core\Utils\Utils;
 use Arikaim\Core\Http\Cookie;
 use Arikaim\Core\Http\Session;
 use Arikaim\Core\Arikaim;
+use Arikaim\Core\Utils\Text;
+use Arikaim\Core\View\Html\Page;
 
 use Arikaim\Core\Controllers\Traits\AccessToken;
 use Arikaim\Core\Controllers\Traits\Captcha;
+use Arikaim\Extensions\Users\Controllers\Traits\Users;
 
 /**
  * Users api controller
@@ -27,6 +30,7 @@ class UsersApi extends ApiController
 {
     use 
         AccessToken,
+        Users,
         Captcha;
 
     /**
@@ -50,8 +54,7 @@ class UsersApi extends ApiController
     public function signupController($request, $response, $data) 
     {       
         $settings = $this->get('options')->get('users.signup.form');
-        $captchaProtect = (isset($settings['captcha']['show']) == true) ? $settings['captcha']['show'] : false;
-     
+        $captchaProtect = $settings['captcha']['show'] ?? false;
         if ($captchaProtect == true) {
             $result = $this->verifyCaptcha($request,$data);         
             if ($result == false) {               
@@ -60,67 +63,31 @@ class UsersApi extends ApiController
         }
        
         $this->onDataValid(function($data) use($settings) { 
-
-            $sendConfirmEmail = $this->get('options')->get('users.notifications.email.verification',false);
-            $activation = (int)$this->get('options')->get('users.sugnup.activation',1);
-           
-            $model = Model::Users();
-            $userName = $data->get('user_name',null);
-            $email = $data->get('email',null);
-            $password = $data->get('password',null);
-            $options = $data->get('options',null);
-
-            // user type
-            $data['type_id'] = $this->getUserTypeId($data->get('user_type_slug',null));
-            
-            // verify username
-            if ($settings['username']['required'] == true) {
-                if ($model->hasUserName($userName) == true) {
-                    $this->error('errors.username.exist');   
-                    return;
-                }
-            }
-            // verify email
-            if ($settings['email']['required'] == true) {
-                if ($model->hasUserEmail($email) == true) {
-                    $this->error('errors.email');   
-                    return;
-                }
-            }
-            $user = $model->createUser($userName,$password,$email);
-            if (\is_object($user) == false) {
-                $this->error('errors.signup');   
-                return;
-            } 
-            if ($activation == 2) {
-                // set user PENDING status
-                $user->setStatus(4);
-            }
-
-            $userDetails = Model::UserDetails('users');
-            $result = $userDetails->saveDetails($user->id,$data->toArray());
-
-            $this->setResponse($result,function() use($user, $userDetails, $options, $sendConfirmEmail) { 
-                // create options
-                $userDetails = $userDetails->findOrCreate($user->id);
-                $userDetails->createOptions();  
+            $user = $this->userSignup($data,$settings);
+            $redirectUrl = $data->get('redirect_url','');
+        
+            if ($user !== false) {
                 // send confirm email to user
+                $sendConfirmEmail = (bool)$this->get('options')->get('users.notifications.email.verification',false);
                 $emailSend = ($sendConfirmEmail === true) ? $this->sendConfirmationEmail($user->toArray()) : false;
+            } else {
+                return false;
+            }
 
-                // dispatch event   
-                $params = $user->toArray();
-                $params['options'] = $options;
-                $this->get('event')->dispatch('user.signup',$params);  
+            $this->setResponse(\is_object($user),function() use($user,$emailSend,$redirectUrl) { 
+                if (empty($redirectUrl) == false) {
+                    $redirectUrl = Text::render($redirectUrl,['user' => $user->uuid]);
+                    $redirectUrl = (Url::isRelative($redirectUrl) == true) ? Page::getUrl($redirectUrl,true) : $redirectUrl;
+                }
                 $this
                     ->message('signup')
                     ->field('uuid',$user->uuid)
+                    ->field('redirect_url',$redirectUrl)
                     ->field('email_send',$emailSend)
                     ->field('status',$user->status);                        
             },'errors.signup');                         
-        });
-        
+        });  
         $repeatPassword = $data->get('repeat_password');
-        
         $data           
             ->addRule('regexp:exp=/^[A-Za-z][A-Za-z0-9]{4,32}$/|required','user_name',$this->getMessage('errors.username.valid'))       
             ->addRule('text:min=4|required','repeat_password')
@@ -128,7 +95,7 @@ class UsersApi extends ApiController
             ->addRule('equal:value=' . $repeatPassword . '|required','password',$this->getMessage('errors.repeat_password'));
 
         if ($settings['name']['required'] == 'true') {
-           $data->addRule('text:min=2|required','name');
+            $data->addRule('text:min=2|required','name');
         }
         if ($settings['phone']['required'] == 'true') {
             $data->addRule('text:min=2|required','phone');
@@ -138,9 +105,8 @@ class UsersApi extends ApiController
         }
         if ($settings['username']['required'] == 'true') {
             $data->addRule('text:min=2|required','user_name');
-        }
-      
-        $data->validate();       
+        }           
+        $data->validate();           
     }
 
     /**
@@ -244,7 +210,7 @@ class UsersApi extends ApiController
             $data->addRule('text:min=2|required','user_name');
         }
         // email
-        if ($loginWith == 2 ) {
+        if ($loginWith == 2) {
             $data->addRule('email|required','email');
         }
         $data->validate();               
@@ -388,51 +354,5 @@ class UsersApi extends ApiController
         }
 
         return $credentials;
-    }
-
-    /**
-     * Send confirm email to user
-     *
-     * @param array $user
-     * @return boolean
-     */
-    public function sendConfirmationEmail(array $user)
-    {
-        $properties = [
-            'user'              => $user,
-            'domain'            => Arikaim::getDomain(),
-            'confirm_email_url' => $this->createProtectedUrl($user['id'],'email/confirm')
-        ];
-
-        try {
-            $result = $this->get('mailer')->create('users>confirmation',$properties)           
-                ->to($user['email'])
-                ->send();   
-        } catch (\Exception $e) {
-            return false;
-        }
-        
-        return $result;
-    }
-
-    /**
-     * Get user type Id
-     *
-     * @param string|integer|null $typeSlug
-     * @return int|null
-     */
-    public function getUserTypeId($typeSlug = null)
-    {
-        if (empty($typeSlug) == true) {
-            return null;
-        }
-
-        if (\is_numeric($typeSlug) == true) {
-            return $typeSlug;
-        }
-
-        $userType = Model::create('UserType','users')->findBySlug($typeSlug);
-        
-        return (\is_object($userType) == true) ? $userType->id : null;
-    }
+    }   
 }
