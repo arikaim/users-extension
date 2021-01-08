@@ -5,10 +5,27 @@
     "type": "user",
     "description": "Users management",
     "short-description": "Users",
-    "version": "1.6.4",
+    "version": "1.6.5",
     "private-repository": true,
     "repository": "https://github.com/arikaim-repository/users-extension.git",
     "position": "2",
+    "features": [
+        "Login with Twitter, Github, Google, Facebook",
+        "User login, signup.",
+        "Password recovery.",
+        "reCaptcha protection.",
+        "User groups",
+        "Group and user permissions.",
+        "User options",
+        "User permissions",
+        "Change password and details",
+        "Login settings",
+        "Signup settings",
+        "User signup activation options",
+        "Welcome email",
+        "Email verification",
+        "Admin notification for user signup"
+    ],
     "require": {
         "extensions": [
             "oauth:optional",

@@ -11,7 +11,6 @@ namespace Arikaim\Extensions\Users\Controllers;
 
 use Arikaim\Core\Db\Model;
 use Arikaim\Core\Controllers\ControlPanelApiController;
-use Arikaim\Core\Access\Access;
 
 /**
  * Permisisons control panel api controler
@@ -152,7 +151,7 @@ class PermissionsControlPanel extends ControlPanelApiController
             $relations = Model::PermissionRelations();
             $permission = Model::Permissions()->findById($data['uuid']);
             
-            if ($permission->name == Access::CONTROL_PANEL) {
+            if ($permission->name == $this->get('access')->getControlPanelPermission()) {
                 $this->error('errors.permission.admin');
                 return;
             }
@@ -189,7 +188,7 @@ class PermissionsControlPanel extends ControlPanelApiController
             $relations = Model::PermissionRelations()->findById($data['uuid']);
             $permission = Model::Permissions()->findById($relations->permission_id);
            
-            if ($permission->name == Access::CONTROL_PANEL) {
+            if ($permission->name == $this->get('access')->getControlPanelPermission()) {
                 $this->error('errors.permission.admin');
                 return;
             }            
