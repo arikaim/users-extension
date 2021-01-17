@@ -40,7 +40,7 @@ class GroupsControlPanel extends ControlPanelApiController
     {
         parent::__construct($container);
         $this->setModelClass('UserGroups');
-        $this->setExtensionName(null);
+        $this->setExtensionName('users');
     }
 
     /**

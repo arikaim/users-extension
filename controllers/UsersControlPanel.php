@@ -46,7 +46,7 @@ class UsersControlPanel extends ControlPanelApiController
     {
         parent::__construct($container);
         $this->setModelClass('Users');
-        $this->setExtensionName(null);
+        $this->setExtensionName('users');
     }
 
     /**
