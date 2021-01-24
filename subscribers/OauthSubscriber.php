@@ -36,8 +36,7 @@ class OauthSubscriber extends EventSubscriber implements EventSubscriberInterfac
     public function auth($event)
     {
         $data = $event->getParameters(); 
-        $action = (isset($data['action']) == true) ? $data['action'] : null;
-
+        $action = $data['action'] ?? null;
         $user = $data['user'];
 
         $users = Model::Users();

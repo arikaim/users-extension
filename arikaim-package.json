@@ -1,13 +1,13 @@
 {
     "title": "Users",
-    "name": "user",
+    "name": "users",
     "package-type": "extension",
     "type": "user",
     "description": "Users management",
     "short-description": "Users",
     "version": "1.6.6",
     "private-repository": true,
-    "repository": "https://github.com/arikaim-repository/users-extension.git",
+    "repository": "arikaim-repository/users-extension",
     "position": "2",
     "features": [
         "Login with Twitter, Github, Google, Facebook",

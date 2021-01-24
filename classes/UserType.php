@@ -33,7 +33,7 @@ class UserType
      * @param string $slug
      * @return void
      */
-    public function create($title, $slug)
+    public function create(string $title, string $slug)
     {
         // Add user type
         Model::seed('UserType','users',function($seed) use($title, $slug) {
@@ -52,7 +52,7 @@ class UserType
      * @param string $extensionName
      * @return void
      */
-    public function createOptionsDefinition($configFile, $extensionName) 
+    public function createOptionsDefinition(string $configFile, string $extensionName) 
     {
         // Add options type definition
         $items = Extension::loadJsonConfigFile($configFile,$extensionName);
@@ -73,7 +73,7 @@ class UserType
      * @param string $extensionName
      * @return void
      */
-    public function createOptionsList($configFile, $extensionName) 
+    public function createOptionsList(string $configFile, string $extensionName) 
     {
         // Add options list 
         $items = Extension::loadJsonConfigFile($configFile,$extensionName);
