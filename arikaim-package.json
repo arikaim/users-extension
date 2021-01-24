@@ -5,7 +5,7 @@
     "type": "user",
     "description": "Users management",
     "short-description": "Users",
-    "version": "1.6.8",
+    "version": "1.6.9",
     "private-repository": true,
     "repository": "arikaim-repository/users-extension",
     "position": "2",
