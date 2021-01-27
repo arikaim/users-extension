@@ -7,6 +7,7 @@
     "short-description": "Users",
     "version": "1.6.10",
     "private-repository": true,
+    "repository-type": "arikaim",
     "repository": "arikaim-repository/users-extension",
     "position": "2",
     "features": [
