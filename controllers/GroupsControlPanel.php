@@ -64,7 +64,7 @@ class GroupsControlPanel extends ControlPanelApiController
 
             $result = $group->delete();
 
-            $this->setResponse($result,function() use($data) {                  
+            $this->setResponse((bool)$result,function() use($data) {                  
                 $this
                     ->message('groups.delete')
                     ->field('uuid',$data['uuid']);                  
@@ -169,7 +169,7 @@ class GroupsControlPanel extends ControlPanelApiController
                 
             $result = $member->delete();
 
-            $this->setResponse($result,function() use($member) {                  
+            $this->setResponse((bool)$result,function() use($member) {                  
                 $this
                     ->message('groups.members.remove')
                     ->field('uuid',$member->uuid);                  

@@ -83,7 +83,7 @@ trait Users
      * @param string|integer|null $typeSlug
      * @return int|null
      */
-    public function getUserTypeId($typeSlug = null)
+    public function getUserTypeId($typeSlug = null): ?int
     {
         if (empty($typeSlug) == true) {
             return null;

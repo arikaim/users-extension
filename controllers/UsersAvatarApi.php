@@ -54,7 +54,7 @@ class UsersAvatarApi extends ApiController
             $details->deleteAvatarImage();
             $result = $details->update(['avatar' => null]);
 
-            $this->setResponse($result,function() use($user) {                  
+            $this->setResponse((bool)$result,function() use($user) {                  
                 $this
                     ->message('avatar.delete')
                     ->field('uuid',$user->uuid);                  

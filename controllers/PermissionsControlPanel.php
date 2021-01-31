@@ -53,7 +53,7 @@ class PermissionsControlPanel extends ControlPanelApiController
 
             $result = $permission->delete();
         
-            $this->setResponse($result,function() use($permission) {                  
+            $this->setResponse((bool)$result,function() use($permission) {                  
                 $this
                     ->message('permission.delete')
                     ->field('uuid',$permission->uuid);                  
@@ -89,7 +89,7 @@ class PermissionsControlPanel extends ControlPanelApiController
                 'editable'    => true
             ]);
         
-            $this->setResponse($result,function() use($permission) {                  
+            $this->setResponse((bool)$result,function() use($permission) {                  
                 $this
                     ->message('permission.update')
                     ->field('uuid',$permission->uuid);                  
@@ -161,7 +161,7 @@ class PermissionsControlPanel extends ControlPanelApiController
             } else{
                 $relation = $relations->setUserPermission($permission->name,['read','write','delete','execute'],$model->id);
             }           
-            $this->setResponse($relation,function() use($relation) {                  
+            $this->setResponse(\is_object($relation),function() use($relation) {                  
                 $this
                     ->message('permission.grant')
                     ->field('relation_id',$relation->relation_id)
@@ -194,7 +194,7 @@ class PermissionsControlPanel extends ControlPanelApiController
             }            
             $result = $relations->delete();
 
-            $this->setResponse($result,function() use($relations) {                  
+            $this->setResponse((bool)$result,function() use($relations) {                  
                 $this
                     ->message('permission.deny')
                     ->field('uuid',$relations->uuid);                  
