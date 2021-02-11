@@ -31,11 +31,13 @@ class Users extends Controller
     public function userArea($request, $response, $data) 
     { 
         $language = $this->getPageLanguage($data);
-        // get current auth user
-        $data['user'] = $this->get('access')->getUser();
-        if (empty($data['user']) == true) {         
+    
+        if ($this->get('access')->isLogged() == false) {         
             return $this->withRedirect($response,'/login');              
-        }            
+        }
+        
+        // get current auth user
+        $data['user'] = $this->get('access')->getUser();            
         $response = $this->noCacheHeaders($response);
 
         return $this->pageLoad($request,$response,$data,'users>user',$language);
@@ -103,16 +105,16 @@ class Users extends Controller
         $uuid = $data->get('uuid',null);
         $data['user'] = Model::Users()->findByid($uuid);
         if (\is_object($data['user']) == false) {           
-            return false;
+            return $this->pageNotFound($response,$data->toArray());    
         }
 
         $data['details'] = Model::UserDetails('users')->findOrCreate($data['user']->id);      
         if (\is_object($data['details']) == false) {
-            return false;
+            return $this->pageNotFound($response,$data->toArray());    
         }
 
         if ($data['details']->isPublic() == false) {          
-            return false;
+            return $this->pageNotFound($response,$data->toArray());    
         }
     }
     
@@ -125,7 +127,7 @@ class Users extends Controller
      * @return Psr\Http\Message\ResponseInterface
     */
     public function changePasswordPage($request, $response, $data)
-    {                    
+    {    
     }
 
     /**

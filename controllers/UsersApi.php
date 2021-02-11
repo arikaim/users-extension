@@ -89,7 +89,7 @@ class UsersApi extends ApiController
         });  
         $repeatPassword = $data->get('repeat_password');
         $data           
-            ->addRule('regexp:exp=/^[A-Za-z][A-Za-z0-9]{4,32}$/|required','user_name',$this->getMessage('errors.username.valid'))       
+            ->addRule('regexp:exp=/^[A-Za-z][A-Za-z0-9]{2,32}$/|required','user_name',$this->getMessage('errors.username.valid'))       
             ->addRule('text:min=4|required','repeat_password')
             ->addRule('text:min=4|required','password')
             ->addRule('equal:value=' . $repeatPassword . '|required','password',$this->getMessage('errors.repeat_password'));
@@ -125,7 +125,10 @@ class UsersApi extends ApiController
         $this->onDataValid(function($data) use($user) {
             $userModel = Model::Users()->findById($user['id']);
             // save user 
-            $result = $userModel->update($data->toArray());
+            $result = $userModel->update([
+                'user_name' => $data->getString('user_name',null),
+                'email'     => $data->getString('email',null)
+            ]);
             if ($result == false) {
                 $this->error('errors.update');
                 return;
@@ -137,12 +140,12 @@ class UsersApi extends ApiController
                     ->message('update')
                     ->field('uuid',$user['uuid']);
             },'errors.update');               
-        });        
+        });         
         $data          
             ->addRule('text:min=2','first_name')
             ->addRule('htmlTags','first_name',$this->getMessage('errors.html'))
             ->addRule('htmlTags','last_name',$this->getMessage('errors.html'))
-            ->addRule('unique:model=Users|field=user_name|exclude=' . $user['user_name'],'user_name',$this->getMessage('errors.username'))
+            ->addRule('unique:model=Users|field=user_name|exclude=' . $user['user_name'],'user_name',$this->getMessage('errors.username.exist'))
             ->addRule('unique:model=Users|field=email|exclude=' . $user['email'],'email',$this->getMessage('errors.email'))
             ->validate();     
     }
@@ -297,19 +300,17 @@ class UsersApi extends ApiController
         $this->onDataValid(function($data) { 
             $password = $data->get('password');
             $user = $this->get('access')->getUser(); 
-            
+                 
             if (\is_array($user) === false) {
                 $this->error('Access token not valid.');
                 return;               
             }
-
-            $model = Model::Users()->findById($user['id']);
-            $result = $model->changePassword($model->id,$password);
-            $uuid = $model->uuid;
-            $this->setResponse($result,function() use($uuid) {                         
+      
+            $result = Model::Users()->changePassword($user['id'],$password);       
+            $this->setResponse($result,function() use($user) {                         
                 $this                    
-                    ->message('password')->field('uuid',$uuid)
-                    ->field('uuid',$uuid);                                     
+                    ->message('password')                  
+                    ->field('uuid',$user['uuid']);                                     
             },'errors.password');                      
         });
 

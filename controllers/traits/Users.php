@@ -29,9 +29,9 @@ trait Users
         $activation = (int)$this->get('options')->get('users.sugnup.activation',1);
         
         $model = Model::Users();
-        $userName = $data->get('user_name',null);
-        $email = $data->get('email',null);
-        $password = $data->get('password',null);
+        $userName = $data->getString('user_name',null);
+        $email = $data->getString('email',null);
+        $password = $data->getString('password',null);
         $options = $data->get('options',null);
 
         // user type

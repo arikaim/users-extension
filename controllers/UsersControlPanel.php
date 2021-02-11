@@ -46,7 +46,7 @@ class UsersControlPanel extends ControlPanelApiController
     {
         parent::__construct($container);
         $this->setModelClass('Users');
-        $this->setExtensionName('users');
+        $this->setExtensionName(null);
     }
 
     /**
@@ -166,7 +166,11 @@ class UsersControlPanel extends ControlPanelApiController
     public function addController($request, $response, $data) 
     {       
         $this->onDataValid(function($data) { 
-            $user = Model::Users()->createUser($data['user_name'],$data['password'],$data['email']);
+            $userName = $data->getString('user_name',null);
+            $password = $data->getString('password',null);
+            $email = $data->getString('email',null);
+
+            $user = Model::Users()->createUser($userName,$password,$email);
             if (\is_object($user) == true) {
                 $userDetails = $data->toArray();
                 $typeId = $data->get('type_id',null);
@@ -239,7 +243,10 @@ class UsersControlPanel extends ControlPanelApiController
             // save user 
             $data['type_id'] = (empty($data->get('type_id') == true)) ? 1 : $data->get('type_id');
 
-            $result = $user->update($data->toArray());
+            $result = $user->update([
+                'user_name' => $data->getString('user_name',null),
+                'email'     => $data->getString('email',null)
+            ]);
         
             // save user details
             $result = Model::UserDetails('Users')->saveDetails($user->id,$data->toArray());
@@ -308,7 +315,7 @@ class UsersControlPanel extends ControlPanelApiController
         $users = Model::Users()->softDeletedQuery()->get();
     
         foreach ($users as $user) {
-
+            
             // dispatch event user.before.delete
             $this->get('event')->dispatch('user.before.delete',$user->toArray());
             // delete tokens
