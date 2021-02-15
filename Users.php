@@ -94,7 +94,7 @@ class Users extends Extension
         $this->registerEvent('user.signup','Trigger after user signup');       
         $this->registerEvent('user.before.delete','Trigger before delete user');       
         // Options       
-        $this->createOption('users.login.with',1);
+        $this->createOption('users.login.with',3);
         $this->createOption('users.login.redirect','user');
         $this->createOption('users.logout.redirect',null);
         $this->createOption('users.login.captcha.protect',true);

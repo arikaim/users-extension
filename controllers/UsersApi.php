@@ -170,13 +170,14 @@ class UsersApi extends ApiController
                 }                  
             }
         }
-        $loginWith = $this->get('options')->get('users.login.with');
+        $loginWith = $this->get('options')->get('users.login.with',3);
 
         $this->onDataValid(function($data) use($loginWith,$loginAttempts) {  
             $remember = $data->get('remember',false);
             $credentials = $this->resolveLoginCredentials($loginWith,$data);
-            $result = $this->get('access')->authenticate($credentials);
-                       
+  
+            $result = $this->get('access')->withProvider('session')->authenticate($credentials);
+           
             $this->setResponse($result,function() use ($remember) {  
                 $user = $this->get('access')->getUser();  
                 Model::Users()->findById($user['uuid'])->updateLoginDate();
@@ -191,7 +192,8 @@ class UsersApi extends ApiController
                     Cookie::delete('user');
                     Cookie::delete('token');                  
                 }
-
+            
+                $jwtToken = $this->get('access')->createProvider('jwt')->createToken($user['auth_id']);
                 $redirectUrl = $this->get('options')->get('users.login.redirect',null); 
                 $redirectUrl = (empty($redirectUrl) == false) ? Url::BASE_URL . '/' . $redirectUrl : Url::BASE_URL;             
                 // dispatch event
@@ -199,6 +201,7 @@ class UsersApi extends ApiController
                 $this
                     ->message('login')
                     ->field('uuid',$user['uuid'])
+                    ->field('token',$jwtToken)
                     ->field('redirect_url',$redirectUrl);                           
             },function() use ($loginAttempts) {    
                 $this
@@ -330,9 +333,10 @@ class UsersApi extends ApiController
      * @param Collection $data
      * @return array
      */
-    protected function resolveLoginCredentials($loginWith, $data)
+    protected function resolveLoginCredentials(int $loginWith, $data): array
     {
         $credentials['password'] = $data->get('password');
+
         switch($loginWith) {
             case 1: 
                 $credentials['user_name'] = $data->get('user_name');    

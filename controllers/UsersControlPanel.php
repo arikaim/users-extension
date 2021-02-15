@@ -315,7 +315,6 @@ class UsersControlPanel extends ControlPanelApiController
         $users = Model::Users()->softDeletedQuery()->get();
     
         foreach ($users as $user) {
-            
             // dispatch event user.before.delete
             $this->get('event')->dispatch('user.before.delete',$user->toArray());
             // delete tokens

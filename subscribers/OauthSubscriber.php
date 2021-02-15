@@ -12,6 +12,7 @@ namespace Arikaim\Extensions\Users\Subscribers;
 use Arikaim\Core\Events\EventSubscriber;
 use Arikaim\Core\Interfaces\Events\EventSubscriberInterface;
 use Arikaim\Core\Arikaim;
+use Arikaim\Core\Utils\Utils;
 use Arikaim\Core\Db\Model;
 
 /**
@@ -46,7 +47,8 @@ class OauthSubscriber extends EventSubscriber implements EventSubscriberInterfac
         $userFound = $users->getUser($user['user_name'],$user['email']); 
         if ($userFound == false) {
             // create user
-            $newUser = $users->createUser($user['user_name'],null,$user['email']);
+            $password = Utils::createRandomKey();
+            $newUser = $users->createUser($user['user_name'],$password,$user['email']);
             $userId = $newUser->id;            
         } else {
             $userId = $userFound->id;
