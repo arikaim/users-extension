@@ -6,7 +6,7 @@
  */
 'use strict';
 
-function TrashControlPanel() {
+function TrashView() {
     var self = this;
 
     this.emptyTrash = function(onSuccess, onError) {
@@ -26,8 +26,8 @@ function TrashControlPanel() {
 
         arikaim.ui.button('.empty-trash',function(element) {       
             return modal.confirmDelete({ 
-                title: self.getMesssage('empty.title') ,
-                description: self.getMesssage('empty.description') 
+                title:  self.getMessage('empty.title'),
+                description: self.getMessage('empty.description') 
             },function() {         
                 self.emptyTrash(function(result) {
                     self.loadRows();
@@ -58,8 +58,7 @@ function TrashControlPanel() {
             trashView.restoreUser(uuid,function(result) {
                 arikaim.ui.table.removeRow('#row_' + uuid,null,function(element) {
                     $('.trash-button').addClass('disabled');
-                });
-              
+                });              
                 arikaim.page.toastMessage(result.message);                   
             },function(error) {
                 arikaim.page.toastMessage({
@@ -71,9 +70,9 @@ function TrashControlPanel() {
     };
 }
 
-var trashView = createObject(TrashControlPanel,ControlPanelView);
+var trashView = createObject(TrashView,ControlPanelView);
 
-arikaim.component.onLoaded(function() {
+arikaim.component.onLoaded(function() {   
     trashView.init();
     trashView.initRows();
 });

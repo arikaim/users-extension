@@ -176,7 +176,9 @@ class UsersControlPanel extends ControlPanelApiController
                 $typeId = $data->get('type_id',null);
                 $userDetails['type_id'] = (empty($typeId) == true) ? null : $typeId;
         
-                $result = Model::UserDetails('users')->saveDetails($user->id,$userDetails);
+                $details = Model::UserDetails('users')->saveDetails($user->id,$userDetails);
+                $result = (\is_object($details) == true || $details !== false);
+
                 $this->setResponse($result,function() use($user) {                  
                     $this
                         ->message('add')

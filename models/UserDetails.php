@@ -157,14 +157,14 @@ class UserDetails extends Model
      *
      * @param integer $userId
      * @param array $details
-     * @return void
+     * @return Model|bool
      */
     public function saveDetails($userId, array $details)
     {
         $details['user_id'] = $userId;
         $model = $this->findByColumn($userId,'user_id');
 
-        return (\is_object($model) == true) ? $model->update($details) : $this->create($details);
+        return (\is_object($model) == true) ? (bool)$model->update($details) : $this->create($details);
     }
 
     /**

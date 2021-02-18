@@ -12,7 +12,10 @@ function UsersView() {
     this.init = function() {
         this.loadMessages('users::admin');
 
-        order.init('users_rows','users::admin.users.view.rows','users');
+        withObject('order',function(order) {
+            order.init('users_rows','users::admin.users.view.rows','users');
+        });
+      
         paginator.init('users_rows',"users::admin.users.view.rows",'users');    
 
         search.init({

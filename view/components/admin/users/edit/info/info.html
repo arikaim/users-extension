@@ -17,11 +17,11 @@
                 </tr>
                 <tr>
                     <td>{{ labels.date_login }}</td>
-                    <td>{{ user.date_login|emptyLabel('-')|dateTimeFormat }}</td>
+                    <td>{{ user.date_login|dateTimeFormat|emptyLabel('-') }}</td>
                 </tr>
                 <tr>
                     <td>{{ labels.date_updated }}</td>
-                    <td>{{ user.date_updated|emptyLabel('-')|dateTimeFormat }}</td>
+                    <td>{{ user.date_updated|dateTimeFormat|emptyLabel('-') }}</td>
                 </tr>
             </tbody>
         </table>      
