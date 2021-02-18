@@ -10,13 +10,11 @@ function UserGroupsView() {
     var self = this;
 
     this.init = function() {
+        this.loadMessages('users::admin')
         paginator.init('group_rows',"users::admin.groups.view.rows",'groups');                
     };
 
     this.initRows = function() {
-        var component = arikaim.component.get('users::admin');
-        var removeMessage = component.getProperty('messages.group_remove.content');
-
         arikaim.ui.button('.edit-button',function(element) {
             var uuid = $(element).attr('uuid');
             arikaim.ui.setActiveTab('#edit_group','.groups-tab-item');
@@ -42,10 +40,10 @@ function UserGroupsView() {
         arikaim.ui.button('.delete-button',function(element) {
             var uuid = $(element).attr('uuid');
             var title = $(element).attr('data-title');
-            var message = arikaim.ui.template.render(removeMessage,{ title: title });
+            var message = arikaim.ui.template.render(self.getMessage('group_remove.content'),{ title: title });
 
             return modal.confirmDelete({ 
-                title: component.getProperty('messages.remove.title'),
+                title: self.getMessage('group_remove.title'),
                 description: message
             },function() {
                 groupsAdmin.delete(uuid,function(result) {
@@ -61,8 +59,8 @@ function UserGroupsView() {
     };
 }
 
-var userGroupsView = new UserGroupsView();
+var userGroupsView = createObject(UserGroupsView,ControlPanelView);
 
-$(document).ready(function() {
+arikaim.component.onLoaded(function() {
     userGroupsView.init();
 });

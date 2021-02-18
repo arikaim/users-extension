@@ -1,6 +1,6 @@
 'use strict';
 
-$(document).ready(function() {
+arikaim.component.onLoaded(function() {
     $('.settings-checkbox').checkbox({
         onChange: function() {
             var checked = $(this).prop('checked'); 

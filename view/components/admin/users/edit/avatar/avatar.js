@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-$(document).ready(function() {
+arikaim.component.onLoaded(function() {
     var fileUpload = new FileUpload('#avatar_form',{
         url: '/api/users/admin/avatar/upload',
         maxFiles: 1,

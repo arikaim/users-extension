@@ -1,6 +1,6 @@
 'use strict';
 
-$(document).ready(function() {
+arikaim.component.onLoaded(function() {
     $('.login-with').checkbox({
         onChange: function() {
             var value = $(this).val();

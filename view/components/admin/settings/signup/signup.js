@@ -1,6 +1,6 @@
 'use strict';
 
-$(document).ready(function() {
+arikaim.component.onLoaded(function() {
     $('.from-settings').checkbox({
         onChange: function() {
             var settings = userSettings.getSignupSettings();

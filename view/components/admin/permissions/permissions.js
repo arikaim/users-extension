@@ -7,8 +7,7 @@
 'use strict';
 
 function PermissionsAdmin() {
-    var self = this;
-
+    
     this.add = function(formId, onSuccess, onError) {
         return arikaim.post('/api/users/admin/permission/add',formId,onSuccess,onError);         
     };
@@ -62,6 +61,6 @@ function PermissionsAdmin() {
 
 var permissions = new PermissionsAdmin();
 
-$(document).ready(function() {
+arikaim.component.onLoaded(function() {
     permissions.init();
 });

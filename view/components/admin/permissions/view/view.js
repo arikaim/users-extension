@@ -9,10 +9,11 @@
 function PermissionsView() {
     var self = this;
 
-    this.initRows = function() {
-        var component = arikaim.component.get('users::admin');
-        var removeMessage = component.getProperty('messages.permisison_remove.content');
+    this.init = function() {
+        this.loadMessages('users::admin');
+    };
 
+    this.initRows = function() {
         arikaim.ui.button('.edit-permission',function(element) {           
             var uuid = $(element).attr('uuid');
             arikaim.ui.setActiveTab('#edit_permisisons_tab','.permissions-tab-item');
@@ -26,12 +27,11 @@ function PermissionsView() {
 
         arikaim.ui.button('.delete-permission',function(element) {           
             var uuid = $(element).attr('uuid');
-
             var title = $(element).attr('data-title');
-            var message = arikaim.ui.template.render(removeMessage,{ title: title });
+            var message = arikaim.ui.template.render(self.getMessage('permisison_remove.content'),{ title: title });
 
             return modal.confirmDelete({ 
-                title: component.getProperty('messages.remove.title'),
+                title: self.getMessage('permisison_remove.title'),
                 description: message
             },function() {
                 permissions.delete(uuid,function(result) {             
@@ -44,9 +44,12 @@ function PermissionsView() {
                     });                
                 });
             });
-
         });
     }   
 }
 
-var permissionsView = new PermissionsView();
+var permissionsView = createObject(PermissionsView,ControlPanelView);
+
+arikaim.component.onLoaded(function() {
+    permissionsView.init();
+});

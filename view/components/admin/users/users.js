@@ -44,6 +44,6 @@ function UsersAdmin() {
 
 var usersAdmin = new UsersAdmin();
 
-$(document).ready(function() {
+arikaim.component.onLoaded(function() {
     usersAdmin.init();
 });

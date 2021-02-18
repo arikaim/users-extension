@@ -1,6 +1,6 @@
 'use strict';
 
-$(document).ready(function() {
+arikaim.component.onLoaded(function() {
     $('.user-type-dropdown').dropdown({
         onChange: function(value) {
             console.log(value);

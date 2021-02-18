@@ -1,7 +1,6 @@
 'use strict';
 
-$(document).ready(function() { 
-    
+arikaim.component.onLoaded(function() {
     initEditPermissionForm();
 
     $('.permissions-dropdown').dropdown({

@@ -1,6 +1,6 @@
 'use strict';
 
-$(document).ready(function() { 
+arikaim.component.onLoaded(function() {
     function initEditGroupForm() {
         arikaim.ui.form.addRules("#group_form");
         arikaim.ui.form.onSubmit('#group_form',function() {

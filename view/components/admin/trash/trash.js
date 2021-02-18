@@ -22,15 +22,12 @@ function TrashControlPanel() {
     };
 
     this.init = function() {
-        var component = arikaim.component.get('users::admin.trash');
+        this.loadMessages('users::admin.trash');
 
         arikaim.ui.button('.empty-trash',function(element) {       
-            var title = component.getProperty('messages.empty.title');
-            var description = component.getProperty('messages.empty.description');
-
             return modal.confirmDelete({ 
-                title: title,
-                description: description 
+                title: self.getMesssage('empty.title') ,
+                description: self.getMesssage('empty.description') 
             },function() {         
                 self.emptyTrash(function(result) {
                     self.loadRows();
@@ -74,9 +71,9 @@ function TrashControlPanel() {
     };
 }
 
-var trashView = new TrashControlPanel();
+var trashView = createObject(TrashControlPanel,ControlPanelView);
 
-arikaim.page.onReady(function() {
+arikaim.component.onLoaded(function() {
     trashView.init();
     trashView.initRows();
 });

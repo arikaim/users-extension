@@ -1,6 +1,6 @@
 'use strict';
 
-$(document).ready(function() { 
+arikaim.component.onLoaded(function() {
     arikaim.ui.form.addRules("#permission_form");  
     arikaim.ui.form.onSubmit('#permission_form',function() {
         return permissions.add('#permission_form');

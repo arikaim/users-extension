@@ -1,6 +1,6 @@
 'use strict';
 
-$(document).ready(function() { 
+arikaim.component.onLoaded(function() {
     $('.permissions-dropdown').dropdown({});
 
     arikaim.ui.button('.add-permission-button',function(element) {

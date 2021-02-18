@@ -7,8 +7,7 @@
 'use strict';
 
 function MembersAdmin() {
-    var self = this;
-
+  
     this.initItems = function() {
         arikaim.ui.button('.remove-group-member',function(element) {           
             var uuid = $(element).attr('uuid');
@@ -44,6 +43,6 @@ function MembersAdmin() {
 
 var membersAdmin = new MembersAdmin();
 
-$(document).ready(function() { 
+arikaim.component.onLoaded(function() {
     membersAdmin.init();    
 });

@@ -1,6 +1,6 @@
 'use strict';
 
-$(document).ready(function () {
+arikaim.component.onLoaded(function() {
     arikaim.ui.form.addRules('#reset_password_form');
     arikaim.ui.form.onSubmit('#reset_password_form',function() {   
         return users.resetPassword('#reset_password_form');

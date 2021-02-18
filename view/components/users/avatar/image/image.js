@@ -1,7 +1,6 @@
-"use strict";
+'use strict';
 
-$(document).ready(function() {
-
+arikaim.component.onLoaded(function() {
     arikaim.ui.button('.remove-avatar',function(element) {       
         return users.deleteAvatar(function(result) {
             arikaim.page.loadContent({

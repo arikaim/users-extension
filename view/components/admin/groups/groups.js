@@ -7,8 +7,7 @@
 'use strict';
 
 function GroupsAdmin() {
-    var self = this;
-
+   
     this.add = function(formId, onSuccess, onError) {
         return arikaim.post('/api/users/admin/groups/add',formId,onSuccess,onError);         
     };
@@ -45,6 +44,6 @@ function GroupsAdmin() {
 
 var groupsAdmin = new GroupsAdmin();
 
-$(document).ready(function() {
+arikaim.component.onLoaded(function() {
     groupsAdmin.init();
 });

@@ -39,6 +39,6 @@ function UserSettings() {
 
 var userSettings = new UserSettings();
 
-$(document).ready(function() {
+arikaim.component.onLoaded(function() {
     userSettings.init();
 })

@@ -10,6 +10,8 @@ function UsersView() {
     var self = this;
        
     this.init = function() {
+        this.loadMessages('users::admin');
+
         order.init('users_rows','users::admin.users.view.rows','users');
         paginator.init('users_rows',"users::admin.users.view.rows",'users');    
 
@@ -49,9 +51,6 @@ function UsersView() {
     };
 
     this.initRows = function() {
-        var component = arikaim.component.get('users::admin');
-        var removeMessage = component.getProperty('messages.remove.content');
-
         arikaim.ui.button('.edit-button',function(element) {
             var uuid = $(element).attr('uuid');
             arikaim.ui.setActiveTab('#edit_user','.users-tab-item');
@@ -73,10 +72,10 @@ function UsersView() {
         arikaim.ui.button('.delete-button',function(element) {
             var uuid = $(element).attr('uuid');
             var title = $(element).attr('data-title');
-            var message = arikaim.ui.template.render(removeMessage,{ title: title });
+            var message = arikaim.ui.template.render(self.getMessage('remove.content'),{ title: title });
 
             return modal.confirmDelete({ 
-                title: component.getProperty('messages.remove.title'),
+                title: self.getMessage('remove.title'),
                 description: message
             },function() {
                 usersAdmin.delete(uuid,function(result) {
@@ -87,9 +86,9 @@ function UsersView() {
     };
 }
 
-var usersView = new UsersView();
+var usersView = createObject(UsersView,ControlPanelView);
 
-$(document).ready(function() {
+arikaim.component.onLoaded(function() {
     usersView.init();
     usersView.initRows();
 });

@@ -26,6 +26,6 @@ function UserTypeView() {
 
 var userTypeView = new UserTypeView();
 
-$(document).ready(function() {  
+arikaim.component.onLoaded(function() { 
     userTypeView.initRows();
 });
