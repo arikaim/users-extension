@@ -1,7 +1,8 @@
 'use strict';
 
 arikaim.component.onLoaded(function() {
-    var dataField =  $('.users-dropdown').attr('data-field');
+    var dataField = $('.users-dropdown').attr('data-field');
+    
     $('.users-dropdown').dropdown({
         apiSettings: {     
             on: 'now',      
