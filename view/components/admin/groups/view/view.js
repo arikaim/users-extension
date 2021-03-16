@@ -11,7 +11,7 @@ function UserGroupsView() {
 
     this.init = function() {
         this.loadMessages('users::admin')
-        paginator.init('group_rows',"users::admin.groups.view.rows",'groups');                
+        paginator.init('group_rows','users::admin.groups.view.rows','groups');                
     };
 
     this.initRows = function() {

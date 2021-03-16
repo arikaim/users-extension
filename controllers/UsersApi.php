@@ -46,6 +46,25 @@ class UsersApi extends ApiController
     /**
      * Signup api
      *
+     * @Api(
+     *      description="User signup",    
+     *      parameters={
+     *          @ApiParameter (name="username",type="string",description="User name"),
+     *          @ApiParameter (name="email",type="string",description="User email address"),
+     *          @ApiParameter (name="repeat_password",type="string",description="Repeat password field"),
+     *          @ApiParameter (name="password",type="string",required=true,description="User password")
+     *      }
+     * )
+     * 
+     * @ApiResponse(
+     *      fields={
+     *          @ApiParameter (name="uuid",type="string",description="User uuid"),
+     *          @ApiParameter (name="redirect_url",type="string",description="Redirect url"),
+     *          @ApiParameter (name="email_send",type="boolean",description="True if email is send to user"),
+     *          @ApiParameter (name="status",type="integer",description="User status"),
+     *      }
+     * )   
+     * 
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param Validator $data
@@ -111,7 +130,23 @@ class UsersApi extends ApiController
 
     /**
      * Change user details page
+     * 
+     * @Api(
+     *      description="Change user details",    
+     *      parameters={
+     *          @ApiParameter (name="first_name",type="string",description="User first name"),
+     *          @ApiParameter (name="last_name",type="string",description="User last name"),
+     *          @ApiParameter (name="user_name",type="string",description="Username field"),
+     *          @ApiParameter (name="email",type="string",required=true,description="User email")
+     *      }
+     * )
      *
+     * @ApiResponse(
+     *      fields={
+     *          @ApiParameter (name="uuid",type="string",description="User uuid")
+     *      }
+     * )  
+     * 
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param Validator $data
@@ -153,6 +188,21 @@ class UsersApi extends ApiController
     /**
      * User Login
      *
+     * @Api(
+     *      description="User login, depend of users extension settings user_name field or email is required.",    
+     *      parameters={
+     *          @ApiParameter (name="user_name",type="string",description="User name"),
+     *          @ApiParameter (name="email",type="string",description="User email address"),
+     *          @ApiParameter (name="password",type="string",required=true,description="User password")
+     *      }
+     * )
+     * 
+     * @ApiResponse(
+     *      fields={
+     *          @ApiParameter (name="uuid",type="string",description="User uuid")
+     *      }
+     * )         
+     * 
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param Validator $data
@@ -219,12 +269,21 @@ class UsersApi extends ApiController
         if ($loginWith == 2) {
             $data->addRule('email|required','email');
         }
-        $data->validate();               
+        $data
+            ->addRule('text:min=2|required','password')
+            ->validate();               
     }
 
     /**
      * Reset password
      *
+     * @Api(
+     *      description="Generate protected url for user password change and email url to user",    
+     *      parameters={
+     *          @ApiParameter (name="email",type="string",description="User email",required=true)         
+     *      }
+     * )
+     * 
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param Validator $data
@@ -261,6 +320,16 @@ class UsersApi extends ApiController
     /**
      * Logout
      *
+     * @Api(
+     *      description="User logout"        
+     * )
+     * 
+     * @ApiResponse(
+     *      fields={
+     *          @ApiParameter (name="redirect_url",type="string",description="Redirect url")
+     *      }
+     * )  
+     * 
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param Validator $data
@@ -293,6 +362,20 @@ class UsersApi extends ApiController
     /**
      * Change password
      *
+     * @Api(
+     *      description="Change user password",    
+     *      parameters={
+     *          @ApiParameter (name="password",type="string",description="New pasword",required=true),   
+     *          @ApiParameter (name="repeat_password",type="string",description="Repeat pasword",required=true)         
+     *      }
+     * )
+     * 
+     * @ApiResponse(
+     *      fields={
+     *          @ApiParameter (name="uuid",type="string",description="User uuid")
+     *      }
+     * )  
+     * 
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param Validator $data
@@ -341,11 +424,9 @@ class UsersApi extends ApiController
             case 1: 
                 $credentials['user_name'] = $data->get('user_name');    
                 break;
-
             case 2: 
                 $credentials['email'] = $data->get('email');  
                 break;
-
             case 3: 
                 if (Utils::isEmail($data->get('user_name')) == true) {
                     $credentials['email'] = $data->get('user_name');

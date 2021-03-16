@@ -37,6 +37,19 @@ class UsersAvatarApi extends ApiController
     /**
      * Delete avatar
      *
+     * @Api(
+     *      description="Delete user avatar",    
+     *      parameters={
+     *          @ApiParameter (name="uuid",type="string",description="User uuid",required=true)             
+     *      }
+     * )
+     * 
+     * @ApiResponse(
+     *      fields={
+     *          @ApiParameter (name="uuid",type="string",description="User uuid")
+     *      }
+     * )  
+     * 
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param Validator $data
@@ -128,6 +141,13 @@ class UsersAvatarApi extends ApiController
     /**
      * View avatar in user admin
      *
+     * @Api(
+     *      description="View user avatar",    
+     *      parameters={
+     *          @ApiParameter (name="uuid",type="string",description="User uuid",required=false,default="Current loged user")             
+     *      }
+     * )
+     * 
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param Validator $data

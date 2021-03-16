@@ -58,11 +58,10 @@ class Users extends Extension
         $this->addApiRoute('PUT','/api/users/admin/status','UsersControlPanel','setStatus','session'); 
         $this->addApiRoute('DELETE','/api/users/admin/delete/{uuid}','UsersControlPanel','softDelete','session'); 
         $this->addApiRoute('GET','/api/users/admin/list/{data_field}/[{query}]','UsersControlPanel','getList','session');  
-        // avatar
+        // Avatar
         $this->addApiRoute('POST','/api/users/admin/avatar/upload','UsersControlPanel','uploadAvatar','session'); 
         $this->addApiRoute('DELETE','/api/users/admin/avatar/delete/{uuid}','UsersControlPanel','deleteAvatar','session'); 
         $this->addApiRoute('GET','/api/users/admin/avatar/view/{uuid}','UsersControlPanel','viewAvatar','session'); 
-
         // Restore soft deleted user
         $this->addApiRoute('PUT','/api/users/admin/restore','UsersControlPanel','restore','session');  
         // Emty trash
@@ -71,10 +70,9 @@ class Users extends Extension
         $this->addApiRoute('POST','/api/users/admin/groups/add','GroupsControlPanel','add','session'); 
         $this->addApiRoute('PUT','/api/users/admin/groups/update','GroupsControlPanel','update','session'); 
         $this->addApiRoute('DELETE','/api/users/admin/groups/delete/{uuid}','GroupsControlPanel','delete','session');  
-        // group members
+        // Group members
         $this->addApiRoute('PUT','/api/users/admin/groups/add/member','GroupsControlPanel','addMember','session'); 
         $this->addApiRoute('PUT','/api/users/admin/groups/remove/member','GroupsControlPanel','removeMember','session'); 
-
         // Permissions
         $this->addApiRoute('POST','/api/users/admin/permission/add','PermissionsControlPanel','addPermission','session');  
         $this->addApiRoute('PUT','/api/users/admin/permission/update','PermissionsControlPanel','updatePermission','session');  
