@@ -41,11 +41,12 @@ class UsersSubscriber extends EventSubscriber implements EventSubscriberInterfac
         $user = $event->getParameters(); 
         $sendWelcomeEmail = Arikaim::options()->get('users.notifications.email.welcome',false);
         $adminNotification = Arikaim::options()->get('users.notifications.email.signup',false);
-        
-        if (($sendWelcomeEmail == true) && (Utils::isEmail($user['email']) == true)) {
+        $userEmail = $user['email'] ?? '';         
+
+        if (($sendWelcomeEmail == true) && (Utils::isEmail($userEmail) == true)) {
             // send welcome email to user
             Arikaim::mailer()->create('users>welcome',$user)               
-                ->to($user['email'])
+                ->to($userEmail)
                 ->send();
         }
 
