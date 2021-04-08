@@ -14,6 +14,7 @@ use Arikaim\Core\Interfaces\Events\EventSubscriberInterface;
 use Arikaim\Core\Arikaim;
 use Arikaim\Core\Utils\Utils;
 use Arikaim\Core\Db\Model;
+use Exception;
 
 /**
  * Execute post signup, login actions 
@@ -45,18 +46,20 @@ class UsersSubscriber extends EventSubscriber implements EventSubscriberInterfac
 
         if (($sendWelcomeEmail == true) && (Utils::isEmail($userEmail) == true)) {
             // send welcome email to user
-            Arikaim::mailer()->create('users>welcome',$user)               
-                ->to($userEmail)
-                ->send();
+            try {
+                Arikaim::mailer()->create('users>welcome',$user)->to($userEmail)->send();
+            } catch (Exception $e) {               
+            }          
         }
 
         if ($adminNotification == true) {
             $adminUser = Model::Users()->getControlPanelUser();
             if (Utils::isEmail($adminUser->email) == true) {
                 // send email to admin
-                Arikaim::mailer()->create('users>signup',$user)                   
-                    ->to($adminUser->email)
-                    ->send();
+                try {
+                    Arikaim::mailer()->create('users>signup',$user)->to($adminUser->email)->send();
+                } catch (Exception $e) {               
+                }   
             }
         }
     }

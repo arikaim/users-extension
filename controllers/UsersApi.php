@@ -74,10 +74,9 @@ class UsersApi extends ApiController
     {       
         $settings = $this->get('options')->get('users.signup.form');
         $captchaProtect = $settings['captcha']['show'] ?? false;
-        if ($captchaProtect == true) {
-            $result = $this->verifyCaptcha($request,$data);         
-            if ($result == false) {               
-                return;
+        if ($captchaProtect == true) {                  
+            if ($this->verifyCaptcha($request,$data) == false) {               
+                return false;
             } 
         }
        
