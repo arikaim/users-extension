@@ -87,9 +87,11 @@ class UserDetails extends Model
      * @param string|null $uuid
      * @return string
      */
-    public function getAvatarViewUrl($uuid = null)
+    public function getAvatarViewUrl($uuid = null): string
     {
-        $uuid = $uuid ?? (\is_object($this->user) == true) ? $this->user->uuid : '';
+        if (empty($uuid) == true) {
+            $uuid = (\is_object($this->user) == true) ? $this->user->uuid : '';
+        }     
         $path = '/api/users/avatar/view/';
 
         return ($this->isPublic() == true) ? $path . $uuid : $path;
