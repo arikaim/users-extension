@@ -16,7 +16,7 @@ use Arikaim\Core\Interfaces\Job\JobInterface;
 /**
  * Send email to user
  */
-class SendEmailToUser extends Job implements JobInterface
+class SendEmail extends Job implements JobInterface
 {
     /**
      * Run job

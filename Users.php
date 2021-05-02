@@ -48,8 +48,8 @@ class Users extends Extension
         $this->addApiRoute('POST','/api/users/avatar/upload','UsersAvatarApi','uploadAvatar','session'); 
         $this->addApiRoute('DELETE','/api/users/avatar/delete','UsersAvatarApi','deleteAvatar','session');        
         // options
-        $this->addApiRoute('PUT','/api/users/options','UsersOptionsApi','save','session'); 
-        $this->addApiRoute('PUT','/api/users/option/save','UsersOptionsApi','saveOption','session'); 
+        $this->addApiRoute('PUT','/api/users/options','UsersOptionsApi','save',['session','jwt']); 
+        $this->addApiRoute('PUT','/api/users/option/save','UsersOptionsApi','saveOption',['session','jwt']); 
 
         // Control Panel Api
         $this->addApiRoute('POST','/api/users/admin/add','UsersControlPanel','add','session'); 
