@@ -50,7 +50,11 @@ class Users extends Extension
         // options
         $this->addApiRoute('PUT','/api/users/options','UsersOptionsApi','save',['session','jwt']); 
         $this->addApiRoute('PUT','/api/users/option/save','UsersOptionsApi','saveOption',['session','jwt']); 
-
+        // tokens
+        $this->addApiRoute('POST','/api/users/token/create','TokensApi','create','session');  
+        $this->addApiRoute('PUT','/api/users/token/status','TokensApi','setStatus','session'); 
+        $this->addApiRoute('PUT','/api/users/token/delete','TokensApi','delete','session'); 
+        
         // Control Panel Api
         $this->addApiRoute('POST','/api/users/admin/add','UsersControlPanel','add','session'); 
         $this->addApiRoute('PUT','/api/users/admin/update','UsersControlPanel','update','session'); 

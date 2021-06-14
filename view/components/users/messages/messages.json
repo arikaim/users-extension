@@ -8,9 +8,19 @@
             "email": "Email with password reset link send."
         }
     },
+    "tokens": {
+        "create": "Api Token created successfully.",
+        "delete": "Token deleted successfully."
+    },
     "errors": {
+        "tokens": {
+            "id": "Not valid token id.",
+            "password": "Not valid password.",
+            "create": "Can't create token.",
+            "delete": "Can't delete token."
+        },
         "username": {
-            "valid": "Username not valid, must start with letter, only letters and numbers allowed",
+            "valid": "Username not valid, must start with letter, only letters and numbers allowed.",
             "exist": "User with this username already exists. Please use a different username"
         },
         "token": "Not valid or expired access token",      

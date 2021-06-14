@@ -1,10 +1,12 @@
 'use strict';
 
 arikaim.component.onLoaded(function() {
-    arikaim.ui.button('.delete-token',function(element) {
-        var uuid = $(element).attr('uuid');
-        accessTokens.delete(uuid,function(result) {
-            arikaim.ui.table.removeRow('#' + uuid); 
+    arikaim.ui.button('.create-token',function(element) {
+        return arikaim.page.loadContent({
+            id: 'token_create_content',           
+            component: 'users::admin.users.edit.tokens.create'
+        },function(result) {
+            
         });
     });
 });

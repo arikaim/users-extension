@@ -1,0 +1,19 @@
+{
+    "title": {
+        "content": "Access tokens",
+        "icon": "tags"
+    },
+    "labels": {
+        "created": "Date Created",
+        "expired_date": "Date Expired",
+        "token": "Token",
+        "type": "Type",
+        "status": "Status",
+        "expired": "Expired",
+        "active": "Active",
+        "action": "Action"
+    },
+    "buttons": {
+        "delete": "Delete"
+    }
+}

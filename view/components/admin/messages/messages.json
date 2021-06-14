@@ -2,7 +2,7 @@
     "add": "User added successfully.",
     "update": "User details saved successfully.",
     "delete": "User deleted successfully.",  
-    "password": "User password chnaged successfully", 
+    "password": "User password chnaged successfully.", 
     "restore": "User restored successfully",
     "avatar": {
         "delete": "Avatar removed successfully.",
@@ -24,9 +24,17 @@
         "deny": "Permission removed successfully.",
         "grant": "Permission added successfully."
     },
+    "tokens": {
+        "create": "Api Token created successfully."
+    },
     "trash_empty": "Trash is empty",
     "errors": {
-        "id": "Not valid user id",
+        "tokens": {
+            "password": "Not valid password.",
+            "exist": "Token exist.",
+            "create": "Can't create token."
+        },
+        "id": "Not valid user id.",
         "username": {
             "valid": "Username not valid",
             "exist": "Username exists"

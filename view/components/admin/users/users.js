@@ -35,15 +35,11 @@ function UsersAdmin() {
 
     this.deleteAvatar = function(uuid, onSuccess, onError) {
         return arikaim.delete('/api/users/admin/avatar/delete/' + uuid,onSuccess,onError);          
-    };
-
-    this.init = function() {
-        arikaim.ui.tab('.users-tab-item','users_content');
-    };
+    };   
 }
 
 var usersAdmin = new UsersAdmin();
 
 arikaim.component.onLoaded(function() {
-    usersAdmin.init();
+    arikaim.ui.tab('.users-tab-item','users_content');
 });

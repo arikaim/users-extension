@@ -5,11 +5,12 @@
     "type": "user",
     "description": "Users management",
     "short-description": "Users",
-    "version": "1.7.2",
+    "version": "1.8.0",
     "private-repository": true,
     "repository-type": "arikaim",
     "repository": "arikaim-repository/users-extension",
     "position": "2",
+    "install-order": 2,
     "features": [
         "Login with Twitter, Github, Google, Facebook",
         "User login, signup.",

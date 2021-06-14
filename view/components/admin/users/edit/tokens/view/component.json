@@ -1,9 +1,4 @@
-{
-    "include": {
-        "js": [
-            "users::users.tokens"             
-        ]
-    },
+{    
     "access": {
         "auth": "session",
         "redirect": "/admin",

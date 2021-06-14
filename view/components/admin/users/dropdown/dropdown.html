@@ -12,7 +12,9 @@
 {% set selectet_text = (selected is empty) ? labels.select : selected.user_name_or_email %}
 <div class="ui search selection dropdown users-dropdown {{ class }}" id="{{ id }}" data-field="{{ data_field }}">
     <input name="{{ name }}" type="hidden">
+    {% if show_icon == true %}
     <i class="user icon {{ icon }}"></i>
+    {% endif %}
     <div class="default text">{{ selectet_text }}</div>
     <i class="dropdown icon"></i>
     <div class="menu">
