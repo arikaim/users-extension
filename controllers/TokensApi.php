@@ -11,13 +11,6 @@ namespace Arikaim\Extensions\Users\Controllers;
 
 use Arikaim\Core\Db\Model;
 use Arikaim\Core\Controllers\ApiController;
-use Arikaim\Core\Http\Url;
-use Arikaim\Core\Utils\Utils;
-use Arikaim\Core\Http\Cookie;
-use Arikaim\Core\Http\Session;
-use Arikaim\Core\Arikaim;
-use Arikaim\Core\Utils\Text;
-use Arikaim\Core\View\Html\Page;
 
 use Arikaim\Core\Access\Interfaces\AutoTokensInterface;
 use Arikaim\Core\Controllers\Traits\AccessToken;
@@ -67,14 +60,14 @@ class TokensApi extends ApiController
             }
             $user = Model::Users()->findById($userId);
             if ($user->verifyPassword($password) == false) {
-                $this->error('errors.tokens.password');
+                $this->error('errors.token.password');
                 return false;  
             }
             $tokens = Model::AccessTokens();
 
             if ($tokens->hasToken($userId,$type) == true) {
                 if ($reCreate == false) {
-                    $this->error('errors.tokens.exist');
+                    $this->error('errors.token.exist');
                     return false;  
                 }
                 $tokens->deleteUserToken($userId,$type);
@@ -84,12 +77,12 @@ class TokensApi extends ApiController
 
             $this->setResponse(\is_array($token),function() use ($token,$user) {  
                 $this
-                    ->message('tokens.create')
+                    ->message('token.create')
                     ->field('uuid',$token['uuid'])
                     ->field('user_uuid',$user->uuid)
                     ->field('type',$token['type']);                                          
             },function() {    
-                $this->error('errors.tokens.create');                                                               
+                $this->error('errors.token.create');                                                               
             }); 
 
         });
@@ -120,7 +113,7 @@ class TokensApi extends ApiController
           
             $token = Model::AccessTokens()->findById($uuid);
             if (\is_object($token) == false) {
-                $this->error('errors.tokens.id');
+                $this->error('errors.token.id');
                 return false;  
             }
 
@@ -133,12 +126,12 @@ class TokensApi extends ApiController
           
             $this->setResponse($result,function() use ($token,$user) {  
                 $this
-                    ->message('tokens.delete')
+                    ->message('token.delete')
                     ->field('uuid',$token->uuid)
                     ->field('user_uuid',$user->uuid)
                     ->field('type',$token->type);                                          
             },function() {    
-                $this->error('errors.tokens.delete');                                                               
+                $this->error('errors.token.delete');                                                               
             }); 
 
         });
@@ -146,5 +139,4 @@ class TokensApi extends ApiController
             ->addRule('text:min=2|required','uuid')
             ->validate();               
     }
-
 }
