@@ -121,6 +121,9 @@ class Users extends Extension
         $this->createOption('users.signup.form',$signupSettings);
         // Reports
         $this->createReport();
+
+        // Services
+        $this->registerService('Users');
     }
     
     /**

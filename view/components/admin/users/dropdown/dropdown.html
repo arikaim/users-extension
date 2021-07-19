@@ -11,7 +11,7 @@
 {% set data_field = data_field|default('uuid') %}
 {% set selectet_text = (selected is empty) ? labels.select : selected.user_name_or_email %}
 <div class="ui search selection dropdown users-dropdown {{ class }}" id="{{ id }}" data-field="{{ data_field }}">
-    <input name="{{ name }}" type="hidden">
+    <input {{ rule|attr('rule') }} name="{{ name }}" type="hidden" value="{{ selected[data_field] }}">
     {% if show_icon == true %}
     <i class="user icon {{ icon }}"></i>
     {% endif %}

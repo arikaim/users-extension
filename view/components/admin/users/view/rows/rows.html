@@ -54,7 +54,7 @@
     <td>{{ item.date_login|dateFormat }}</td>       
     <td>          
         {% if item.isDeleted() == false and control_panel_user == false %}
-        {{ component('components:status.dropdown',{ status: item.status, uuid: item.uuid }) }} 
+            {{ component('components:status.dropdown',{ status: item.status, uuid: item.uuid }) }} 
         {% elseif control_panel_user == true %}
             <div class="ui blue basic label">{{ labels.active }}</div>
         {% else %}

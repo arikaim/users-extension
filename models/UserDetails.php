@@ -241,7 +241,7 @@ class UserDetails extends Model
      *
      * @return boolean
      */
-    public function createStorageFolder()
+    public function createStorageFolder(): bool
     {
         $result = true;
         if ($this->hasStorageFolder() == false) {
@@ -258,9 +258,9 @@ class UserDetails extends Model
      *
      * @return boolean
      */
-    public function hasStorageFolder()
+    public function hasStorageFolder(): bool
     {
-        return File::exists($this->getUserStoragePath(false));
+        return (bool)File::exists($this->getUserStoragePath(false));
     }
 
     /**
@@ -294,7 +294,7 @@ class UserDetails extends Model
      * @param bool $relative
      * @return string
      */
-    public function getUserStoragePath($relative = true)
+    public function getUserStoragePath($relative = true): string
     {
         $path = 'users' . DIRECTORY_SEPARATOR . 'user-' . $this->user->uuid . DIRECTORY_SEPARATOR;
 
