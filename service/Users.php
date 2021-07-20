@@ -33,7 +33,7 @@ class Users extends Service implements ServiceInterface
      * @param boolean $relative
      * @return string|null
      */
-    public function getStoragePaht(?int $userId, bool $relative = true): ?string
+    public function getStoragePath(?int $userId, bool $relative = true): ?string
     {
         $model = Model::UserDetails('users')->findOrCreate($userId);
         if (\is_object($model) == false) {
