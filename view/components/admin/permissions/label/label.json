@@ -3,6 +3,8 @@
         "read": "Read",
         "write": "Write",
         "delete": "Delete",
-        "execute": "Execute"
+        "execute": "Execute",
+        "deny": "Deny",
+        "allow": "Allow"
     }
 }

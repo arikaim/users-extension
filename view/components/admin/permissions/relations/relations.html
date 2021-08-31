@@ -6,7 +6,7 @@
 
 {% set permissions = createModel('PermissionRelations').getRelationsQuery(model.id,type) %}
 {% if uuid is not empty %}
-    <div class="ui middle aligned divided list" id="permissions_list" uuid="{{ model.uuid }}" type="{{ type }}">        
+    <div class="ui middle aligned list" id="permissions_list" uuid="{{ model.uuid }}" type="{{ type }}">        
         {% if permissions is empty %}
             <div class="item">..</div>
         {% endif %}     

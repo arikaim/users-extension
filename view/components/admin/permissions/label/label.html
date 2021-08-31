@@ -1,7 +1,18 @@
 {% set permission = item.toArray() %}
 {% set name = item.permission.name %}
-<div class="{{ class }}">     
-    {{ name }}     
+<div class="{{ class }}">   
+    {% if item.permission.deny == true %}
+    <div class="ui label red horizontal basic">
+        <span class="ui text">{{ labels.deny }}</span>
+    </div>
+{% else %}
+    <div class="ui label green horizontal basic">
+        <span class="ui text">{{ labels.allow }}</span>
+    </div>
+{% endif %}   
+    <span class="px-2">
+        {{ name }}
+    </span>     
     <div class="ui labels right floated">
         {% if permission.read == 1 %}
             <span class="ui basic label text-gray-800 underline">{{ labels.read }}</span>

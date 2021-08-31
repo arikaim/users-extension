@@ -27,11 +27,11 @@
             <tr>   
                 <th class="collapsing center aligned">{{ columns.avatar }}</th>          
                 <th class="collapsing center aligned">{{ columns.actions }}</th>
-                <th class="one wide">
+                <th class="two wide">
                     {{ order.orderByLink('users','date_created') }}
                     {{ columns.created }}
                 </th>
-                <th class="one wide">{{ columns.last_login }}</th>               
+                <th class="two wide">{{ columns.last_login }}</th>               
                 <th class="collapsing one wide">
                     {{ order.orderByLink('users','status') }}
                     {{ columns.status }}

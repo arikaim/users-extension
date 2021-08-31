@@ -2,6 +2,8 @@
     "labels": {
         "readonly": "Readonly",
         "slug": "Slug",
+        "deny": "Deny",
+        "allow": "Allow",
         "extension": "Extension"
     }
 }

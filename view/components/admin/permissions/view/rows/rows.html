@@ -4,6 +4,15 @@
 {% for item in permissions %}
 <div class="item" id="item_{{ item.uuid }}"> 
     <div class="left floated content">
+        {% if item.deny == true %}
+            <div class="ui label red basic">
+                <span class="ui text">{{ labels.deny }}</span>
+            </div>
+        {% else %}
+            <div class="ui label green basic">
+                <span class="ui text">{{ labels.allow }}</span>
+            </div>
+        {% endif %}   
         {% if item.editable == true %}
         <button class="ui mini icon basic button delete-permission" uuid="{{ item.uuid }}" data-title="{{ item.name }}">
             <i class="icon trash orange"></i>
@@ -11,8 +20,8 @@
         <button class="ui mini icon basic button edit-permission" uuid="{{ item.uuid }}">
             <i class="icon edit"></i>
         </button> 
-        {% else %}
-        <div class="ui label horizontal basic">
+        {% else %}      
+        <div class="ui label basic">
             <span class="ui text blue">{{ labels.readonly }}</span>
         </div>
         {% endif %}       
