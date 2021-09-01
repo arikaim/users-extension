@@ -7,7 +7,8 @@
 'use strict';
 
 function PermissionsAdmin() {
-    
+    var self = this;
+
     this.add = function(formId, onSuccess, onError) {
         return arikaim.post('/api/users/admin/permission/add',formId,onSuccess,onError);         
     };
@@ -39,6 +40,16 @@ function PermissionsAdmin() {
         return arikaim.put('/api/users/admin/permission/deny',data,onSuccess,onError);         
     };
 
+    this.updatePermissionType = function(uuid, type, actionType, onSuccess, onError) {      
+        var data = {
+            uuid: uuid,
+            type: type,
+            actionType: actionType                
+        }
+
+        return arikaim.put('/api/admin/users/permission/type',data,onSuccess,onError);         
+    };
+
     this.initItems = function() {
         arikaim.ui.button('.delete-permission',function(element) {           
             var uuid = $(element).attr('uuid');
@@ -52,6 +63,36 @@ function PermissionsAdmin() {
                 });                
             });
         });
+
+        arikaim.ui.button('.change-permission-type',function(element) {           
+            var uuid = $(element).attr('uuid');
+            var type = $(element).attr('type');
+            var actionType = $(element).attr('action-type');
+
+            return permissions.updatePermissionType(uuid,type,actionType,function(result) {       
+                var remove = (actionType == 'remove') ? 0 : 1;
+
+                arikaim.page.loadContent({
+                    id: 'permission_type_content_' + type + '_' + uuid,
+                    params: { 
+                        uuid: uuid,
+                        type: type,
+                        remove: remove
+                    },
+                    component: 'users::admin.permissions.label.button'
+                },function(result) {
+                    self.initItems();
+                });
+
+                arikaim.page.toastMessage(result.message);
+            },function(error) {              
+                arikaim.page.toastMessage({
+                    class: 'error',
+                    message: error
+                });                
+            });
+        });
+       
     }   
 
     this.init = function() {

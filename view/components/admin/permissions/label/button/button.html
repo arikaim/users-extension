@@ -1,0 +1,16 @@
+{% if remove == 1 %}  
+    {% set button = { action: 'remove', class: 'green', icon: 'check circle outline' } %}          
+{% else %}
+    {% set button = { action: 'add', class: 'red', icon: 'ban red' } %}        
+{% endif %}         
+<div 
+    class="ui horizontal basic {{ button.class }} label change-permission-type cursor-pointer" 
+    type="{{ type }}" 
+    uuid="{{ uuid }}"
+    action-type="{{ button.action }}">       
+    <i class="icon {{ button.icon }}"></i>        
+    <span class="underline text-gray-800 hover:text-red-500 w-full">
+
+        {{ labels[type] }}
+    </span>
+</div>

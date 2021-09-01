@@ -204,4 +204,37 @@ class PermissionsControlPanel extends ControlPanelApiController
             ->addRule('exists:model=PermissionRelations|field=uuid','uuid')   
             ->validate();      
     }
+
+    /**
+     * Chnage permission type (remove, add)
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param Validator $data
+     * @return Psr\Http\Message\ResponseInterface
+    */
+    public function updatePermissionTypeController($request, $response, $data) 
+    {
+        $this->onDataValid(function($data) {
+            $type = $data->get('type');
+            $relations = Model::PermissionRelations()->findById($data['uuid']);
+            $permission = Model::Permissions()->findById($relations->permission_id);
+           
+            if ($permission->name == $this->get('access')->getControlPanelPermission()) {
+                $this->error('errors.permission.admin');
+                return;
+            }            
+
+            $result = ($data['actionType'] == 'add') ? $relations->addPermisionType($type) : $relations->removePermisionType($type);
+                          
+            $this->setResponse((bool)$result ?? false,function() use($relations) {                  
+                $this
+                    ->message('permission.deny')
+                    ->field('uuid',$relations->uuid);                  
+            },'errors.permission.deny');                            
+        });        
+        $data
+            ->addRule('exists:model=PermissionRelations|field=uuid','uuid')   
+            ->validate();      
+    }
 }

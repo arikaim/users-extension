@@ -5,26 +5,34 @@
     <div class="ui label red horizontal basic">
         <span class="ui text">{{ labels.deny }}</span>
     </div>
-{% else %}
+    {% else %}
     <div class="ui label green horizontal basic">
         <span class="ui text">{{ labels.allow }}</span>
     </div>
-{% endif %}   
-    <span class="px-2">
+    {% endif %}   
+    <span class="px-2">        
         {{ name }}
     </span>     
     <div class="ui labels right floated">
-        {% if permission.read == 1 %}
-            <span class="ui basic label text-gray-800 underline">{{ labels.read }}</span>
-        {% endif %}
-        {% if permission.write == 1 %}
-            <span class="ui basic label text-gray-800 underline">{{ labels.write }}</span>
-        {% endif %}
-        {% if permission.delete == 1 %}
-            <span class="ui basic label text-gray-800 underline">{{ labels.delete }}</span>
-        {% endif %}
-        {% if permission.execute == 1 %}
-            <span class="ui basic label text-gray-800 underline">{{ labels.execute }}</span>
-        {% endif %}
+        {% set permisssion_types = ['read','write','delete','execute'] %}
+        {% for type in permisssion_types %}
+            {% if permission[type] == 1 %}  
+                {% set button = { action: 'remove', class: 'green', icon: 'check circle outline green' } %}          
+            {% else %}
+                {% set button = { action: 'add', class: 'red', icon: 'ban red' } %}        
+            {% endif %}     
+            <span id="permission_type_content_{{ type }}_{{ item.uuid }}">
+                <div 
+                    class="ui horizontal basic {{ button.class }} label change-permission-type cursor-pointer" 
+                    type="{{ type }}" 
+                    uuid="{{ item.uuid }}"
+                    action-type="{{ button.action }}">       
+                    <i class="icon {{ button.icon }}"> </i>        
+                    <span class="underline text-gray-800 hover:text-red-500 w-full">
+                        {{ labels[type] }}
+                    </span>
+                </div>
+            </span>                
+        {% endfor %}
     </div>
 </div>

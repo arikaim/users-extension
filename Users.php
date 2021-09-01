@@ -83,7 +83,8 @@ class Users extends Extension
         $this->addApiRoute('DELETE','/api/users/admin/permission/delete/{uuid}','PermissionsControlPanel','deletePermission','session');   
         $this->addApiRoute('PUT','/api/users/admin/permission/grant','PermissionsControlPanel','grantPermission','session');   
         $this->addApiRoute('PUT','/api/users/admin/permission/deny','PermissionsControlPanel','denyPermission','session');   
-        
+        $this->addApiRoute('PUT','/api/admin/users/permission/type','PermissionsControlPanel','updatePermissionType','session');
+
         // Create db tables
         $this->createDbTable('UserTypeSchema');
         $this->createDbTable('UserDetailsSchema');     
