@@ -16,7 +16,20 @@
     <i class="dropdown icon"></i>
     <div class="menu">
         {% for item in permissions.get() %}
-        <div class="item" data-value="{{ item.uuid }} ">{{ item.title }}</div>
+        <div class="item" data-value="{{ item.uuid }} ">
+            <div class="flex flex-rows items-center">
+                {% if item.deny == 1 %}
+                <div class="ui mini basic label red">
+                    {{ labels.deny }}
+                </div>
+                {% else %}
+                <div class="ui mini basic label green">
+                    {{ labels.allow }}
+                </div>
+                {% endif %}
+                <span class="px-1">{{ item.title }}</span>
+            </div>            
+        </div>
         {% endfor %}
     </div>
 </div>

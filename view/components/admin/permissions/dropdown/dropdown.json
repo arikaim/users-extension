@@ -1,5 +1,7 @@
 {
     "labels": {
-        "select": "Select Permission"
+        "select": "Select Permission",
+        "allow": "Allow",
+        "deny": "Deny"
     }
 }
