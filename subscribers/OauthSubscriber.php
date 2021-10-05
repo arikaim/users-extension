@@ -58,7 +58,7 @@ class OauthSubscriber extends EventSubscriber implements EventSubscriberInterfac
 
         if ($action == 'login') {
             // login with oauth provider
-            $result = Arikaim::access()->withProvider('oauth',$tokens)->authenticate([
+            Arikaim::access()->withProvider('oauth',$tokens)->authenticate([
                 'token'  => $data['access_token'],
                 'driver' => $data['driver']
             ]);
