@@ -10,7 +10,6 @@
 namespace Arikaim\Extensions\Users\Models\Schema;
 
 use Arikaim\Core\Db\Schema;
-use Arikaim\Core\Db\Model;
 
 /**
  * UserDetails db table schema
@@ -68,19 +67,6 @@ class UserDetailsSchema extends Schema
      * @return void
      */
     public function seeds($seed)
-    {  
-        $permissions = Model::Permissions();
-        $permissionRelations = Model::PermissionRelations();
-        $groups = Model::UserGroups();
-
-        // Pro members      
-        $groups->createGroup('Pro members','Pro members users.');
-        $permissions->createPermission('Pro Members','Pro members features.');
-        $permissionRelations->setGroupPermission('pro-members',['read','write','delete','execute'],'pro-members');
-
-        // Premium members
-        $groups->createGroup('Premium members','Premium members users.');
-        $permissions->createPermission('Premium Members','Premium members features.');
-        $permissionRelations->setGroupPermission('premium-members',['read','write','delete','execute'],'premium-members');
+    {         
     }
 }
