@@ -81,7 +81,6 @@ class UserDetailsSchema extends Schema
         // Premium members
         $groups->createGroup('Premium members','Premium members users.');
         $permissions->createPermission('Premium Members','Premium members features.');
-        $permissionRelations->setGroupPermission('pro-members',['read','write','delete','execute'],'premium-members');
         $permissionRelations->setGroupPermission('premium-members',['read','write','delete','execute'],'premium-members');
     }
 }
