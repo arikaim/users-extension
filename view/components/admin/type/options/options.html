@@ -1,4 +1,4 @@
-{% component 'components:tabs.vertical.content' %}
+{% component 'semantic~tabs.vertical.content' %}
     {% set class = 'sixteen wide column' %}
     {% set panel_class = '' %}
     {% set options = createModel('UserOptionsList','users') %}
@@ -32,7 +32,7 @@
                     </h4>
                     <div class="ui ten column grid p-2">
                         <div class="ten wide column">
-                            {{ component('components:orm.options.type',{ type: type, class: 'mini' }) }}  
+                            {{ component('semantic~orm.options.type',{ type: type, class: 'mini' }) }}  
                         </div>
                     </div>                                                      
                 </div>

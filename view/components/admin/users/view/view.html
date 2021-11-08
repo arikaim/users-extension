@@ -4,7 +4,7 @@
     <div class="ui stackable grid">
         <div class="two wide column left aligned">
             <i class="icon filter"></i>
-            {{  component('components:status.dropdown',{ 
+            {{  component('semantic~status.dropdown',{ 
                     status: status_filter,
                     class: 'status-filter clearable selection',                       
                     all: false 
@@ -12,12 +12,12 @@
             }} 
         </div>
         <div class="four wide column left aligned">
-            {{ component('components:search.form',{ namespace: 'users' }) }}
+            {{ component('semantic~search.form',{ namespace: 'users' }) }}
         </div>
         <div class="nine wide column">
         </div>
         <div class="one wide right aligned column">
-            {{ component('components:paginator.dropdown',{ namespace: 'users' }) }}
+            {{ component('semantic~paginator.dropdown',{ namespace: 'users' }) }}
         </div>
     </div>
 </div>
@@ -53,6 +53,6 @@
         </tbody>
     </table>
     <div id="paginator">
-        {{ component("components:paginator",{ namespace: 'users' }) }}
+        {{ component("semantic~paginator",{ namespace: 'users' }) }}
     </div>
 </div>

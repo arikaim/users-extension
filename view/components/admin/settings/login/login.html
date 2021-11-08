@@ -2,7 +2,7 @@
 {% set captcha_protect = getOption('users.login.captcha.protect',true) %}
 {% set redirect = getOption('users.login.redirect','') %}
 
-{% component 'components:tabs.vertical.content' %}
+{% component 'semantic~tabs.vertical.content' %}
 
 {% if demo_mode == true %}
 <div class="ui warning message">
@@ -41,7 +41,7 @@
     <div class="ui field segment">
         <label>{{ labels.oauth }}</label>
         {% set with_facebook = getOption('users.sign.with.facebook',false) %}
-        {{  component('components:option.checkbox',{ 
+        {{  component('semantic~option.checkbox',{ 
                 name: 'users.sign.with.facebook',
                 value: with_facebook,
                 label: labels.facebook 
@@ -49,7 +49,7 @@
         }}
         <div class="mt-2"></div>
         {% set with_github = getOption('users.sign.with.github',false) %}
-        {{  component('components:option.checkbox',{ 
+        {{  component('semantic~option.checkbox',{ 
                 name: 'users.sign.with.github',
                 value: with_github,
                 label: labels.github 
@@ -57,7 +57,7 @@
         }}
         <div class="mt-2"></div>
         {% set with_twitter = getOption('users.sign.with.twitter',false) %}
-        {{  component('components:option.checkbox',{ 
+        {{  component('semantic~option.checkbox',{ 
                 name: 'users.sign.with.twitter',
                 value: with_twitter,
                 label: labels.twitter 
@@ -65,7 +65,7 @@
         }}
         <div class="mt-2"></div>
         {% set with_google = getOption('users.sign.with.google',false) %}
-        {{  component('components:option.checkbox',{ 
+        {{  component('semantic~option.checkbox',{ 
                 name: 'users.sign.with.google',
                 value: with_google,
                 label: labels.google 
@@ -80,6 +80,6 @@
             <input type="text" name="redirect" id="redirect" value="{{ redirect }}" placeholder="{{ placeholder.redirect }}">     
         </div> 
     </div>
-    {{ component('components:form.footer') }}
+    {{ component('semantic~form.footer') }}
 </form>
 {% endcomponent %}

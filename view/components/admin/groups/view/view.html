@@ -1,9 +1,9 @@
-{% component 'components:tabs.vertical.content' %}
+{% component 'semantic~tabs.vertical.content' %}
 {% set class = 'sixteen wide column' %}
 {% set panel_class = '' %}
 <div class="ui stackable text menu">
     <div class="item right floated">
-        {{ component('components:paginator.dropdown',{ namespace: 'groups' }) }}
+        {{ component('semantic~paginator.dropdown',{ namespace: 'groups' }) }}
     </div>
 </div>
 <div class="ui mt-2">
@@ -22,7 +22,7 @@
         </tbody>
     </table>
     <div id="paginator">
-        {{ component("components:paginator",{ namespace: 'groups' }) }}
+        {{ component("semantic~paginator",{ namespace: 'groups' }) }}
     </div>
 </div>
 {% endcomponent %}

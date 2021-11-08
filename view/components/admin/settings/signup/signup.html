@@ -1,7 +1,7 @@
 {% set settings = getOption('users.signup.form') %}
 {% set activation = getOption('users.sugnup.activation')|number_format %}
 
-{% component 'components:tabs.vertical.content' %}
+{% component 'semantic~tabs.vertical.content' %}
 {% if demo_mode == true %}
 <div class="ui warning message">
     Save optins is disabeld in DEMO MODE!
