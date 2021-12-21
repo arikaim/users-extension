@@ -8,6 +8,7 @@
         "expired_date": "Date Expired",
         "token": "Token",
         "type": "Type",
+        "never": "Never",
         "status": "Status",
         "expired": "Expired",
         "active": "Active",

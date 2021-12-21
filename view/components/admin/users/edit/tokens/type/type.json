@@ -4,5 +4,8 @@
         "api": "Api",
         "login": "Login",
         "oauth": "OAuth"
+    },
+    "tooltips": {
+        "2": "Api access token."
     }
 }

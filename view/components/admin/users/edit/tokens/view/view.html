@@ -16,27 +16,27 @@
             </tr>
         {% endif %}
         {% for token in tokens %}
-        {% set expired_class = (token.expired == true) ? 'error' : 'positive' %}
-        <tr class="{{ expired_class }}" id="{{ token.uuid }}">
-            <td>
-                <button class="ui mini basic icon button delete-token" uuid="{{ token.uuid }}">
-                    <i class="icon trash orange"></i>                  
-                </button>
-            </td>
-            <td>
-                {{ component('users::admin.users.edit.tokens.type',{ type: token.type }) }}
-            </td>  
-            <td>
-                {% if token.expired == true %}
-                    <div class="ui red basic label">{{ labels.expired }}</div>                  
-                {% else %}
-                    <div class="ui green basic label">{{ labels.active }}</div>                   
-                {% endif %}
-            </td>
-            <td>{{ token.date_created|dateTimeFormat }}</td>
-            <td>{{ token.date_expired|dateTimeFormat }}</td>
-            <td>{{ token.token }}</td>           
-        </tr>            
+            {% set expired_class = (token.expired == true) ? 'error' : 'positive' %}
+            <tr class="{{ expired_class }}" id="{{ token.uuid }}">
+                <td>
+                    <button class="ui mini basic icon button delete-token" uuid="{{ token.uuid }}">
+                        <i class="icon trash orange"></i>                  
+                    </button>
+                </td>
+                <td>
+                    {{ component('users::admin.users.edit.tokens.type',{ type: token.type }) }}
+                </td>  
+                <td>
+                    {% if token.expired == true %}
+                        <div class="ui red basic label">{{ labels.expired }}</div>                  
+                    {% else %}
+                        <div class="ui green basic label">{{ labels.active }}</div>                   
+                    {% endif %}
+                </td>
+                <td>{{ token.date_created|dateTimeFormat }}</td>
+                <td>{{ (token.date_expired > 0) ? token.date_expired|dateTimeFormat : labels.never }}</td>
+                <td>{{ token.token }}</td>           
+            </tr>            
         {% endfor %}
     </tbody>
 </table>
