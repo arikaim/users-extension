@@ -233,9 +233,9 @@ class UsersApi extends ApiController
                 
                 if ($remember == true) {
                     // remember user login                                
-                    Cookie::add('user',$user['uuid']);
+                    @Cookie::add('user',$user['uuid']);
                     $accessToken = Model::AccessTokens()->createToken($user['id'],1,4800);                      
-                    Cookie::add('token',$accessToken['token']);                                  
+                    @Cookie::add('token',$accessToken['token']);                                  
                 } else {       
                     // remove token
                     Cookie::delete('user');
