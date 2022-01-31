@@ -1,14 +1,12 @@
-{% set items = [ 
-    { id: 'view_button', title: labels.view.content, component: 'users::admin.users', icon: 'user friends', active: true },
-    { id: 'groups_button', title: labels.groups.content, component: 'users::admin.groups', icon: 'users' },   
-    { id: 'permisisons_button', title: labels.permissions.content, component: 'users::admin.permissions', icon: 'lock' },
-    { id: 'user_type_button', title: labels.type.content, component: 'users::admin.type.view', icon: 'user alternate' },   
-    { id: 'settings_button', title: labels.settings.content, component: 'users::admin.settings', icon: 'cogs' },
-    { id: 'trash_button', title: labels.trash.content, component: 'users::admin.trash', icon: 'trash orange' }      
-] %}
-
 {{  component('semantic~tabs',{ 
-        items: items,
+        items: [ 
+            { id: 'view_button', title: labels.view.content, component: 'users::admin.users', icon: 'user friends', active: true },
+            { id: 'groups_button', title: labels.groups.content, component: 'users::admin.groups', icon: 'users' },   
+            { id: 'permisisons_button', title: labels.permissions.content, component: 'users::admin.permissions', icon: 'lock' },
+            { id: 'user_type_button', title: labels.type.content, component: 'users::admin.type.view', icon: 'user alternate' },   
+            { id: 'settings_button', title: labels.settings.content, component: 'users::admin.settings', icon: 'cogs' },
+            { id: 'trash_button', title: labels.trash.content, component: 'users::admin.trash', icon: 'trash orange' }      
+        ],
         menu: { extension: 'users' },
         help: { component: 'users::admin.help', extension: 'users' }, 
         content: { component: 'users::admin.users' } 

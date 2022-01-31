@@ -2,7 +2,7 @@
 {% set status_filter = searchValue('status','users') %}
 <div class="ui segment">
     <div class="ui stackable grid">
-        <div class="two wide column left aligned">
+        <div class="five wide column left aligned">
             <i class="icon filter"></i>
             {{  component('semantic~status.dropdown',{ 
                     status: status_filter,
@@ -11,13 +11,11 @@
                 }) 
             }} 
         </div>
-        <div class="four wide column left aligned">
+        <div class="nine wide column left aligned">
             {{ component('semantic~search.form',{ namespace: 'users' }) }}
         </div>
-        <div class="nine wide column">
-        </div>
-        <div class="one wide right aligned column">
-            {{ component('semantic~paginator.dropdown',{ namespace: 'users' }) }}
+        <div class="two wide right aligned column">
+            {{ component('semantic~paginator.dropdown',{ class: '', namespace: 'users' }) }}
         </div>
     </div>
 </div>

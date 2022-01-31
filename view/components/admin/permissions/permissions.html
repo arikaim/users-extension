@@ -1,11 +1,9 @@
-{% set items = [ 
-    { title: labels.view,component: 'users::admin.permissions.view',icon: 'list', active: true },
-    { title: labels.add,component: 'users::admin.permissions.view.add',icon: 'plus' },
-    { id: 'edit_permisisons_tab',title: labels.edit,component: 'users::admin.permissions.view.edit',icon: 'edit' }
-] %}
-
 {{  component('semantic~tabs.vertical',{ 
-        items: items, 
+        items:  [ 
+            { title: labels.view,component: 'users::admin.permissions.view',icon: 'list', active: true },
+            { title: labels.add,component: 'users::admin.permissions.view.add',icon: 'plus' },
+            { id: 'edit_permisisons_tab',title: labels.edit,component: 'users::admin.permissions.view.edit',icon: 'edit' }
+        ], 
         menu: { id: 'permissions_menu' }, 
         item_class: 'permissions-tab-item',
         content: {

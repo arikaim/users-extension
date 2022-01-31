@@ -1,4 +1,5 @@
 {% component 'semantic~tabs.vertical.content' %}
+{% set class = 'sixteen wide column' %}
 {% set user = createModel('Users').findById(uuid) %}
 <div class="ui mt-8"> 
     {% if uuid is not empty %} 

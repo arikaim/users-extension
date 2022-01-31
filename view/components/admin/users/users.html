@@ -1,11 +1,9 @@
-{% set items = [ 
-    { title: labels.view,component: 'users::admin.users.view',icon: 'list', active: true },
-    { title: labels.add,component: 'users::admin.users.add',icon: 'plus' },
-    { id: 'edit_user',title: labels.edit,component: 'users::admin.users.edit',icon: 'edit' }    
-] %}
-
 {{  component('semantic~tabs.vertical',{ 
-        items: items, 
+        items: [ 
+            { title: labels.view,component: 'users::admin.users.view',icon: 'list', active: true },
+            { title: labels.add,component: 'users::admin.users.add',icon: 'plus' },
+            { id: 'edit_user',title: labels.edit,component: 'users::admin.users.edit',icon: 'edit' }    
+        ], 
         menu: { id: 'users_menu' }, 
         item_class: 'users-tab-item',
         content: {
