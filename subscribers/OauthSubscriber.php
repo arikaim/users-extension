@@ -15,6 +15,7 @@ use Arikaim\Core\Arikaim;
 use Arikaim\Core\Utils\Utils;
 use Arikaim\Core\Db\Model;
 
+
 /**
  * Execute oauth actions 
 */
@@ -43,6 +44,8 @@ class OauthSubscriber extends EventSubscriber implements EventSubscriberInterfac
         $users = Model::Users();
         $tokens = Model::OauthTokens('oauth');
        
+        Arikaim::logger()->info('oauth',$user);
+
         // Find user
         $userFound = $users->getUser($user['user_name'],$user['email']); 
         if ($userFound == false) {
