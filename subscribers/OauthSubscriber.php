@@ -44,7 +44,7 @@ class OauthSubscriber extends EventSubscriber implements EventSubscriberInterfac
         $users = Model::Users();
         $tokens = Model::OauthTokens('oauth');
        
-        Arikaim::logger()->info('oauth',$user);
+        Arikaim::logger()->info('oauth',$data);
 
         // Find user
         $userFound = $users->getUser($user['user_name'],$user['email']); 

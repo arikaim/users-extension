@@ -128,6 +128,10 @@ class Users extends Controller
     */
     public function changePasswordPage($request, $response, $data)
     {    
+        $result = $this->get('access')->withProvider('token')->authenticate($data->toArray());
+        if ($result == false) {
+            return $this->pageNotFound($response,$data->toArray());   
+        }
     }
 
     /**
