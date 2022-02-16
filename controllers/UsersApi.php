@@ -97,6 +97,9 @@ class UsersApi extends ApiController
                     $redirectUrl = Text::render($redirectUrl,['user' => $user->uuid]);
                     $redirectUrl = (Url::isRelative($redirectUrl) == true) ? Page::getUrl($redirectUrl,true) : $redirectUrl;
                 }
+                // dispatch event
+                $this->get('event')->dispatch('user.signup',$user->toArray());
+
                 $this
                     ->message('signup')
                     ->field('uuid',$user->uuid)
