@@ -6,24 +6,26 @@
         {{ buttons.empty.content }}
     </button>
 </div>
-<table class="ui compact stackable borderless basic table">
-    <thead class="table-head">
-        <tr>
-            <th class="two wide">{{ columns.avatar }}</th>           
-            <th class="two wide collapsing center aligned">{{ columns.actions }}</th>
-            <th class="two wide">{{ columns.created }}</th>
-            <th class="two wide">{{ columns.last_login }}</th>               
-            <th class="collapsing two wide">{{ columns.status }}</th>
-            <th class="collapsing five wide">{{ columns.user_name }}</th>
-            <th class="collapsing five wide">{{ columns.email }}</th>              
-            <th>{{ columns.name }}</th>  
-            <th class="collapsing tow wide">{{ columns.phone }}</th>    
-        </tr>
-    </thead>
-    <tbody id="items_rows" component="users::admin.users.view.rows" namespace="trash">
-        {{ component("users::admin.users.view.rows",{ show_deleted: true }) }}
-    </tbody>
-</table>
-<div id="paginator">
-    {{ component("semantic~paginator",{ namespace: 'trash' }) }}
+<div class="ui segment">
+    <table class="ui compact stackable borderless basic table">
+        <thead class="table-head">
+            <tr>
+                <th class="two wide">{{ columns.avatar }}</th>           
+                <th class="two wide collapsing center aligned">{{ columns.actions }}</th>
+                <th class="two wide">{{ columns.created }}</th>
+                <th class="two wide">{{ columns.last_login }}</th>               
+                <th class="collapsing two wide">{{ columns.status }}</th>
+                <th class="collapsing five wide">{{ columns.user_name }}</th>
+                <th class="collapsing five wide">{{ columns.email }}</th>              
+                <th>{{ columns.name }}</th>  
+                <th class="collapsing tow wide">{{ columns.phone }}</th>    
+            </tr>
+        </thead>
+        <tbody id="items_rows" component="users::admin.users.view.rows" namespace="trash">
+            {{ component("users::admin.users.view.rows",{ show_deleted: true }) }}
+        </tbody>
+    </table>
+    <div id="paginator">
+        {{ component("semantic~paginator",{ namespace: 'trash' }) }}
+    </div>
 </div>

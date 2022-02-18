@@ -1,11 +1,15 @@
 <div>
-    <div class="ui divided grid">
+    <div class="ui grid">
         <div class="row">
             <div class="three wide column">
-                {{ component('users::admin.type.list') }}
+                <div class="ui segment">
+                    {{ component('users::admin.type.list') }}
+                </div>                
             </div>
             <div class="thirteen wide column" id="user_type_options">
-                {{ component('users::admin.type.options',{ uuid: 'default' }) }}
+                <div class="ui segment">
+                    {{ component('users::admin.type.options',{ uuid: 'default' }) }}
+                </div>                
             </div>
         </div>
     </div>

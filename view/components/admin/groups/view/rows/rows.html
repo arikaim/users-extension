@@ -2,6 +2,11 @@
 {% set groups = groups.orderBy('title') %}
 {% set items = paginate(groups,'groups') %}
 
+{% if items.getItems()|length == 0 %}
+<tr>
+    <td colspan="4">..</td>
+</tr>
+{% endif %}
 {% for item in items.getItems() %}   
 <tr id="row_{{ item.uuid }}">             
     <td>                     
