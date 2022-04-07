@@ -33,6 +33,9 @@ class DashboardSubscriber extends EventSubscriber implements EventSubscriberInte
      */
     public function execute($event)
     {
-        return 'users::admin.dashboard';
+        return [
+            'component' => 'users::admin.dashboard',
+            'class'     => 'three wide'
+        ];   
     }
 }
