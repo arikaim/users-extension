@@ -16,12 +16,31 @@ use Arikaim\Core\Interfaces\Job\JobInterface;
 use Arikaim\Core\Utils\Text;
 
 /**
- * User signup action
- */
+* User signup action
+*/
 class SignupAction extends Job implements JobInterface
 {
     /**
-     * Run job
+     * Signup action api
+     *
+     * @Api(
+     *      description="User signup",    
+     *      parameters={
+     *          @ApiParameter (name="name",type="string",required=true,description="Action name"),
+     *          @ApiParameter (name="secret",type="string",required=false,description="Secret key"),
+     *          @ApiParameter (name="user_name",type="string",required=true,description="User name"),
+     *          @ApiParameter (name="email",type="string",required=true,description="User email address"),
+     *      }
+     * )
+     * 
+     * @ApiResponse(
+     *      fields={
+     *          @ApiParameter (name="uuid",type="string",description="User uuid"),
+     *          @ApiParameter (name="status",type="integer",description="User status"),
+     *      }
+     * )
+     * 
+     * Run signup action job
      *
      * @return mixed
      */
