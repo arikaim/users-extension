@@ -227,40 +227,8 @@ class UsersApi extends ApiController
         $this->onDataValid(function($data) use($loginWith,$loginAttempts) {  
             $remember = $data->get('remember',false);
             $credentials = $this->resolveLoginCredentials($loginWith,$data);
-  
-            $result = $this->get('access')->withProvider('session')->authenticate($credentials);
-           
-            $this->setResponse($result,function() use ($remember) {  
-                $user = $this->get('access')->getUser();  
-                Model::Users()->findById($user['uuid'])->updateLoginDate();
-                
-                if ($remember == true) {
-                    // remember user login                                
-                    @Cookie::add('user',$user['uuid']);
-                    $accessToken = Model::AccessTokens()->createToken($user['id'],1,4800);                      
-                    @Cookie::add('token',$accessToken['token']);                                  
-                } else {       
-                    // remove token
-                    Cookie::delete('user');
-                    Cookie::delete('token');                  
-                }
-            
-                $jwtToken = $this->get('access')->createProvider('jwt')->createToken($user['auth_id']);
-                $redirectUrl = $this->get('options')->get('users.login.redirect',null); 
-                $redirectUrl = (empty($redirectUrl) == false) ? Url::BASE_URL . '/' . $redirectUrl : Url::BASE_URL;             
-                // dispatch event
-                $this->get('event')->dispatch('user.login',$user);
-                $this
-                    ->message('login')
-                    ->field('uuid',$user['uuid'])
-                    ->field('token',$jwtToken)
-                    ->field('redirect_url',$redirectUrl);                           
-            },function() use ($loginAttempts) {    
-                $this
-                    ->error('errors.login')     
-                    ->field('attempts',$loginAttempts);                                           
-            }); 
 
+            $this->userLogin($credentials,$remember);
         });
 
         // user name

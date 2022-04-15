@@ -12,6 +12,7 @@ namespace Arikaim\Extensions\Users\Service;
 use Arikaim\Core\Db\Model;
 use Arikaim\Core\Service\Service;
 use Arikaim\Core\Service\ServiceInterface;
+use Arikaim\Core\Utils\Text;
 
 /**
  * Users service class
@@ -24,6 +25,27 @@ class Users extends Service implements ServiceInterface
     public function __construct()
     {
         $this->setServiceName('users');
+    }
+
+    /**
+     * Create user
+     *
+     * @param string|null $userName
+     * @param string|null $password
+     * @param string|null $email
+     * @return Model|false
+     */
+    public function create(?string $userName, ?string $password = null, ?string $email = null)
+    {
+        $password = (empty($password) == true) ? Text::createToken(12) : $password;
+        $user = Model::Users()->createUser($userName,$password,$email);
+
+        if (\is_object($user) == true) {
+            Ariakim::event()->dispatch('user.signup',$user->toArray()); 
+            return $user;
+        }
+
+        return false;
     }
 
     /**
