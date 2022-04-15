@@ -25,9 +25,15 @@ trait Users
      * @param array $credentials
      * @param boolean $remember
      * @param string $authProviderName
+     * @param int|null $loginAttempts
      * @return void
      */
-    public function userLogin(array $credentials, bool $remember = false, string $authProviderName = 'session'): void
+    public function userLogin(
+            array $credentials, 
+            bool $remember = false, 
+            string $authProviderName = 'session', 
+            ?int $loginAttempts = null
+    ): void
     {
         $result = $this->get('access')->withProvider($authProviderName)->authenticate($credentials);
            

@@ -228,7 +228,7 @@ class UsersApi extends ApiController
             $remember = $data->get('remember',false);
             $credentials = $this->resolveLoginCredentials($loginWith,$data);
 
-            $this->userLogin($credentials,$remember);
+            $this->userLogin($credentials,$remember,'session',$loginAttempts);
         });
 
         // user name
