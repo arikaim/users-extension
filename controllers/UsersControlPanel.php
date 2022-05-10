@@ -252,7 +252,7 @@ class UsersControlPanel extends ControlPanelApiController
         
             // save user details
             $result = Model::UserDetails('Users')->saveDetails($user->id,$data->toArray());
-            $this->setResponse($result,function() use($user) {                  
+            $this->setResponse((\is_object($result) == true || $result !== false),function() use($user) {                  
                 $this
                     ->message('update')
                     ->field('uuid',$user->uuid);                  

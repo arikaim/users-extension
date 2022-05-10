@@ -83,7 +83,8 @@ class UsersApi extends ApiController
         $this->onDataValid(function($data) use($settings) { 
             $user = $this->userSignup($data,$settings);
             $redirectUrl = $data->get('redirect_url','');
-        
+            $group = $data->get('group',null);
+
             if ($user !== false) {
                 // send confirm email to user
                 $sendConfirmEmail = (bool)$this->get('options')->get('users.notifications.email.verification',false);
@@ -92,17 +93,20 @@ class UsersApi extends ApiController
                 return false;
             }
 
-            $this->setResponse(\is_object($user),function() use($user,$emailSend,$redirectUrl) { 
+            $this->setResponse(\is_object($user),function() use($user,$emailSend,$redirectUrl,$group) { 
                 if (empty($redirectUrl) == false) {
                     $redirectUrl = Text::render($redirectUrl,['user' => $user->uuid]);
                     $redirectUrl = (Url::isRelative($redirectUrl) == true) ? Page::getUrl($redirectUrl,true) : $redirectUrl;
                 }
                 // dispatch event
                 $this->get('event')->dispatch('user.signup',$user->toArray());
-
+                // add user to gorup
+                Model::UserGroups()->addUser($group,$user->id);
+                
                 $this
                     ->message('signup')
                     ->field('uuid',$user->uuid)
+                    ->field('user_group',$group)
                     ->field('redirect_url',$redirectUrl)
                     ->field('email_send',$emailSend)
                     ->field('status',$user->status);                        

@@ -7,7 +7,6 @@
         "api": "API access",
         "permissions": "Permissions",
         "groups": "Groups",
-        "options": "Options",
-        "info": "Info"
+        "options": "Options"
     }
 }

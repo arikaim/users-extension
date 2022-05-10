@@ -1,0 +1,22 @@
+{
+    "title": "User Details",
+    "labels": {
+        "id": "Id",
+        "username": "Username",
+        "email": "Email",
+        "phone": "Phone",
+        "phone2": "Phone 2",
+        "name": "Name",
+        "type": "User Type",
+        "public": "Public Profile",
+        "on": "On",
+        "off": "Off",
+        "tokens": "Access Tokens",
+        "permissions": "Permissions",
+        "options": "Options",
+        "groups": "Groups",
+        "date_created": "Date Created",
+        "date_updated": "Date Updated",
+        "date_login": "Date Last Login"        
+    }
+}

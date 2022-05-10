@@ -49,6 +49,12 @@
             <i class="trash restore olive alternate icon"></i>
         </button>
         {% endif %}
+        <button 
+            class="ui icon mini basic button user-details-button" 
+            uuid="{{ item.uuid }}" 
+            data-title="{{ (item.user_name is empty) ? item.email : item.user_name }}">
+            <i class="icon info"></i>
+        </button>
     </td>
     <td>{{ item.date_created|dateFormat }}</td>
     <td>{{ item.date_login|dateFormat }}</td>       

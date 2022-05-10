@@ -1,0 +1,132 @@
+{% set user = createModel('Users').findById(uuid) %}
+{% set userDetails = createModel('UserDetails','users').findByColumn(user.id,'user_id') %}
+{% set tokens = createModel('AccessTokens').getUserTokens(user.id) %}
+{% set permissions = createModel('PermissionRelations').getRelationsQuery(user.id,'user') %}
+
+<div clas="ui segment">
+    {{ component('semantic~segment-title',{ title: title, icon: 'info', close_button: true }) }}
+    <div class="mt-4">
+        <div class="ui equal width grid">
+            <div class="ui five wide column">
+                <div class="mt-2">
+                    {{ component('users::admin.users.edit.avatar.image',{ avatar: userDetails.avatar, uuid: uuid }) }}
+                </div>      
+                <table class="ui definition table">
+                    <tbody>
+                        <tr>
+                            <td>{{ labels.id }}</td>
+                            <td>
+                                <div class="ui basic label"> {{ user.id }}</div>
+                                {{ user.uuid }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ labels.username }}</td>
+                            <td>{{ user.user_name }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ labels.email }}</td>
+                            <td>{{ user.email }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ labels.name }}</td>
+                            <td>
+                                {{ userDetails.first_name }}
+                                {{ userDetails.last_name }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ labels.phone }}</td>
+                            <td>{{ userDetails.phone }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ labels.phone2 }}</td>
+                            <td>{{ userDetails.phone_2 }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ labels.public }}</td>
+                            <td>
+                                {% if userDetails.public_profile == 1 %}
+                                    <div class="ui basic green label">{{ labels.on }}</div>
+                                {% else %}
+                                    <div class="ui basic red label">{{ labels.off }}</div>                               
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ labels.type }}</td>
+                            <td>{{ userDetails.type.title }}</td>
+                        </tr>
+                    </tbody>
+                </table>         
+            </div>
+            <div class="column">
+                <h4>{{ labels.tokens }}</h4>
+                <table class="ui definition table">
+                    <tbody>
+                        {% for token in tokens %}
+                            {% if token.isExpired() == flase %}
+                            <tr>
+                                <td>
+                                    {{ component('users::admin.users.edit.tokens.type',{ type: token.type }) }}
+                                </td>
+                                <td>
+                                    {{ token.token }}
+                                </td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>  
+                <h4>{{ labels.permissions }}</h4>
+                <table class="ui definition table">
+                    <tbody>
+                    {% for item in permissions.get() %}
+                        {{ component('users::admin.permissions.label',{ item: item, class: ' flex flex-row items-center' }) }} 
+                    {% endfor %}
+                    </tbody>
+                </table> 
+                <h4>{{ labels.groups }}</h4>
+                <table class="ui definition table">
+                    <tbody>
+                    {% for item in user.groups %}              
+                        {{  component('users::admin.users.edit.groups.item',{ 
+                                group: item.group, 
+                                disable_edit: true,
+                                relation_uuid: item.uuid  
+                            }) 
+                        }}       
+                    {% endfor %}                    
+                    </tbody>
+                </table> 
+                <h4>{{ labels.options }}</h4>
+                {{  component('system:admin.orm.options.edit',{ 
+                        model: 'UserOptions',
+                        extension: 'users',
+                        id: user.id,
+                        class: 'mt-2 basic',
+                        hide: false 
+                    }) 
+                }}
+            </div>
+            <div class="column">
+                <table class="ui definition table">
+                    <tbody>
+                        <tr>
+                            <td>{{ labels.date_created }}</td>
+                            <td>{{ user.date_created|dateTimeFormat }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ labels.date_login }}</td>
+                            <td>{{ user.date_login|dateTimeFormat|emptyLabel('-') }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ labels.date_updated }}</td>
+                            <td>{{ user.date_updated|dateTimeFormat|emptyLabel('-') }}</td>
+                        </tr>
+                    </tbody>
+                </table>  
+            </div>
+        </div>
+    </div>
+</div>

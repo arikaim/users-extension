@@ -54,6 +54,15 @@ function UsersView() {
     };
 
     this.initRows = function() {
+        arikaim.ui.button('.user-details-button',function(element) {
+            var uuid = $(element).attr('uuid');
+            return arikaim.page.loadContent({
+                id: 'users_content',
+                params: { uuid: uuid },
+                component: 'users::admin.users.details'
+            });
+        });
+
         arikaim.ui.button('.edit-button',function(element) {
             var uuid = $(element).attr('uuid');
             arikaim.ui.setActiveTab('#edit_user','.users-tab-item');
