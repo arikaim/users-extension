@@ -29,7 +29,7 @@ class DashboardSubscriber extends EventSubscriber implements EventSubscriberInte
      * Run 
      *
      * @param EventInterface $event
-     * @return void
+     * @return array
      */
     public function execute($event)
     {

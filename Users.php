@@ -33,7 +33,6 @@ class Users extends Extension
         // set auth error redirect url
         $this->setRouteRedirectUrl('GET','/user[/{menu}[/{language:[a-z]{2}}/]]','/login');
         $this->addPageRoute('/user/profile/{uuid}','Users','userProfile','users>user.profile',null,'user.profile.page',true);
-        
         // Api 
         $this->addApiRoute('POST','/api/users/login','UsersApi','login');  
         $this->addApiRoute('POST','/api/users/signup','UsersApi','signup');  
@@ -54,7 +53,6 @@ class Users extends Extension
         $this->addApiRoute('POST','/api/users/token/create','TokensApi','create','session');  
         $this->addApiRoute('PUT','/api/users/token/status','TokensApi','setStatus','session'); 
         $this->addApiRoute('PUT','/api/users/token/delete','TokensApi','delete','session'); 
-        
         // Control Panel Api
         $this->addApiRoute('POST','/api/users/admin/add','UsersControlPanel','add','session'); 
         $this->addApiRoute('PUT','/api/users/admin/update','UsersControlPanel','update','session'); 
@@ -84,7 +82,6 @@ class Users extends Extension
         $this->addApiRoute('PUT','/api/users/admin/permission/grant','PermissionsControlPanel','grantPermission','session');   
         $this->addApiRoute('PUT','/api/users/admin/permission/deny','PermissionsControlPanel','denyPermission','session');   
         $this->addApiRoute('PUT','/api/admin/users/permission/type','PermissionsControlPanel','updatePermissionType','session');
-
         // Create db tables
         $this->createDbTable('UserTypeSchema');
         $this->createDbTable('UserDetailsSchema');     

@@ -15,7 +15,6 @@ use Arikaim\Core\Arikaim;
 use Arikaim\Core\Utils\Utils;
 use Arikaim\Core\Db\Model;
 
-
 /**
  * Execute oauth actions 
 */
