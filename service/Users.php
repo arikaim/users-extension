@@ -13,6 +13,7 @@ use Arikaim\Core\Db\Model;
 use Arikaim\Core\Service\Service;
 use Arikaim\Core\Service\ServiceInterface;
 use Arikaim\Core\Utils\Text;
+use Arikaim\Core\Arikaim;
 
 /**
  * Users service class
@@ -41,7 +42,7 @@ class Users extends Service implements ServiceInterface
         $user = Model::Users()->createUser($userName,$password,$email);
 
         if (\is_object($user) == true) {
-            Ariakim::event()->dispatch('user.signup',$user->toArray()); 
+            Arikaim::event()->dispatch('user.signup',$user->toArray()); 
             return $user;
         }
 
