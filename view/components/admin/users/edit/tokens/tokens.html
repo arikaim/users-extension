@@ -1,12 +1,18 @@
+{% if uuid is not empty %}
+    {% set user = createModel('Users').findById(uuid) %}     
+{% endif %}
+
 {{ component('semantic~segment-title',{ title: title.content, icon: title.icon }) }}
 <div class="p-2 mt-4" id="tokens_view">
     {{ component('users::admin.users.edit.tokens.view',{ uuid: uuid }) }}
 </div>
-<div class="p-1">
+<div class="p-1">    
+    {% if service('access').hasControlPanelAccess(user.id) == true %}
     <button class="ui basic icon labeled button create-token mini">
         <i class="icon green plus"></i>
         {{ buttons.create }}
     </button>
+    {% endif %}
 </div>
 <div class="p-2 w-74" id="token_create_content">
 </div>

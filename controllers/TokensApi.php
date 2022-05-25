@@ -58,6 +58,7 @@ class TokensApi extends ApiController
                 $this->error('errors.id');
                 return false;  
             }
+
             $user = Model::Users()->findById($userId);
             if ($user->verifyPassword($password) == false) {
                 $this->error('errors.token.password');
