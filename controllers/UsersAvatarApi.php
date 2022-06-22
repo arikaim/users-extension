@@ -157,10 +157,10 @@ class UsersAvatarApi extends ApiController
     { 
         $model = Model::Users();
         $userId = $this->getUserId(); 
+        $uuid = $data->get('uuid');
+        $userId = (empty($uuid) == true) ? $userId : $uuid;       
         
-        $userId = (empty($userId) == true) ? $data->get('uuid') : $userId;       
         $user = $model->findById($userId);
-
         if (\is_object($user) == false) {
             // user not found
             $this->error('Not valid user id.');

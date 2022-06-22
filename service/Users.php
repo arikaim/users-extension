@@ -29,6 +29,17 @@ class Users extends Service implements ServiceInterface
     }
 
     /**
+     * Get view avatar url
+     *
+     * @param string|null $uuid
+     * @return string|null
+     */
+    public function getViewAvatarUrl(?string $uuid = null): ?string
+    {
+        return '/api/users/avatar/view/' . $uuid ?? '';
+    }
+
+    /**
      * Create user
      *
      * @param string|null $userName

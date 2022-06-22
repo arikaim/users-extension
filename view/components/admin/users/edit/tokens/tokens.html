@@ -1,7 +1,6 @@
 {% if uuid is not empty %}
     {% set user = createModel('Users').findById(uuid) %}     
 {% endif %}
-
 {{ component('semantic~segment-title',{ title: title.content, icon: title.icon }) }}
 <div class="p-2 mt-4" id="tokens_view">
     {{ component('users::admin.users.edit.tokens.view',{ uuid: uuid }) }}
