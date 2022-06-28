@@ -281,12 +281,18 @@ class UsersControlPanel extends ControlPanelApiController
             $size = $data->get('size',15);
             
             $model = Model::Users()->getNotDeletedQuery();
-            $model = $model->where('user_name','like','%' . $search . '%')->take($size)->get();
+            $model = $model
+                ->where('user_name','like','%' . $search . '%')
+                ->orWhere('email','like','%' . $search . '%')->take($size)->get();
           
             $this->setResponse(\is_object($model),function() use($model,$dataField) {     
                 $items = [];
                 foreach ($model as $item) {
-                    $items[] = ['name' => $item['user_name'],'value' => $item[$dataField]];
+                    $name = (empty($item['user_name']) == true) ? $item['email'] : $item['user_name'];
+                    $items[] = [
+                        'name' => $name,
+                        'value' => $item[$dataField]
+                    ];
                 }
                 $this                    
                     ->field('success',true)
