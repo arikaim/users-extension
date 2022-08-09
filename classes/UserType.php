@@ -10,9 +10,9 @@
 namespace Arikaim\Extensions\Users\Classes;
 
 use Arikaim\Core\Extension\Extension;
-use Arikaim\Core\Db\Model;
 use Arikaim\Core\Utils\Uuid;
 use Arikaim\Core\Db\Traits\Options\OptionType;
+use Arikaim\Core\Db\Seed;
 
 /**
  * User type options
@@ -36,7 +36,7 @@ class UserType
     public function create(string $title, string $slug)
     {
         // Add user type
-        Model::seed('UserType','users',function($seed) use($title, $slug) {
+        Seed::withModel('UserType','users',function($seed) use($title, $slug) {
             $seed->create(['slug' => $slug],[
                 'uuid'   => Uuid::create(),
                 'title'  => $title,               
@@ -57,7 +57,7 @@ class UserType
         // Add options type definition
         $items = Extension::loadJsonConfigFile($configFile,$extensionName);
 
-        Model::seed('UserOptionType','users',function($seed) use($items) {
+        Seed::withModel('UserOptionType','users',function($seed) use($items) {
             $seed->createFromArray(['key'],$items,function($item) {
                 $item['uuid'] = Uuid::create();
                 $item['type'] = OptionType::getOptionTypeId($item['type']);
@@ -78,7 +78,7 @@ class UserType
         // Add options list 
         $items = Extension::loadJsonConfigFile($configFile,$extensionName);
 
-        Model::seed('UserOptionsList','users',function($seed) use($items) {
+        Seed::withModel('UserOptionsList','users',function($seed) use($items) {
             $seed->createFromArray(['key','type_name'],$items,function($item) {
                 $item['uuid'] = Uuid::create(); 
                 return $item;
