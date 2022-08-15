@@ -70,7 +70,7 @@ class UsersApi extends ApiController
      * @param Validator $data
      * @return Psr\Http\Message\ResponseInterface
     */
-    public function signupController($request, $response, $data) 
+    public function signup($request, $response, $data) 
     {       
         $settings = $this->get('options')->get('users.signup.form');
         $captchaProtect = $settings['captcha']['show'] ?? false;
@@ -80,38 +80,6 @@ class UsersApi extends ApiController
             } 
         }
        
-        $this->onDataValid(function($data) use($settings) { 
-            $user = $this->userSignup($data,$settings);
-            $redirectUrl = $data->get('redirect_url','');
-            $group = $data->get('group',null);
-
-            if ($user !== false) {
-                // send confirm email to user
-                $sendConfirmEmail = (bool)$this->get('options')->get('users.notifications.email.verification',false);
-                $emailSend = ($sendConfirmEmail === true) ? $this->sendConfirmationEmail($user->toArray()) : false;
-            } else {
-                return false;
-            }
-
-            $this->setResponse(\is_object($user),function() use($user,$emailSend,$redirectUrl,$group) { 
-                if (empty($redirectUrl) == false) {
-                    $redirectUrl = Text::render($redirectUrl,['user' => $user->uuid]);
-                    $redirectUrl = (Url::isRelative($redirectUrl) == true) ? Page::getUrl($redirectUrl,true) : $redirectUrl;
-                }
-                // dispatch event
-                $this->get('event')->dispatch('user.signup',$user->toArray());
-                // add user to gorup
-                Model::UserGroups()->addUser($group,$user->id);
-                
-                $this
-                    ->message('signup')
-                    ->field('uuid',$user->uuid)
-                    ->field('user_group',$group)
-                    ->field('redirect_url',$redirectUrl)
-                    ->field('email_send',$emailSend)
-                    ->field('status',$user->status);                        
-            },'errors.signup');                         
-        });  
         $repeatPassword = $data->get('repeat_password');
         $data           
             ->addRule('regexp:exp=/^[A-Za-z][A-Za-z0-9]{2,32}$/|required','user_name',$this->getMessage('errors.username.valid'))       
@@ -130,8 +98,49 @@ class UsersApi extends ApiController
         }
         if ($settings['username']['required'] == 'true') {
             $data->addRule('text:min=2|required','user_name');
+            // 
+            if ($this->get('service')->has('content.moderation') == true) {
+                // check user name
+                $result = $this->get('service')->get('content.moderation')->containWord($data['user_name'] ?? '','user.signup');
+                if ($result == true) {                                      
+                    $this->error('errors.username.invalid','Not valid user name.');
+                    return false;
+                }
+            }
         }           
-        $data->validate();           
+
+        $data->validate(true);    
+
+        $user = $this->userSignup($data,$settings);
+        $redirectUrl = $data->get('redirect_url','');
+        $group = $data->get('group',null);
+
+        if ($user !== false) {
+            // send confirm email to user
+            $sendConfirmEmail = (bool)$this->get('options')->get('users.notifications.email.verification',false);
+            $emailSend = ($sendConfirmEmail === true) ? $this->sendConfirmationEmail($user->toArray()) : false;
+        } else {
+            return false;
+        }
+
+        $this->setResponse(\is_object($user),function() use($user,$emailSend,$redirectUrl,$group) { 
+            if (empty($redirectUrl) == false) {
+                $redirectUrl = Text::render($redirectUrl,['user' => $user->uuid]);
+                $redirectUrl = (Url::isRelative($redirectUrl) == true) ? Page::getUrl($redirectUrl,true) : $redirectUrl;
+            }
+            // dispatch event
+            $this->get('event')->dispatch('user.signup',$user->toArray());
+            // add user to gorup
+            Model::UserGroups()->addUser($group,$user->id);
+            
+            $this
+                ->message('signup')
+                ->field('uuid',$user->uuid)
+                ->field('user_group',$group)
+                ->field('redirect_url',$redirectUrl)
+                ->field('email_send',$emailSend)
+                ->field('status',$user->status);                        
+        },'errors.signup');                         
     }
 
     /**
