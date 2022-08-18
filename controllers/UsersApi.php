@@ -67,7 +67,7 @@ class UsersApi extends ApiController
      * 
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param Validator $data
+     * @param \Arikaim\Core\Validator\Validator $data
      * @return Psr\Http\Message\ResponseInterface
     */
     public function signup($request, $response, $data) 
@@ -401,11 +401,12 @@ class UsersApi extends ApiController
      */
     protected function resolveLoginCredentials(int $loginWith, $data): array
     {
-        $credentials['password'] = $data->get('password');
+        $credentials['password'] = \trim($data->get('password'));
+        $userName = \strtolower(\trim($data->get('user_name')));
 
         switch($loginWith) {
             case 1: 
-                $credentials['user_name'] = $data->get('user_name');    
+                $credentials['user_name'] = $userName;    
                 break;
             case 2: 
                 $credentials['email'] = $data->get('email');  
@@ -414,12 +415,12 @@ class UsersApi extends ApiController
                 if (Utils::isEmail($data->get('user_name')) == true) {
                     $credentials['email'] = $data->get('user_name');
                 } else {
-                    $credentials['user_name'] = $data->get('user_name');  
+                    $credentials['user_name'] = $userName;  
                 }
                 break;
 
             default:
-                $credentials['user_name'] = $data->get('user_name');
+                $credentials['user_name'] = $userName;
         }
 
         return $credentials;
