@@ -250,7 +250,7 @@ class UsersApi extends ApiController
         }
         // email
         if ($loginWith == 2) {
-            $data->addRule('email|required','email');
+            $data->addRule('email:|required','email');
         }
         $data
             ->addRule('text:min=2|required','password')

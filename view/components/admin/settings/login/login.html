@@ -1,7 +1,6 @@
 {% set login_with = getOption('users.login.with',1) %}
 {% set captcha_protect = getOption('users.login.captcha.protect',true) %}
 {% set redirect = getOption('users.login.redirect','') %}
-
 {% component 'semantic~tabs.vertical.content' %}
 
 {% if demo_mode == true %}
