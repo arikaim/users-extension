@@ -81,8 +81,7 @@ class UsersApi extends ApiController
         }
        
         $repeatPassword = $data->get('repeat_password');
-        $data           
-            ->addRule('regexp:exp=/^[A-Za-z][A-Za-z0-9]{2,32}$/|required','user_name',$this->getMessage('errors.username.valid'))       
+        $data                 
             ->addRule('text:min=4|required','repeat_password')
             ->addRule('text:min=4|required','password')
             ->addRule('equal:value=' . $repeatPassword . '|required','password',$this->getMessage('errors.repeat_password'));
@@ -97,7 +96,9 @@ class UsersApi extends ApiController
             $data->addRule('email:|required','email');
         }
         if ($settings['username']['required'] == 'true') {
-            $data->addRule('text:min=2|required','user_name');
+            $data           
+                ->addRule('regexp:exp=/^[A-Za-z][A-Za-z0-9]{2,32}$/|required','user_name',$this->getMessage('errors.username.valid')) 
+                ->addRule('text:min=2|required','user_name');
             // 
             if ($this->get('service')->has('content.moderation') == true) {
                 // check user name
