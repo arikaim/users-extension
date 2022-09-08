@@ -24,7 +24,7 @@ class Users extends Extension
     public function install()
     {
         // Pages            
-        $this->addPageRoute('/logout','Users','logout','users>user.logout',null,'logout.page',true); 
+        $this->addPageRoute('/logout[/{language:[a-z]{2}}/]]','Users','logout','users>user.logout',null,'logout.page',true); 
         $this->addPageRoute('/signup[/{options}[/{language:[a-z]{2}}/]]','Users','signup','users>user.signup',null,'signup.page',false); 
         $this->addPageRoute('/login','Users','login','users>user.login',null,'login.page',true);  
         $this->addPageRoute('/change-password/{token}','Users','changePassword','users>user.change-password','token,public','change.password.page',true);  
