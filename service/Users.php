@@ -13,7 +13,6 @@ use Arikaim\Core\Db\Model;
 use Arikaim\Core\Service\Service;
 use Arikaim\Core\Service\ServiceInterface;
 use Arikaim\Core\Utils\Text;
-use Arikaim\Core\Arikaim;
 
 /**
  * Users service class
@@ -49,11 +48,13 @@ class Users extends Service implements ServiceInterface
      */
     public function create(?string $userName, ?string $password = null, ?string $email = null)
     {
+        global $container;
+
         $password = (empty($password) == true) ? Text::createToken(12) : $password;
         $user = Model::Users()->createUser($userName,$password,$email);
 
         if (\is_object($user) == true) {
-            Arikaim::event()->dispatch('user.signup',$user->toArray()); 
+            $container->get('event')->dispatch('user.signup',$user->toArray()); 
             return $user;
         }
 

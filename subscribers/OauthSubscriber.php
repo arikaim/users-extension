@@ -11,7 +11,6 @@ namespace Arikaim\Extensions\Users\Subscribers;
 
 use Arikaim\Core\Events\EventSubscriber;
 use Arikaim\Core\Interfaces\Events\EventSubscriberInterface;
-use Arikaim\Core\Arikaim;
 use Arikaim\Core\Utils\Utils;
 use Arikaim\Core\Db\Model;
 
@@ -36,6 +35,8 @@ class OauthSubscriber extends EventSubscriber implements EventSubscriberInterfac
      */
     public function auth($event)
     {
+        global $container;
+
         $data = $event->getParameters(); 
         $action = $data['action'] ?? null;
         $user = $data['user'];
@@ -62,7 +63,7 @@ class OauthSubscriber extends EventSubscriber implements EventSubscriberInterfac
        
         if ($action == 'login') {
             // login with oauth provider
-            Arikaim::access()->withProvider('oauth',$tokens)->authenticate([
+            $container->get('access')->withProvider('oauth',$tokens)->authenticate([
                 'token'  => $data['access_token'],
                 'driver' => $data['driver']
             ]);

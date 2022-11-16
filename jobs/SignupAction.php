@@ -10,7 +10,6 @@
 namespace Arikaim\Extensions\Users\Jobs;
 
 use Arikaim\Core\Queue\Jobs\Job;
-use Arikaim\Core\Arikaim;
 use Arikaim\Core\Db\Model;
 use Arikaim\Core\Interfaces\Job\JobInterface;
 use Arikaim\Core\Utils\Text;
@@ -46,6 +45,8 @@ class SignupAction extends Job implements JobInterface
      */
     public function execute()
     {      
+        global $container;
+
         $email = $this->getParam('email');
         $userName = $this->getParam('user_name');
         if (empty($email) == true || empty($userName) == true) {
@@ -80,7 +81,7 @@ class SignupAction extends Job implements JobInterface
         } 
        
         // dispatch event   
-        Arikaim::get('event')->dispatch('user.signup',$user->toArray());
+        $container->get('event')->dispatch('user.signup',$user->toArray());
 
         return $user->toArray();
     }

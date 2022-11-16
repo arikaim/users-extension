@@ -29,16 +29,6 @@ class GroupsControlPanel extends ControlPanelApiController
     public function init()
     {
         $this->loadMessages('users::admin.messages');
-    }
-
-    /**
-     * Constructor
-     * 
-     * @param Container|null $container
-     */
-    public function __construct($container = null) 
-    {
-        parent::__construct($container);
         $this->setModelClass('UserGroups');
         $this->setExtensionName('users');
     }

@@ -11,7 +11,6 @@ namespace Arikaim\Extensions\Users\Subscribers;
 
 use Arikaim\Core\Events\EventSubscriber;
 use Arikaim\Core\Interfaces\Events\EventSubscriberInterface;
-use Arikaim\Core\Arikaim;
 use Arikaim\Core\Utils\Utils;
 use Arikaim\Core\Db\Model;
 use Exception;
@@ -39,15 +38,17 @@ class UsersSubscriber extends EventSubscriber implements EventSubscriberInterfac
      */
     public function signup($event)
     {
+        global $container;
+
         $user = $event->getParameters(); 
-        $sendWelcomeEmail = Arikaim::options()->get('users.notifications.email.welcome',false);
-        $adminNotification = Arikaim::options()->get('users.notifications.email.signup',false);
+        $sendWelcomeEmail = $container->get('options')->get('users.notifications.email.welcome',false);
+        $adminNotification = $container->get('options')->get('users.notifications.email.signup',false);
         $userEmail = $user['email'] ?? '';         
 
         if (($sendWelcomeEmail == true) && (Utils::isEmail($userEmail) == true)) {
             // send welcome email to user
             try {
-                Arikaim::mailer()->create('users>welcome',$user)->to($userEmail)->send();
+                $container->get('mailer')->create('users>welcome',$user)->to($userEmail)->send();
             } catch (Exception $e) {               
             }          
         }
@@ -57,7 +58,7 @@ class UsersSubscriber extends EventSubscriber implements EventSubscriberInterfac
             if (Utils::isEmail($adminUser->email) == true) {
                 // send email to admin
                 try {
-                    Arikaim::mailer()->create('users>signup',$user)->to($adminUser->email)->send();
+                    $container->get('mailer')->create('users>signup',$user)->to($adminUser->email)->send();
                 } catch (Exception $e) {               
                 }   
             }

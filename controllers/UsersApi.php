@@ -15,7 +15,6 @@ use Arikaim\Core\Http\Url;
 use Arikaim\Core\Utils\Utils;
 use Arikaim\Core\Http\Cookie;
 use Arikaim\Core\Http\Session;
-use Arikaim\Core\Arikaim;
 use Arikaim\Core\Utils\Text;
 use Arikaim\Core\View\Html\Page;
 
@@ -116,32 +115,30 @@ class UsersApi extends ApiController
         $redirectUrl = $data->get('redirect_url','');
         $group = $data->get('group',null);
 
-        if ($user !== false) {
-            // send confirm email to user
-            $sendConfirmEmail = (bool)$this->get('options')->get('users.notifications.email.verification',false);
-            $emailSend = ($sendConfirmEmail === true) ? $this->sendConfirmationEmail($user->toArray()) : false;
-        } else {
+        if ($user === false) {
+            $this->error('errors.signup','Error user signup');
             return false;
         }
 
-        $this->setResponse(\is_object($user),function() use($user,$emailSend,$redirectUrl,$group) { 
-            if (empty($redirectUrl) == false) {
-                $redirectUrl = Text::render($redirectUrl,['user' => $user->uuid]);
-                $redirectUrl = (Url::isRelative($redirectUrl) == true) ? Page::getUrl($redirectUrl,true) : $redirectUrl;
-            }
-            // dispatch event
-            $this->get('event')->dispatch('user.signup',$user->toArray());
-            // add user to gorup
-            Model::UserGroups()->addUser($group,$user->id);
-            
-            $this
-                ->message('signup')
-                ->field('uuid',$user->uuid)
-                ->field('user_group',$group)
-                ->field('redirect_url',$redirectUrl)
-                ->field('email_send',$emailSend)
-                ->field('status',$user->status);                        
-        },'errors.signup');                         
+        // send confirm email to user
+        $sendConfirmEmail = (bool)$this->get('options')->get('users.notifications.email.verification',false);
+        $emailSend = ($sendConfirmEmail === true) ? $this->sendConfirmationEmail($user->toArray()) : false;
+    
+        if (empty($redirectUrl) == false) {
+            $redirectUrl = Text::render($redirectUrl,['user' => $user->uuid]);
+            $redirectUrl = (Url::isRelative($redirectUrl) == true) ? Page::getUrl($redirectUrl,true) : $redirectUrl;
+        }
+        
+        // add user to gorup
+        Model::UserGroups()->addUser($group,$user->id);
+        
+        $this
+            ->message('signup')
+            ->field('uuid',$user->uuid)
+            ->field('user_group',$group)
+            ->field('redirect_url',$redirectUrl)
+            ->field('email_send',$emailSend)
+            ->field('status',$user->status);                                                       
     }
 
     /**
@@ -283,7 +280,7 @@ class UsersApi extends ApiController
         }
         $properties = [
             'user'               => $user->toArray(),
-            'domain'             => Arikaim::getDomain(),
+            'domain'             => \constant('DOMAIN'),
             'reset_password_url' => $this->createProtectedUrl($user->id,'change-password')
         ];
 

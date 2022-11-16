@@ -10,7 +10,6 @@
 namespace Arikaim\Extensions\Users\Console;
 
 use Arikaim\Core\Console\ConsoleCommand;
-use Arikaim\Core\Arikaim;
 use Arikaim\Core\Db\Model;
 
 /**
@@ -38,6 +37,8 @@ class DeleteGames extends ConsoleCommand
      */
     protected function executeCommand($input, $output)
     {       
+        global $container;
+
         $userId = $input->getArgument('id');
        
         $this->style->writeLn('');
@@ -45,7 +46,7 @@ class DeleteGames extends ConsoleCommand
         $this->style->writeLn('');
 
         $user = Model::Users()->findById($userId);
-        if (\is_object($user) == false) {
+        if ($user == null) {
             $this->showError('Not vlaid user Id!');
             return;
         }
@@ -55,7 +56,8 @@ class DeleteGames extends ConsoleCommand
         }
        
         // trigger before user delete event
-        Arikaim::event()->dispatch('user.before.delete',$user->toArray());
+        $container->get('event')->dispatch('user.before.delete',$user->toArray());
+
         // delete user details
         $userDetails = Model::UserDetails('users');
         $userDetails->deleteUserDetails($userId);
