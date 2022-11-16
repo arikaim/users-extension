@@ -59,22 +59,19 @@ class UsersAvatarApi extends ApiController
     { 
         // get current auth user
         $user = $this->get('access')->getUser();
+        $data->validate(true);
 
-        $this->onDataValid(function($data) use ($user) { 
-            $user = Model::Users()->findByid($user['uuid']);
-            $details = Model::UserDetails('users')->findOrCreate($user->id);
+        $user = Model::Users()->findByid($user['uuid']);
+        $details = Model::UserDetails('users')->findOrCreate($user->id);
 
-            $details->deleteAvatarImage();
-            $result = $details->update(['avatar' => null]);
+        $details->deleteAvatarImage();
+        $result = $details->update(['avatar' => null]);
 
-            $this->setResponse((bool)$result,function() use($user) {                  
-                $this
-                    ->message('avatar.delete')
-                    ->field('uuid',$user->uuid);                  
-            },'errors.avatar.delete');               
-        });
-        $data->validate();
-
+        $this->setResponse((bool)$result,function() use($user) {                  
+            $this
+                ->message('avatar.delete')
+                ->field('uuid',$user->uuid);                  
+        },'errors.avatar.delete');               
     }
 
     /**
@@ -89,53 +86,50 @@ class UsersAvatarApi extends ApiController
     {        
         // get current auth user
         $user = $this->get('access')->getUser();
+        $data->validate(true);   
 
-        $this->onDataValid(function($data) use ($request,$user) {          
-            $user = Model::Users()->findById($user['id']);
-            if (\is_object($user) == false) {
-                $this->error('errors.id');
-                return;
-            }
-            $details = Model::UserDetails('users')->findOrCreate($user->id);
-            if (\is_object($details) == false) {
-                $this->error('errors.details');
-                return;
-            }
+        $user = Model::Users()->findById($user['id']);
+        if ($user == null) {
+            $this->error('errors.id','Not valid user id');
+            return;
+        }
+        $details = Model::UserDetails('users')->findOrCreate($user->id);
+        if (\is_object($details) == false) {
+            $this->error('errors.details');
+            return;
+        }
 
-            $result = $details->createStorageFolder();
-            if ($result === false) {
-                $this->error('errors.storage');
-                return;
+        $result = $details->createStorageFolder();
+        if ($result === false) {
+            $this->error('errors.storage');
+            return;
+        }
+        $destinationPath = $details->getUserStoragePath();
+    
+        $files = $this->uploadFiles($request,$destinationPath);
+
+        // process uploaded files
+        $avatar = null;
+        foreach ($files as $item) {               
+            if (empty($item['error']) == false) {
+                continue;
             }
-            $destinationPath = $details->getUserStoragePath();
+            if (empty($details->avatar) == false) {
+                // remove prev avatar
+                $details->deleteAvatarImage();
+            }  
+
+            // set avatar image           
+            $avatar = $item['name'];                  
+            $result = (bool)$details->update(['avatar' => $avatar]);                            
+        }
         
-            $files = $this->uploadFiles($request,$destinationPath);
-
-            // process uploaded files
-            $avatar = null;
-            foreach ($files as $item) {               
-                if (empty($item['error']) == false) {
-                    continue;
-                }
-                if (empty($details->avatar) == false) {
-                    // remove prev avatar
-                    $details->deleteAvatarImage();
-                }  
-
-                // set avatar image           
-                $avatar = $item['name'];                  
-                $result = (bool)$details->update(['avatar' => $avatar]);                            
-            }
-           
-            $this->setResponse(\is_array($files),function() use($user,$avatar) {                  
-                $this
-                    ->message('avatar.upload')
-                    ->field('uuid',$user->uuid)
-                    ->field('avatar',$avatar);                                                
-            },'errors.avatar.upload');   
-
-        });
-        $data->validate();   
+        $this->setResponse(\is_array($files),function() use($user,$avatar) {                  
+            $this
+                ->message('avatar.upload')
+                ->field('uuid',$user->uuid)
+                ->field('avatar',$avatar);                                                
+        },'errors.avatar.upload');    
     }
 
     /**
@@ -161,7 +155,7 @@ class UsersAvatarApi extends ApiController
         $userId = (empty($uuid) == true) ? $userId : $uuid;       
         
         $user = $model->findById($userId);
-        if (\is_object($user) == false) {
+        if ($user == null) {
             // user not found
             $this->error('Not valid user id.');
             return $this->getResponse();

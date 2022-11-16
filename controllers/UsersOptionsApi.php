@@ -28,16 +28,6 @@ class UsersOptionsApi extends ApiController
     public function init()
     {
         $this->loadMessages('users>users.messages');
-    }
-
-    /**
-     * Constructor
-     * 
-     * @param Container|null $container
-     */
-    public function __construct($container = null) 
-    {
-        parent::__construct($container);
         $this->setModelClass('UserOptions');
         $this->setExtensionName('users');
     }

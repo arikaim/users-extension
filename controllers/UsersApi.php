@@ -172,33 +172,32 @@ class UsersApi extends ApiController
     { 
         // get current auth user
         $user = $this->get('access')->getUser();
-
-        $this->onDataValid(function($data) use($user) {
-            $userModel = Model::Users()->findById($user['id']);
-            // save user 
-            $result = $userModel->update([
-                'user_name' => $data->getString('user_name',null),
-                'email'     => $data->getString('email',null)
-            ]);
-            if ($result == false) {
-                $this->error('errors.update');
-                return;
-            }
-            // save user details
-            $result = Model::UserDetails('Users')->saveDetails($user['id'],$data->toArray());          
-            $this->setResponse($result,function() use($user) {  
-                $this
-                    ->message('update')
-                    ->field('uuid',$user['uuid']);
-            },'errors.update');               
-        });         
         $data          
             ->addRule('text:min=2','first_name')
             ->addRule('htmlTags','first_name',$this->getMessage('errors.html'))
             ->addRule('htmlTags','last_name',$this->getMessage('errors.html'))
             ->addRule('unique:model=Users|field=user_name|exclude=' . $user['user_name'],'user_name',$this->getMessage('errors.username.exist'))
             ->addRule('unique:model=Users|field=email|exclude=' . $user['email'],'email',$this->getMessage('errors.email'))
-            ->validate();     
+            ->validate(true);    
+
+        $userModel = Model::Users()->findById($user['id']);
+        // save user 
+        $result = $userModel->update([
+            'user_name' => $data->getString('user_name',null),
+            'email'     => $data->getString('email',null)
+        ]);
+        if ($result == false) {
+            $this->error('errors.update');
+            return;
+        }
+        // save user details
+        $result = Model::UserDetails('Users')->saveDetails($user['id'],$data->toArray());
+
+        $this->setResponse($result,function() use($user) {  
+            $this
+                ->message('update')
+                ->field('uuid',$user['uuid']);
+        },'errors.update');               
     }
 
     /**
@@ -226,25 +225,7 @@ class UsersApi extends ApiController
     */
     public function loginController($request, $response, $data)
     {       
-        $loginAttempts = $this->get('access')->getLoginAttempts();
-
-        if ($loginAttempts > 1) {
-            $captchaProtect = $this->get('options')->get('users.login.captcha.protect');
-            if ($captchaProtect == true) {      
-                if ($this->verifyCaptcha($request,$data) == false) {                                            
-                    return;
-                }                  
-            }
-        }
         $loginWith = $this->get('options')->get('users.login.with',3);
-
-        $this->onDataValid(function($data) use($loginWith,$loginAttempts) {  
-            $remember = $data->get('remember',false);
-            $credentials = $this->resolveLoginCredentials($loginWith,$data);
-
-            $this->userLogin($credentials,$remember,'session',$loginAttempts);
-        });
-
         // user name
         if ($loginWith == 1 || $loginWith == 3) {
             $data->addRule('text:min=2|required','user_name');
@@ -255,7 +236,23 @@ class UsersApi extends ApiController
         }
         $data
             ->addRule('text:min=2|required','password')
-            ->validate();               
+            ->validate(true);    
+
+        $loginAttempts = $this->get('access')->getLoginAttempts();
+
+        if ($loginAttempts > 1) {
+            $captchaProtect = $this->get('options')->get('users.login.captcha.protect');
+            if ($captchaProtect == true) {      
+                if ($this->verifyCaptcha($request,$data) == false) {                                            
+                    return false;
+                }                  
+            }
+        }
+    
+        $remember = $data->get('remember',false);
+        $credentials = $this->resolveLoginCredentials($loginWith,$data);
+
+        $this->userLogin($credentials,$remember,'session',$loginAttempts);
     }
 
     /**
@@ -275,30 +272,28 @@ class UsersApi extends ApiController
     */
     public function resetPasswordController($request, $response, $data)
     {  
-        $this->onDataValid(function($data) {
-            $user = Model::Users()->findByColumn($data->get('email'),'email');
-            if (\is_object($user) == false) {
-                $this->error('errors.email.notvalid');
-                return;
-            }
-            $properties = [
-                'user'               => $user->toArray(),
-                'domain'             => Arikaim::getDomain(),
-                'reset_password_url' => $this->createProtectedUrl($user->id,'change-password')
-            ];
-
-            $result = $this->get('mailer')->create('users>reset-password',$properties)                
-                ->to($user->email)
-                ->send();
-
-            $this->setResponse($result,function()  {                        
-                $this->message('reset.password.email');                        
-            },'errors.reset-password');          
-
-        });
         $data
             ->addRule('exists:model=Users|field=email|required','email',$this->getMessage('errors.not-valid'))
-            ->validate();       
+            ->validate(true);       
+       
+        $user = Model::Users()->findByColumn($data->get('email'),'email');
+        if ($user == null) {
+            $this->error('errors.email.notvalid','Not valid email.');
+            return;
+        }
+        $properties = [
+            'user'               => $user->toArray(),
+            'domain'             => Arikaim::getDomain(),
+            'reset_password_url' => $this->createProtectedUrl($user->id,'change-password')
+        ];
+
+        $result = $this->get('mailer')->create('users>reset-password',$properties)                
+            ->to($user->email)
+            ->send();
+
+        $this->setResponse($result,function()  {                        
+            $this->message('reset.password.email');                        
+        },'errors.reset-password');          
     }
 
     /**
@@ -367,30 +362,29 @@ class UsersApi extends ApiController
     */
     public function changePasswordController($request, $response, $data)
     {      
-        $this->onDataValid(function($data) { 
-            $password = $data->get('password');
-            $user = $this->get('access')->getUser(); 
-                 
-            if (\is_array($user) === false) {
-                $this->error('Access token not valid.');
-                return;               
-            }
-      
-            $result = Model::Users()->changePassword($user['id'],$password);       
-            $this->setResponse($result,function() use($user) {                         
-                $this                    
-                    ->message('password')                  
-                    ->field('uuid',$user['uuid']);                                     
-            },'errors.password');                      
-        });
-
         $repeatPassword = $data->get('repeat_password');
         $data        
             ->addRule('exists:model=Users|field=uuid','uuid')
             ->addRule('text:min=4|required','repeat_password')
             ->addRule('text:min=4|required','password')
             ->addRule('equal:value=' . $repeatPassword . '|required','password','Password and repeat password does not match.')
-            ->validate();       
+            ->validate(true);       
+
+        $password = $data->get('password');
+        $user = $this->get('access')->getUser(); 
+                
+        if (\is_array($user) === false) {
+            $this->error('errors.token','Access token not valid.');
+            return;               
+        }
+    
+        $result = Model::Users()->changePassword($user['id'],$password);   
+
+        $this->setResponse($result,function() use($user) {                         
+            $this                    
+                ->message('password')                  
+                ->field('uuid',$user['uuid']);                                     
+        },'errors.password');                      
     }
 
     /**

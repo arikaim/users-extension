@@ -47,49 +47,47 @@ class TokensApi extends ApiController
     */
     public function createController($request, $response, $data)
     {       
-        $this->onDataValid(function($data)  {  
-            $password = $data->get('password');
-            $type = $data->get('type',AutoTokensInterface::API_ACCESS_TOKEN);
-            $expireTime = $data->get('expire_time',-1);
-            $reCreate = $data->get('recreate',false);
-            $userId = $this->getUserId();
-
-            if (empty($userId) == true) {
-                $this->error('errors.id');
-                return false;  
-            }
-
-            $user = Model::Users()->findById($userId);
-            if ($user->verifyPassword($password) == false) {
-                $this->error('errors.token.password');
-                return false;  
-            }
-            $tokens = Model::AccessTokens();
-
-            if ($tokens->hasToken($userId,$type) == true) {
-                if ($reCreate == false) {
-                    $this->error('errors.token.exist');
-                    return false;  
-                }
-                $tokens->deleteUserToken($userId,$type);
-            }
-
-            $token = Model::AccessTokens()->createToken($userId,$type,$expireTime,false);
-
-            $this->setResponse(\is_array($token),function() use ($token,$user) {  
-                $this
-                    ->message('token.create')
-                    ->field('uuid',$token['uuid'])
-                    ->field('user_uuid',$user->uuid)
-                    ->field('type',$token['type']);                                          
-            },function() {    
-                $this->error('errors.token.create');                                                               
-            }); 
-
-        });
         $data
             ->addRule('text:min=2|required','password')
-            ->validate();               
+            ->validate(true);       
+
+        $password = $data->get('password');
+        $type = $data->get('type',AutoTokensInterface::API_ACCESS_TOKEN);
+        $expireTime = $data->get('expire_time',-1);
+        $reCreate = $data->get('recreate',false);
+        $userId = $this->getUserId();
+
+        if (empty($userId) == true) {
+            $this->error('errors.id');
+            return false;  
+        }
+
+        $user = Model::Users()->findById($userId);
+        if ($user->verifyPassword($password) == false) {
+            $this->error('errors.token.password');
+            return false;  
+        }
+        $tokens = Model::AccessTokens();
+
+        if ($tokens->hasToken($userId,$type) == true) {
+            if ($reCreate == false) {
+                $this->error('errors.token.exist');
+                return false;  
+            }
+            $tokens->deleteUserToken($userId,$type);
+        }
+
+        $token = Model::AccessTokens()->createToken($userId,$type,$expireTime,false);
+
+        $this->setResponse(\is_array($token),function() use ($token,$user) {  
+            $this
+                ->message('token.create')
+                ->field('uuid',$token['uuid'])
+                ->field('user_uuid',$user->uuid)
+                ->field('type',$token['type']);                                          
+        },function() {    
+            $this->error('errors.token.create');                                                               
+        });                
     }
 
     /**
@@ -102,42 +100,40 @@ class TokensApi extends ApiController
     */
     public function deleteController($request, $response, $data)
     {       
-        $this->onDataValid(function($data)  {  
-            $uuid = $data->get('uuid');
-            $userId = $this->getUserId();
-
-            if (empty($userId) == true) {
-                $this->error('errors.id');
-                return false;  
-            }
-            $user = Model::Users()->findById($userId);
-          
-            $token = Model::AccessTokens()->findById($uuid);
-            if (\is_object($token) == false) {
-                $this->error('errors.token.id');
-                return false;  
-            }
-
-            if ($token->user_id != $userId) {
-                $this->error('errors.access');
-                return false;  
-            }
-
-            $result = $token->delete();
-          
-            $this->setResponse($result,function() use ($token,$user) {  
-                $this
-                    ->message('token.delete')
-                    ->field('uuid',$token->uuid)
-                    ->field('user_uuid',$user->uuid)
-                    ->field('type',$token->type);                                          
-            },function() {    
-                $this->error('errors.token.delete');                                                               
-            }); 
-
-        });
         $data
             ->addRule('text:min=2|required','uuid')
-            ->validate();               
+            ->validate(true);    
+
+        $uuid = $data->get('uuid');
+        $userId = $this->getUserId();
+
+        if (empty($userId) == true) {
+            $this->error('errors.id');
+            return false;  
+        }
+        $user = Model::Users()->findById($userId);
+        
+        $token = Model::AccessTokens()->findById($uuid);
+        if ($token == null) {
+            $this->error('errors.token.id','Not valid token id');
+            return false;  
+        }
+
+        if ($token->user_id != $userId) {
+            $this->error('errors.access');
+            return false;  
+        }
+
+        $result = $token->delete();
+        
+        $this->setResponse($result,function() use ($token,$user) {  
+            $this
+                ->message('token.delete')
+                ->field('uuid',$token->uuid)
+                ->field('user_uuid',$user->uuid)
+                ->field('type',$token->type);                                          
+        },function() {    
+            $this->error('errors.token.delete');                                                               
+        });                   
     }
 }
