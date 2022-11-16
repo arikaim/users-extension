@@ -291,9 +291,14 @@ class UsersApi extends ApiController
             ->to($user->email)
             ->send();
 
-        $this->setResponse($result,function()  {                        
-            $this->message('reset.password.email');                        
-        },'errors.reset-password');          
+        if ($result === false) {
+            $this->error('errors.reset-password','Error send password reset link.');
+            return;
+        }
+                          
+        $this
+            ->message('reset.password.email')
+            ->field('email',$data->get('email'));                                 
     }
 
     /**
