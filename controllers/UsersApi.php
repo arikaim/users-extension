@@ -398,8 +398,8 @@ class UsersApi extends ApiController
      */
     protected function resolveLoginCredentials(int $loginWith, $data): array
     {
-        $credentials['password'] = \trim($data->get('password'));
-        $userName = \strtolower(\trim($data->get('user_name')));
+        $credentials['password'] = \trim($data->get('password',''));
+        $userName = \strtolower(\trim($data->get('user_name','')));
 
         switch($loginWith) {
             case 1: 
