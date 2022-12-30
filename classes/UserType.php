@@ -11,7 +11,7 @@ namespace Arikaim\Extensions\Users\Classes;
 
 use Arikaim\Core\Extension\Extension;
 use Arikaim\Core\Utils\Uuid;
-use Arikaim\Core\Db\Traits\Options\OptionType;
+use Arikaim\Core\Db\OptionType;
 use Arikaim\Core\Db\Seed;
 
 /**
@@ -19,13 +19,6 @@ use Arikaim\Core\Db\Seed;
 */
 class UserType 
 {
-    /**
-     * Constructor
-     */
-    public function __construct() 
-    {
-    }
-
     /**
      * Create user type
      *
