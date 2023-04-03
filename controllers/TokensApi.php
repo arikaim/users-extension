@@ -45,10 +45,10 @@ class TokensApi extends ApiController
      * @param Validator $data
      * @return Psr\Http\Message\ResponseInterface
     */
-    public function createController($request, $response, $data)
+    public function create($request, $response, $data)
     {       
         $data
-            ->addRule('text:min=2|required','password')
+            ->addRule('text:min=4|required','password')
             ->validate(true);       
 
         $password = $data->get('password');
@@ -58,36 +58,35 @@ class TokensApi extends ApiController
         $userId = $this->getUserId();
 
         if (empty($userId) == true) {
-            $this->error('errors.id');
+            $this->error('Access denied');
             return false;  
         }
 
         $user = Model::Users()->findById($userId);
         if ($user->verifyPassword($password) == false) {
-            $this->error('errors.token.password');
+            $this->error('Not valid user password');
             return false;  
         }
         $tokens = Model::AccessTokens();
 
         if ($tokens->hasToken($userId,$type) == true) {
             if ($reCreate == false) {
-                $this->error('errors.token.exist');
+                $this->error('Token exist error');
                 return false;  
             }
             $tokens->deleteUserToken($userId,$type);
         }
 
         $token = Model::AccessTokens()->createToken($userId,$type,$expireTime,false);
-
-        $this->setResponse(\is_array($token),function() use ($token,$user) {  
-            $this
-                ->message('token.create')
-                ->field('uuid',$token['uuid'])
-                ->field('user_uuid',$user->uuid)
-                ->field('type',$token['type']);                                          
-        },function() {    
-            $this->error('errors.token.create');                                                               
-        });                
+        if (\is_array($token) == false) {
+            $this->error('Error create access token.');  
+        }
+      
+        $this
+            ->message('token.create',"Token created.")
+            ->field('uuid',$token['uuid'])
+            ->field('user_uuid',$user->uuid)
+            ->field('type',$token['type']);                                                               
     }
 
     /**
