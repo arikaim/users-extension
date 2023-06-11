@@ -69,16 +69,11 @@
     </td>  
     <td>{{ item.user_name }}</td>
     <td>
-        {% if item.email_status == 1 %}
+        {% if item.details.isConfirmedEmail() == true %}
             <i class="icon olive checkmark" title="{{ labels.confirmed }}"></i>          
         {% endif %}
-        {{ item.email }}        
+        {{ item.email }}           
     </td>       
-    <td>{{ item.first_name }} {{ item.last_name }}</td>
-    <td class="center aligned">           
-        {% if control_panel == true %}
-            <div class="ui label blue mini basic">{{ labels.cp }}</div>
-        {% endif %}
-    </td>
+    <td>{{ item.first_name }} {{ item.last_name }}</td>    
 </tr>
 {% endfor %}

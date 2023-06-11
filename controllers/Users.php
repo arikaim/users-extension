@@ -149,7 +149,7 @@ class Users extends Controller
         if (\is_object($details) == false) {
             return false;
         }
-
+        // set email confirmed
         $details->setEmailStatus(1);       
     }
 

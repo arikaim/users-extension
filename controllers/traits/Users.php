@@ -35,36 +35,51 @@ trait Users
             ?int $loginAttempts = null
     ): void
     {
+       
         $result = $this->get('access')->withProvider($authProviderName)->authenticate($credentials);
-           
-        $this->setResponse($result,function() use ($remember) {  
-            $user = $this->get('access')->getUser();  
-            Model::Users()->findById($user['uuid'])->updateLoginDate();
-            
-            if ($remember == true) {
-                // remember user login                                
-                @Cookie::add('user',$user['uuid']);
-                $accessToken = Model::AccessTokens()->createToken($user['id'],1,4800);                      
-                @Cookie::add('token',$accessToken['token']);                                  
-            } else {       
-                // remove token
-                Cookie::delete('user');
-                Cookie::delete('token');                  
-            }
-            
-            $jwtToken = $this->get('access')->createProvider('jwt')->createToken($user['auth_id']);
-            // dispatch event
-            $this->get('event')->dispatch('user.login',$user);
-            $this
-                ->message('login')
-                ->field('uuid',$user['uuid'])
-                ->field('token',$jwtToken)
-                ->field('redirect_url',$this->getLoginRedirectUrl());                           
-        },function() use ($loginAttempts) {    
+        if ($result == false) {
             $this
                 ->error('errors.login')     
-                ->field('attempts',$loginAttempts);                                           
-        }); 
+                ->field('attempts',$loginAttempts);
+
+            return;
+        }
+
+        $user = $this->get('access')->getUser();  
+
+        $verifiedEmail = (bool)$this->get('options')->get('users.login.require.verified.email',false);
+        if ($verifiedEmail == true && empty($credentials['email']) == false) {
+            $userDetails = Model::UserDetails('users')->findOrCreate($user['id']);
+            if ($userDetails->email_status != 1) {
+                $this
+                    ->error('errors.login','Not verified emaiil.')     
+                    ->field('attempts',$loginAttempts);     
+                
+                return;   
+            }
+        }
+
+        Model::Users()->findById($user['uuid'])->updateLoginDate();
+        
+        if ($remember == true) {
+            // remember user login                                
+            @Cookie::add('user',$user['uuid']);
+            $accessToken = Model::AccessTokens()->createToken($user['id'],1,4800);                      
+            @Cookie::add('token',$accessToken['token']);                                  
+        } else {       
+            // remove token
+            Cookie::delete('user');
+            Cookie::delete('token');                  
+        }
+        
+        $jwtToken = $this->get('access')->createProvider('jwt')->createToken($user['auth_id']);
+        // dispatch event
+        $this->get('event')->dispatch('user.login',$user);
+        $this
+            ->message('login')
+            ->field('uuid',$user['uuid'])
+            ->field('token',$jwtToken)
+            ->field('redirect_url',$this->getLoginRedirectUrl());                           
     }
 
     /**

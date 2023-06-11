@@ -13,6 +13,8 @@
         "email": "Login with email",
         "username": "Login with username",
         "combined": "Login with email and user name",
+        "verified": "Verified email",
+        "verified_email": "Require verified email for login",
         "protect": "Protect login form with captcha",
         "redirect": "Redirect Url"       
     },

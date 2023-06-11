@@ -38,12 +38,11 @@
                     {{ order.orderByLink('users','user_name') }}
                     {{ columns.user_name }}
                 </th>
-                <th class="collapsing two wide">
+                <th>
                     {{ order.orderByLink('users','email') }}
                     {{ columns.email }}
                 </th>              
-                <th>{{ columns.name }}</th>  
-                <th class="collapsing one wide">{{ columns.phone }}</th>          
+                <th>{{ columns.name }}</th>                    
             </tr>
         </thead>
         <tbody id="users_rows" component="users::admin.users.view.rows" namespace="users">

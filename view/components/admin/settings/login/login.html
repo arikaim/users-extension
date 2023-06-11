@@ -1,6 +1,8 @@
 {% set login_with = getOption('users.login.with',1) %}
 {% set captcha_protect = getOption('users.login.captcha.protect',true) %}
 {% set redirect = getOption('users.login.redirect','') %}
+{% set require_verified_email = getOption('users.login.require.verified.email',false) %}
+
 {% component 'semantic~tabs.vertical.content' %}
 
 {% if demo_mode == true %}
@@ -29,6 +31,14 @@
             </div>
         </div>
     </div>
+    <div class="ui field segment">
+        <label>{{ labels.verified }}</label>
+        <div class="ui checkbox" id="require_verified_email">
+            <input type="checkbox" name="verified_email" tabindex="0" class="hidden" value="true" {{ require_verified_email|ifthen(true,'checked') }}>
+            <label>{{ labels.verified_email }}</label>
+        </div>
+    </div>
+
     <div class="ui field segment">
         <label>{{ labels.captcha }}</label>
         <div class="ui checkbox" id="captcha_protect">

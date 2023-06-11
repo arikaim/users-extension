@@ -173,13 +173,13 @@ class UserDetails extends Model
      * Find or create user details row
      *
      * @param integer $userId
-     * @return Model|false
+     * @return Model|null
      */
-    public function findOrCreate($userId)
+    public function findOrCreate($userId): ?object
     {
         $model = $this->where('user_id','=',$userId)->first();
         
-        return (\is_object($model) == true) ? $model : $this->create(['user_id' => $userId]);          
+        return ($model !== null) ? $model : $this->create(['user_id' => $userId]);          
     } 
 
     /**
@@ -188,7 +188,7 @@ class UserDetails extends Model
      * @param int $userId
      * @return Model|null
      */
-    public function findDetails($userId)
+    public function findDetails($userId): ?object
     {
         return $this->where('user_id','=',$userId)->first();
     }
@@ -208,7 +208,7 @@ class UserDetails extends Model
      *
      * @return boolean
      */
-    public function isConfirmedEmail()
+    public function isConfirmedEmail(): bool
     {
         return ($this->email_status == 1);
     }
@@ -219,7 +219,7 @@ class UserDetails extends Model
      * @param integer $status
      * @return boolean
      */
-    public function setEmailStatus($status)
+    public function setEmailStatus(int $status)
     {
         $this->email_status = $status;
         

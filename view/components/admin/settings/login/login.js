@@ -23,4 +23,13 @@ arikaim.component.onLoaded(function() {
     },function(result) {
         arikaim.ui.form.showMessage(result.message);
     });
+
+    $('#require_verified_email').checkbox({
+        onChecked: function() {
+            options.save('users.login.require.verified.email',true);
+        },
+        onUnchecked: function() {
+            options.save('users.login.require.verified.email',false);
+        }   
+    });
 });

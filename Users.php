@@ -98,11 +98,15 @@ class Users extends Extension
         $this->createOption('users.login.redirect','user');
         $this->createOption('users.logout.redirect',null);
         $this->createOption('users.login.captcha.protect',true);
+       
         $this->createOption('users.sugnup.activation',1);       
         $this->createOption('users.notifications.email.signup',false);
         $this->createOption('users.notifications.email.welcome',false);
         $this->createOption('users.notifications.email.verification',false);
         $this->createOption('users.default.type',null);
+        // 
+        $this->createOption('users.login.require.verified.email',false);
+
         // sign in with 
         $this->createOption('users.sign.with.github',false);
         $this->createOption('users.sign.with.facebook',false);

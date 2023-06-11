@@ -6,6 +6,7 @@
         "email": "Email",
         "phone": "Phone",
         "phone2": "Phone 2",
+        "confirmed": "Confirmed",
         "name": "Name",
         "type": "User Type",
         "public": "Public Profile",

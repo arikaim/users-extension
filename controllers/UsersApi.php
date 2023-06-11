@@ -223,6 +223,7 @@ class UsersApi extends ApiController
     public function loginController($request, $response, $data)
     {       
         $loginWith = $this->get('options')->get('users.login.with',3);
+      
         // user name
         if ($loginWith == 1 || $loginWith == 3) {
             $data->addRule('text:min=2|required','user_name');

@@ -26,7 +26,12 @@
                         </tr>
                         <tr>
                             <td>{{ labels.email }}</td>
-                            <td>{{ user.email }}</td>
+                            <td>
+                                {% if item.details.isConfirmedEmail() == true %}
+                                <i class="icon olive checkmark" title="{{ labels.confirmed }}"></i>          
+                                {% endif %}
+                                {{ user.email }}
+                            </td>
                         </tr>
                         <tr>
                             <td>{{ labels.name }}</td>
