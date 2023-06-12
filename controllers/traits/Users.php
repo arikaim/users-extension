@@ -9,6 +9,8 @@
 */
 namespace Arikaim\Extensions\Users\Controllers\Traits;
 
+use Arikaim\Core\Access\Interfaces\AutoTokensInterface;
+
 use Arikaim\Core\Db\Model;
 use Arikaim\Core\Validator\Validator;
 use Arikaim\Core\Http\Cookie;
@@ -50,11 +52,15 @@ trait Users
         $verifiedEmail = (bool)$this->get('options')->get('users.login.require.verified.email',false);
         if ($verifiedEmail == true && empty($credentials['email']) == false) {
             $userDetails = Model::UserDetails('users')->findOrCreate($user['id']);
-            if ($userDetails->email_status != 1) {
+            
+            if ($userDetails->isConfirmedEmail() == false) {
+                // Error: user email is not confirmed
+                $accessToken = Model::AccessTokens()->createToken($user['id'],AutoTokensInterface::PAGE_ACCESS_TOKEN,1800);
                 $this
                     ->error('errors.login','Not verified emaiil.')     
-                    ->field('attempts',$loginAttempts);     
-                
+                    ->field('attempts',$loginAttempts)    
+                    ->field('token',$accessToken['token']);
+
                 return;   
             }
         }
@@ -64,7 +70,7 @@ trait Users
         if ($remember == true) {
             // remember user login                                
             @Cookie::add('user',$user['uuid']);
-            $accessToken = Model::AccessTokens()->createToken($user['id'],1,4800);                      
+            $accessToken = Model::AccessTokens()->createToken($user['id'],AutoTokensInterface::LOGIN_ACCESS_TOKEN,4800);                      
             @Cookie::add('token',$accessToken['token']);                                  
         } else {       
             // remove token
@@ -169,7 +175,7 @@ trait Users
         }
         $userType = Model::create('UserType','users')->findBySlug($typeSlug);
         
-        return (\is_object($userType) == true) ? $userType->id : null;
+        return ($userType != null) ? $userType->id : null;
     }
 
      /**

@@ -20,9 +20,9 @@ use Arikaim\Core\Utils\Text;
 class Users extends Service implements ServiceInterface
 {
     /**
-     * Constructor
-     */
-    public function __construct()
+     * Init service
+    */
+    public function boot()
     {
         $this->setServiceName('users');
     }
@@ -53,12 +53,13 @@ class Users extends Service implements ServiceInterface
         $password = (empty($password) == true) ? Text::createToken(12) : $password;
         $user = Model::Users()->createUser($userName,$password,$email);
 
-        if (\is_object($user) == true) {
-            $container->get('event')->dispatch('user.signup',$user->toArray()); 
-            return $user;
+        if ($user === false || $user === null) {
+            return false;
         }
 
-        return false;
+        $container->get('event')->dispatch('user.signup',$user->toArray()); 
+
+        return $user;       
     }
 
     /**
@@ -71,7 +72,7 @@ class Users extends Service implements ServiceInterface
     public function getStoragePath(?int $userId, bool $relative = true): ?string
     {
         $model = Model::UserDetails('users')->findOrCreate($userId);
-        if (\is_object($model) == false) {
+        if ($model == null) {
             return null;
         }
 

@@ -63,6 +63,10 @@ function Users() {
     this.getLoginAttempts = function() {
         return loginAttempts;
     };
+
+    this.sendConfirmEmail = function(token) {
+        return arikaim.put('/api/users/confirm/email',{ token: token },onError);
+    }
 }
 
 var users = new Users();

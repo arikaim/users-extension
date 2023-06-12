@@ -42,6 +42,34 @@ class UsersApi extends ApiController
         $this->loadMessages('users>users.messages');
     }
 
+    /**  
+    * Send confirm email
+    * 
+    * @param \Psr\Http\Message\ServerRequestInterface $request
+    * @param \Psr\Http\Message\ResponseInterface $response
+    * @param \Arikaim\Core\Validator\Validator $data
+    * @return Psr\Http\Message\ResponseInterface
+    */
+    public function sendConfirmEmail($request, $response, $data) 
+    {   
+        $user = $this->get('access')->getUser();                 
+        if ($user === null) {
+            $this->error('errors.token','Access token not valid.');
+            return;               
+        }
+
+        $result = $this->sendConfirmationEmail($user);
+
+        if ($result === false) {
+            $this->error('errors.confirm.email','Error send confirm email.');
+            return false;
+        }
+
+        $this
+            ->message('confirm.email','Confirm email send')
+            ->field('uuid',$user['uuid']);
+    }
+
     /**
      * Signup api
      *

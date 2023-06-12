@@ -144,13 +144,24 @@ class Users extends Controller
     */
     public function emailConfirmPage($request, $response, $data)
     {            
-        $user = $this->get('access')->getUser();      
-        $details = Model::UserDetails('users')->findByColumn($user['id'],'user_id');
-        if (\is_object($details) == false) {
-            return false;
+        $result = $this->get('access')->withProvider('token')->authenticate($data->toArray());
+        if ($result == false) {
+            return $this->pageNotFound($response,$data->toArray());   
         }
+
+        $user = $this->get('access')->getUser();      
+
+        if ($user == null) {
+            return $this->pageNotFound($response,$data->toArray());    
+        }
+
+        $details = Model::UserDetails('users')->findByColumn($user['id'],'user_id');
+        if ($details == null) {
+            return $this->pageNotFound($response,$data->toArray());   
+        }
+        
         // set email confirmed
-        $details->setEmailStatus(1);       
+        $details->setEmailStatus(1);     
     }
 
     /**
