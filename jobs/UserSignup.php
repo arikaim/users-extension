@@ -60,40 +60,37 @@ class UserSignup extends Job implements JobInterface
         $email = $this->getParam('email');
         $userName = $this->getParam('user_name');
         if (empty($email) == true || empty($userName) == true) {
-            return [
-                'error' => 'Not valid email or user name.'
-            ]; 
+            $this->result()->error('Not valid email or user name.');
+            return;
         }
         
         $model = Model::Users();
 
         // verify username
         if ($model->hasUserName($userName) == true) { 
-            return [
-                'error' => 'errors.username.exist'
-            ];             
+            $this->result()->error('Username exists');
+            return;         
         }
        
         // verify email
-        if ($model->hasUserEmail($email) == true) {               
-            return [
-                'error' => 'errors.email.exist'
-            ];
+        if ($model->hasUserEmail($email) == true) {         
+            $this->result()->error('Email are used.');      
+            return;
         }
         
         $password = Text::createToken(62);
         $user = $model->createUser($userName,$password,$email);
        
         if (\is_object($user) == false) {   
-            return [
-                'error' => 'errors.signup'
-            ];       
+            $this->result()->error('Error signup');
+            return;    
         } 
        
         // dispatch event   
         $container->get('event')->dispatch('user.signup',$user->toArray());
 
-        return $user->toArray();
+        // set job result field
+        $this->result()->field('user',$user->toArray());
     }
 
     /**
