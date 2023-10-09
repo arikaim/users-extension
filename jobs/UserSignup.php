@@ -17,8 +17,18 @@ use Arikaim\Core\Utils\Text;
 /**
 * User signup action
 */
-class SignupAction extends Job implements JobInterface
+class UserSignup extends Job implements JobInterface
 {
+    /**
+     * Init job
+     *
+     * @return void
+     */
+    public function init(): void
+    {
+        $this->setName('user.signup');
+    }
+
     /**
      * Signup action api
      *
@@ -84,5 +94,32 @@ class SignupAction extends Job implements JobInterface
         $container->get('event')->dispatch('user.signup',$user->toArray());
 
         return $user->toArray();
+    }
+
+    /**
+     * Init descriptor properties 
+     *
+     * @return void
+     */
+    protected function initDescriptor(): void
+    {
+        $this->descriptor->set('title','User signup');
+        $this->descriptor->set('description','Create user with user name or email and auto generated password.');
+
+        // properties
+        $this->descriptor->collection('parameters')->property('user_name',function($property) {
+            $property
+                ->title('Username')
+                ->type('text')   
+                ->required(false)                    
+                ->value('');                         
+        });
+        $this->descriptor->collection('parameters')->property('email',function($property) {
+            $property
+                ->title('Email')
+                ->type('email')   
+                ->required(false)                    
+                ->value('');                         
+        });
     }
 }

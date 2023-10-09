@@ -126,6 +126,8 @@ class Users extends Extension
         $this->createReport();
         // Services
         $this->registerService('Users');
+        // Register Job
+        $this->registerJob('UserSignup');
     }
     
     /**
