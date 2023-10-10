@@ -104,7 +104,8 @@ class UserSignup extends Job implements JobInterface
         $this->descriptor->set('description','Create user with user name or email and auto generated password.');
 
         $this->descriptor->set('allow.admin.config',false);
-        
+        $this->descriptor->set('allow.console.push',true);
+
         // properties
         $this->descriptor->collection('parameters')->property('user_name',function($property) {
             $property
