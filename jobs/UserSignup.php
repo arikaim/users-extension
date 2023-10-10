@@ -108,13 +108,28 @@ class UserSignup extends Job implements JobInterface
             $property
                 ->title('Username')
                 ->type('text')   
-                ->required(false)                    
+                ->required(true)                    
                 ->value('');                         
         });
         $this->descriptor->collection('parameters')->property('email',function($property) {
             $property
                 ->title('Email')
                 ->type('email')   
+                ->required(true)                    
+                ->value('');                         
+        });
+        // result
+        $this->descriptor->collection('result')->property('error',function($property) {
+            $property
+                ->title('Error')
+                ->type('text')   
+                ->required(false)                    
+                ->value('');                         
+        });
+        $this->descriptor->collection('result')->property('user',function($property) {
+            $property
+                ->title('User')
+                ->type('list')   
                 ->required(false)                    
                 ->value('');                         
         });
