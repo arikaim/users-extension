@@ -1,7 +1,7 @@
 {% component 'semantic~tabs.vertical.content' %}
 {% set user = createModel('Users').findById(uuid) %}
 {% set user_details = createModel('UserDetails','users').findOrCreate(user.id) %}
-{% set options = createModel('UserOptionsList','users').getItemsQuery(user_details.type.slug) %}
+{% set options = [] %}
 <div class="mt-4">
     <div class="ui label basic">
         {{ labels.type }}

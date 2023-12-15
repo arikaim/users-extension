@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Model;
 use Arikaim\Core\Models\Users;
 use Arikaim\Extensions\Users\Models\UserDetails;
 use Arikaim\Extensions\Users\Models\UserOptionType;
-use Arikaim\Extensions\Users\Models\UserOptionsList;
 
 use Arikaim\Core\Db\Traits\Uuid;
 use Arikaim\Core\Db\Traits\Find;
@@ -35,16 +34,6 @@ class UserOptions extends Model
      * @var string
      */
     protected $table = 'user_options';
-
-    /**
-     * Visible columns
-     *
-     * @var array
-     */
-    protected $visible = [
-        'key',
-        'value'                
-    ];
 
     /**
      * Fillable columns
@@ -72,13 +61,6 @@ class UserOptions extends Model
      * @var string
      */
     protected $optionTypeClass = UserOptionType::class;
-
-    /**
-     * Options definition model class
-     *
-     * @var string
-     */
-    protected $optionsDefinitionClass = UserOptionsList::class;
 
     /**
      * Get user relation

@@ -88,7 +88,6 @@ class Users extends Extension
         $this->createDbTable('UserDetailsSchema');     
         $this->createDbTable('UserOptionTypeSchema');  
         $this->createDbTable('UserOptionsSchema');  
-        $this->createDbTable('UserOptionsListSchema');  
         // Events
         $this->registerEvent('user.login','Trigger after user login','UserEventDescriptor');
         $this->registerEvent('user.logout','Trigger after user logout');

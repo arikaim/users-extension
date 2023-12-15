@@ -48,7 +48,7 @@ class Users extends Service implements ServiceInterface
      */
     public function create(?string $userName, ?string $password = null, ?string $email = null)
     {
-        global $container;
+        global $arikaim;
 
         $password = (empty($password) == true) ? Text::createToken(12) : $password;
         $user = Model::Users()->createUser($userName,$password,$email);
@@ -57,7 +57,7 @@ class Users extends Service implements ServiceInterface
             return false;
         }
 
-        $container->get('event')->dispatch('user.signup',$user->toArray()); 
+        $arikaim->get('event')->dispatch('user.signup',$user->toArray()); 
 
         return $user;       
     }

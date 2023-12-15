@@ -58,24 +58,4 @@ class UserType
             });   
         });
     }
-
-    /**
-     * Create options list
-     *
-     * @param string $configFile
-     * @param string $extensionName
-     * @return void
-     */
-    public function createOptionsList(string $configFile, string $extensionName) 
-    {
-        // Add options list 
-        $items = Extension::loadJsonConfigFile($configFile,$extensionName);
-
-        Seed::withModel('UserOptionsList','users',function($seed) use($items) {
-            $seed->createFromArray(['key','type_name'],$items,function($item) {
-                $item['uuid'] = Uuid::create(); 
-                return $item;
-            });    
-        });     
-    }
 }

@@ -1,7 +1,7 @@
 {% component 'semantic~tabs.vertical.content' %}
     {% set class = 'sixteen wide column' %}
     {% set panel_class = '' %}
-    {% set options = createModel('UserOptionsList','users') %}
+    {% set options = [] %}
     {% set user_type = createModel('UserType','users').findByColumn(uuid,['uuid','slug']) %}
     {% set option_type = createModel('UserOptionType','users') %}
     <div class="mt-2">

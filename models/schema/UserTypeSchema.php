@@ -38,7 +38,8 @@ class UserTypeSchema extends Schema
         $table->slug();
         $table->string('title')->nullable(false);
         $table->status();
-        $table->string('description')->nullable(true);           
+        $table->string('description')->nullable(true);      
+        $table->options();     
     }
 
     /**
@@ -49,6 +50,9 @@ class UserTypeSchema extends Schema
      */
     public function update($table) 
     {              
+        if ($this->hasColumn('options') == false) {
+            $table->options();     
+        }
     }
 
     /**
