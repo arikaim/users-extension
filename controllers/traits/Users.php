@@ -147,10 +147,7 @@ trait Users
 
         $userDetails = Model::UserDetails('users');
         $userDetails->saveDetails($user->id,$data->toArray());
-        // create options
-        $userDetails = $userDetails->findOrCreate($user->id);
-        $userDetails->createOptions();  
-      
+        
         // dispatch event   
         $params = $user->toArray();
         $params['options'] = $options;

@@ -1,5 +1,6 @@
 {
     "title": "User Details",
+    "icon": "user",
     "labels": {
         "id": "Id",
         "username": "Username",

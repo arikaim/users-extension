@@ -4,9 +4,6 @@ arikaim.component.onLoaded(function() {
     arikaim.ui.form.addRules("#create_user_form",{
         inline: false,
         fields: {
-            user_name: {
-                rules: [{ type: 'minLength[2]' }]
-            },
             email: {
                 rules: [{ type: 'email' }]
             },
@@ -23,6 +20,7 @@ arikaim.component.onLoaded(function() {
             }
         }
     });  
+
     arikaim.ui.form.onSubmit('#create_user_form',function() {
         return usersAdmin.add('#create_user_form');
     },function(result) {

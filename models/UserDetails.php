@@ -166,7 +166,7 @@ class UserDetails extends Model
         $details['user_id'] = $userId;
         $model = $this->findByColumn($userId,'user_id');
 
-        return (\is_object($model) == true) ? (bool)$model->update($details) : $this->create($details);
+        return ($model !== null) ? (bool)$model->update($details) : $this->create($details);
     }
 
     /**

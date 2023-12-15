@@ -3,14 +3,23 @@
 {% set tokens = createModel('AccessTokens').getUserTokens(user.id) %}
 {% set permissions = createModel('PermissionRelations').getRelationsQuery(user.id,'user') %}
 
-<div clas="ui segment">
-    {{ component('semantic~segment-title',{ title: title, icon: 'info', close_button: true }) }}
+{% component 'semantic~panel' %}
     <div class="mt-4">
         <div class="ui equal width grid">
-            <div class="ui five wide column">
-                <div class="mt-2">
-                    {{ component('users::admin.users.edit.avatar.image',{ avatar: userDetails.avatar, uuid: uuid }) }}
-                </div>      
+            <div class="ui five wide column">               
+                {% if userDetails.avatar is not empty %}
+                {% set image_url = url('/api/users/admin/avatar/view/' ~  uuid,true) %}    
+                <img 
+                    class="ui top aligned small circular image" 
+                    src="{{ image_url }}">
+
+                {% else %}
+                <div class="w-32 h-32 border rounded-full border-solid border-gray-300">         
+                    <div class="flex items-center justify-center align-middle pt-6 pl-2">
+                        <i class="icon user outline grey huge"></i>
+                    </div>
+                </div>
+                {% endif %}                          
                 <table class="ui definition table">
                     <tbody>
                         <tr>
@@ -134,4 +143,4 @@
             </div>
         </div>
     </div>
-</div>
+{% endcomponent %}
