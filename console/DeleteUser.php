@@ -13,9 +13,9 @@ use Arikaim\Core\Console\ConsoleCommand;
 use Arikaim\Core\Db\Model;
 
 /**
- * Delete games command
+ * Delete users command
  */
-class DeleteGames extends ConsoleCommand
+class DeleteUser extends ConsoleCommand
 {  
     /**
      * Configure command
@@ -37,7 +37,7 @@ class DeleteGames extends ConsoleCommand
      */
     protected function executeCommand($input, $output)
     {       
-        global $container;
+        global $arikaim;
 
         $userId = $input->getArgument('id');
        
@@ -56,7 +56,7 @@ class DeleteGames extends ConsoleCommand
         }
        
         // trigger before user delete event
-        $container->get('event')->dispatch('user.before.delete',$user->toArray());
+        $arikaim->get('event')->dispatch('user.before.delete',$user->toArray());
 
         // delete user details
         $userDetails = Model::UserDetails('users');
