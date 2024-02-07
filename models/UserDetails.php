@@ -35,6 +35,13 @@ class UserDetails extends Model
         Status;
     
     /**
+     * Table name
+     *
+     * @var string
+     */
+    protected $tableName = 'user_details';
+
+    /**
      * Fillable attributes
      *
      * @var array
