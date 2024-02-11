@@ -14,7 +14,7 @@ use Arikaim\Core\Db\Schema;
 /**
  * User options db table
  */
-class UserOptionsSchema extends Schema  
+class UserOptions extends Schema  
 {    
     /**
      * Table name

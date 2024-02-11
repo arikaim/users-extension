@@ -14,7 +14,7 @@ use Arikaim\Core\Db\Schema;
 /**
  * UserDetails db table schema
  */
-class UserDetailsSchema extends Schema  
+class UserDetails extends Schema  
 {    
     /**
      * Table name
@@ -58,15 +58,5 @@ class UserDetailsSchema extends Schema
         if ($this->hasColumn('type_id') == false) {
             $table->relation('type_id','user_type',true);
         } 
-    }
-
-    /**
-     * Insert or update rows in table
-     *
-     * @param Seed $seed
-     * @return void
-     */
-    public function seeds($seed)
-    {         
     }
 }

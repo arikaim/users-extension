@@ -15,7 +15,7 @@ use Arikaim\Core\Utils\Uuid;
 /**
  * User type db table
  */
-class UserTypeSchema extends Schema  
+class UserType extends Schema  
 {    
     /**
      * Table name

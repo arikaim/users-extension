@@ -14,7 +14,7 @@ use Arikaim\Core\Db\Schema;
 /**
  * User option type db table schema
  */
-class UserOptionTypeSchema extends Schema  
+class UserOptionType extends Schema  
 {    
     /**
      * Table name
@@ -43,15 +43,5 @@ class UserOptionTypeSchema extends Schema
      */
     public function update($table) 
     {              
-    }
-
-    /**
-     * Insert or update rows in table
-     *
-     * @param Seed $seed
-     * @return void
-     */
-    public function seeds($seed)
-    {       
     }
 }

@@ -84,10 +84,10 @@ class Users extends Extension
         $this->addApiRoute('PUT','/api/users/admin/permission/deny','PermissionsControlPanel','denyPermission','session');   
         $this->addApiRoute('PUT','/api/admin/users/permission/type','PermissionsControlPanel','updatePermissionType','session');
         // Create db tables
-        $this->createDbTable('UserTypeSchema');
-        $this->createDbTable('UserDetailsSchema');     
-        $this->createDbTable('UserOptionTypeSchema');  
-        $this->createDbTable('UserOptionsSchema');  
+        $this->createDbTable('UserType');
+        $this->createDbTable('UserDetails');     
+        $this->createDbTable('UserOptionType');  
+        $this->createDbTable('UserOptions');  
         // Events
         $this->registerEvent('user.login','Trigger after user login','UserEventDescriptor');
         $this->registerEvent('user.logout','Trigger after user logout');
