@@ -9,7 +9,7 @@
 */
 namespace Arikaim\Extensions\Users\Controllers\Traits;
 
-use Arikaim\Core\Access\Interfaces\AutoTokensInterface;
+use Arikaim\Core\Access\Interfaces\AuthTokensInterface;
 
 use Arikaim\Core\Db\Model;
 use Arikaim\Core\Validator\Validator;
@@ -55,7 +55,7 @@ trait Users
             
             if ($userDetails->isConfirmedEmail() == false) {
                 // Error: user email is not confirmed
-                $accessToken = Model::AccessTokens()->createToken($user['id'],AutoTokensInterface::PAGE_ACCESS_TOKEN,1800);
+                $accessToken = Model::AccessTokens()->createToken($user['id'],AuthTokensInterface::PAGE_ACCESS_TOKEN,1800);
                 $this
                     ->error('errors.login','Not verified emaiil.')     
                     ->field('attempts',$loginAttempts)    
@@ -70,7 +70,8 @@ trait Users
         if ($remember == true) {
             // remember user login                                
             @Cookie::add('user',$user['uuid']);
-            $accessToken = Model::AccessTokens()->createToken($user['id'],AutoTokensInterface::LOGIN_ACCESS_TOKEN,4800);                      
+
+            $accessToken = Model::AccessTokens()->createToken($user['id'],AuthTokensInterface::LOGIN_ACCESS_TOKEN,4800);                      
             @Cookie::add('token',$accessToken['token']);                                  
         } else {       
             // remove token
