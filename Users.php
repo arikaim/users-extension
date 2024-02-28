@@ -61,10 +61,6 @@ class Users extends Extension
         $this->addApiRoute('PUT','/api/users/admin/status','UsersControlPanel','setStatus','session'); 
         $this->addApiRoute('DELETE','/api/users/admin/delete/{uuid}','UsersControlPanel','softDelete','session'); 
         $this->addApiRoute('GET','/api/users/admin/list/{data_field}/[{query}]','UsersControlPanel','getList','session');  
-        // Avatar
-        $this->addApiRoute('POST','/api/users/admin/avatar/upload','UsersControlPanel','uploadAvatar','session'); 
-        $this->addApiRoute('DELETE','/api/users/admin/avatar/delete/{uuid}','UsersControlPanel','deleteAvatar','session'); 
-        $this->addApiRoute('GET','/api/users/admin/avatar/view/{uuid}','UsersControlPanel','viewAvatar','session'); 
         // Restore soft deleted user
         $this->addApiRoute('PUT','/api/users/admin/restore','UsersControlPanel','restore','session');  
         // Emty trash

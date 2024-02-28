@@ -1,5 +1,5 @@
 {% if avatar is not empty %}
-    {% set image_url = url('/api/users/admin/avatar/view/' ~  uuid,true) %}    
+    {% set image_url = url('/api/users/avatar/view/' ~  uuid,true) %}    
     <img class="ui top aligned left floated small circular image" src="{{ image_url }}">
     <button class="ui icon button basic remove-avatar" uuid="{{ uuid }}" title="{{ labels.remove }}">
         <i class="icon orange trash"></i>

@@ -1,6 +1,4 @@
 {
-    "title": {
-        "content" : "Group Permissions",
-        "icon": "unlock"
-    }
+    "title": "Group Permissions",    
+    "icon": "unlock"
 }

@@ -26,8 +26,8 @@
 <tr id="row_{{ item.uuid }}" class="{{ (control_panel_user == true) ? 'warning' : '' }}" title="{{ (control_panel_user == true) ? labels.cp : '' }}">             
     <td>
         {% if item.avatar is not empty  %}
-        {% set image_url = url('/api/users/admin/avatar/view/' ~  item.uuid,true) %}       
-        <img class="ui avatar tiny circular image" src="{{ image_url }}">
+        {% set image_url = url('/api/users/avatar/view/' ~  item.uuid,true) %}       
+        <img class="ui tiny circular image rounded-full" src="{{ image_url }}">
         {% else %}
         <i class="user outline icon circular large grey"></i>
         {% endif %}

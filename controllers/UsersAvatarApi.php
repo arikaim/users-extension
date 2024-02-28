@@ -55,7 +55,7 @@ class UsersAvatarApi extends ApiController
      * @param Validator $data
      * @return Psr\Http\Message\ResponseInterface
     */
-    public function deleteAvatarController($request, $response, $data) 
+    public function deleteAvatar($request, $response, $data) 
     { 
         // get current auth user
         $user = $this->get('access')->getUser();
@@ -63,6 +63,9 @@ class UsersAvatarApi extends ApiController
 
         $user = Model::Users()->findByid($user['uuid']);
         $details = Model::UserDetails('users')->findOrCreate($user->id);
+
+        // check access
+        $this->requireUserOrControlPanel($user->id);
 
         $details->deleteAvatarImage();
         $result = $details->update(['avatar' => null]);
@@ -162,9 +165,8 @@ class UsersAvatarApi extends ApiController
         }
        
         $details = Model::UserDetails('users')->findOrCreate($user->id);
-        if (($details->isPublic() == false) && (empty($this->getUserId()) == true)) {
-            $this->error('Access denied.');
-            return $this->getResponse();
+        if ($details->isPublic() == false) {
+            $this->requireUserOrControlPanel($user->id);
         }
 
         $avatarImage = $details->getAvatarImagePath();

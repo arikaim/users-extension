@@ -1,10 +1,7 @@
-{% component 'semantic~tabs.vertical.content' %}
-<div class="ui segment pt-4">   
-    {{ component('users::admin.groups.dropdown',{ selected: uuid, icon: 'blue' }) }}
-</div>
-<div class="mt-10 ml-4" id="edit_group">
-    {% if uuid is not null %}
-        {{ component('users::admin.groups.form',{ uuid: uuid }) }}
-    {% endif %}
-</div>
+{% component 'semantic~panel' %}    
+    <div class="mt-4">
+        {% if uuid is not null %}
+            {{ component('users::admin.groups.form',{ uuid: uuid }) }}
+        {% endif %}
+    </div>
 {% endcomponent %}

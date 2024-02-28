@@ -11,18 +11,6 @@ arikaim.component.onLoaded(function() {
             })
         });
     }
-   
-    $('.groups-dropdown').dropdown({       
-        onChange: function(value, text, choice) {           
-            return arikaim.page.loadContent({
-                id: 'edit_group',
-                params: { uuid: value },
-                component: 'users::admin.groups.form'
-            },function(result) {                  
-                initEditGroupForm(); 
-            });                     
-        }         
-    });
-  
+
     initEditGroupForm();    
 });

@@ -10,6 +10,8 @@ function UserGroupsView() {
     var self = this;
 
     this.init = function() {
+        arikaim.ui.loadComponentButton('.create-group');
+        
         this.loadMessages('users::admin')
         paginator.init('group_rows','users::admin.groups.view.rows','groups');                
     };
@@ -17,8 +19,7 @@ function UserGroupsView() {
     this.initRows = function() {
         arikaim.ui.button('.edit-button',function(element) {
             var uuid = $(element).attr('uuid');
-            arikaim.ui.setActiveTab('#edit_group','.groups-tab-item');
-
+           
             return arikaim.page.loadContent({
                 id: 'groups_content',
                 params: { uuid: uuid },
@@ -26,10 +27,19 @@ function UserGroupsView() {
             });
         });
 
+        arikaim.ui.button('.members-button',function(element) {
+            var uuid = $(element).attr('uuid');
+           
+            return arikaim.page.loadContent({
+                id: 'groups_content',
+                params: { uuid: uuid },
+                component: 'users::admin.groups.members'
+            });
+        });
+
         arikaim.ui.button('.permissions-button',function(element) {
             var uuid = $(element).attr('uuid');
-            arikaim.ui.setActiveTab('#group_permissions_tab','.groups-tab-item');
-
+        
             return arikaim.page.loadContent({
                 id: 'groups_content',
                 params: { uuid: uuid },

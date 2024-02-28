@@ -16,7 +16,10 @@
             </button>      
             <button class="ui icon button permissions-button" uuid="{{ item.uuid }}">
                 <i class="icon unlock"></i>
-            </button>         
+            </button>   
+            <button class="ui icon button members-button" uuid="{{ item.uuid }}">
+                <i class="icon users"></i>
+            </button>        
             <button class="ui icon button delete-button" uuid="{{ item.uuid }}" data-title="{{ item.title }}">
                 <i class="icon trash orange"></i>
             </button>               
@@ -30,9 +33,6 @@
     </td>
     <td>
         {{ item.title }}
-    </td>       
-    <td>          
-        {{ item.description }}
-    </td>       
+    </td>          
 </tr>
 {% endfor %}

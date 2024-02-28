@@ -36,14 +36,10 @@ function GroupsAdmin() {
 
         return arikaim.put('/api/users/admin/groups/remove/member',data,onSuccess,onError);         
     };
-
-    this.init = function() {
-        arikaim.ui.tab('.groups-tab-item','groups_content');
-    };
 }
 
 var groupsAdmin = new GroupsAdmin();
 
 arikaim.component.onLoaded(function() {
-    groupsAdmin.init();
+    arikaim.ui.tab('.groups-tab-item','groups_content');
 });

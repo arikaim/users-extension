@@ -1,8 +1,6 @@
 {
-    "title": {
-        "content": "Edit Group",
-        "icon": "edit blue"
-    },
+    "title": "Edit Group",
+    "icon": "edit blue",   
     "labels": {
         "user": "Group"
     }

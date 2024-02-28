@@ -14,7 +14,7 @@ arikaim.component.onLoaded(function() {
                 append: true,
                 component: 'users::admin.groups.members.list.item'
             },function(result) {                  
-               
+                membersAdmin.initItems();
             });    
         },function(error) {
             arikaim.page.toastMessage({

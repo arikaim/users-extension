@@ -9,7 +9,7 @@
     {% set selected = model.findById(selected) %}
 {% endif %}
 {% set selectet_text = (selected is empty) ? labels.select : selected.title %}
-<div class="ui search selection dropdown permissions-dropdown" id="{{ id }}">
+<div class="ui search selection dropdown permissions-dropdown {{ class }}" id="{{ id }}">
     <input name="{{ name }}" type="hidden">
     <i class="icon unlock {{ icon }}"></i> 
     <div class="default text">{{ selectet_text }}</div>

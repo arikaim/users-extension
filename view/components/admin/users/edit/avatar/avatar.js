@@ -2,7 +2,7 @@
 
 arikaim.component.onLoaded(function() {
     var fileUpload = new FileUpload('#avatar_form',{
-        url: '/api/users/admin/avatar/upload',
+        url: '/api/users/avatar/upload',
         maxFiles: 1,
         allowMultiple: false,
         acceptedFileTypes: [],

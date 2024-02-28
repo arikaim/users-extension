@@ -1,6 +1,4 @@
 {
-    "title": {
-        "content": "Add Group",
-        "icon": "plus blue"        
-    }
+    "title": "Add Group", 
+    "icon": "plus blue"        
 }

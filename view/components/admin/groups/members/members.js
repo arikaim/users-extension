@@ -23,26 +23,10 @@ function MembersAdmin() {
             });
         });
     };
-    
-    this.init = function() {
-        $('.groups-dropdown').dropdown({       
-            onChange: function(value, text, choice) {           
-                return arikaim.page.loadContent({
-                    id: 'group_members',
-                    params: { 
-                        uuid: value
-                    },
-                    component: 'users::admin.groups.members.list'
-                },function(result) {                  
-                    
-                });                     
-            }         
-        });    
-    };
 }
 
 var membersAdmin = new MembersAdmin();
 
 arikaim.component.onLoaded(function() {
-    membersAdmin.init();    
+   
 });

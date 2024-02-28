@@ -1,11 +1,12 @@
-{% component 'semantic~tabs.vertical.content' %}
 {% set group = createModel('UserGroups').findById(uuid) %}
-<div class="ui segment pt-4">      
-    {{ component('users::admin.groups.dropdown',{ selected: uuid, icon: 'blue', class: 'fluid' }) }}
-</div>
-<div class="ui mt-8" id="group_permissions_list"> 
-    {% if uuid is not empty %} 
-    {{ component('users::admin.permissions.relations',{ type: 'group', uuid: group.uuid }) }}
-    {% endif %}
-</div>
+
+{% component 'semantic~panel' %}
+    <h4>
+        {{ group.title }}
+    </h4>
+    <div class="ui mt-8" id="group_permissions_list"> 
+        {% if uuid is not empty %} 
+            {{ component('users::admin.permissions.relations',{ type: 'group', uuid: group.uuid }) }}
+        {% endif %}
+    </div>
 {% endcomponent %}

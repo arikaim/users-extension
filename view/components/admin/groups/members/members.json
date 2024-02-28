@@ -1,6 +1,4 @@
 {
-    "title": {
-        "content" : "Group Members",
-        "icon": "user friends"
-    }
+    "title": "Group Members",
+    "icon": "user friends"
 }
