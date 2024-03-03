@@ -1,6 +1,7 @@
 {% set permission = item.toArray() %}
 {% set name = item.permission.name %}
-<div class="{{ class }}">   
+<div    
+    class="flex flex-row items-center {{ class }}">   
     {% if item.permission.deny == true %}
     <div class="ui label red horizontal basic">
         <span class="ui text">{{ labels.deny }}</span>
@@ -10,9 +11,9 @@
         <span class="ui text">{{ labels.allow }}</span>
     </div>
     {% endif %}   
-    <span class="px-2">        
+    <div class="px-2 flex-grow">        
         {{ name }}
-    </span>     
+    </div>     
     <div class="ui labels right floated">
         {% set permisssion_types = ['read','write','delete','execute'] %}
         {% for type in permisssion_types %}

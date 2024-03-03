@@ -55,7 +55,7 @@ class UserSignup extends Job implements JobInterface
      */
     public function execute()
     {      
-        global $container;
+        global $arikaim;
 
         $email = $this->getParam('email');
         $userName = $this->getParam('user_name');
@@ -87,7 +87,7 @@ class UserSignup extends Job implements JobInterface
         } 
        
         // dispatch event   
-        $container->get('event')->dispatch('user.signup',$user->toArray());
+        $arikaim->get('event')->dispatch('user.signup',$user->toArray());
 
         // set job result field
         $this->result()->field('user',$user->toArray());

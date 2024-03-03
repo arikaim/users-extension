@@ -9,7 +9,6 @@
         <div class="ui left icon input">
             <i class="icon user outline"></i>
             <input 
-                rule="minLength[2]"
                 type="text" 
                 name="user_name" 
                 id="user_name" 
@@ -17,24 +16,31 @@
                 value="{{ user.user_name }}"> 
         </div>
     </div>   
-    <div class="field">
-        <label>{{ fields.email.label }}</label>
-        <div class="ui left icon input">
-            <i class="icon mail outline"></i>
-            <input type="text" name="email" id="email" {{ fields.email.placeholder|attr('placeholder') }} value="{{ user.email }}">  
-        </div>
-    </div>        
+    <div class="two fields">
+        <div class="field">
+            <label>{{ fields.email.label }}</label>
+            <div class="ui left icon input">
+                <i class="icon mail outline"></i>
+                <input type="text" name="email" id="email" {{ fields.email.placeholder|attr('placeholder') }} value="{{ user.email }}">  
+            </div>
+        </div>     
+        {{  component('semantic~form.fields.checkbox',{ 
+                name: 'email_status',
+                value: user_details.email_status, 
+                field_label: fields.confirmed.label
+            }) 
+        }}      
+    </div>  
     {{  component('semantic~form.fields.checkbox',{ 
             value: user_details.public_profile, 
             name: 'public_profile',
             label: fields.public.label
         }) 
     }}  
-    <div class="ui horizontal divider"></div>   
-    <h4 class="ui header title">
+    <div class="ui horizontal divider">
         {{ labels.details }}
-    </h4>
-    <div class="ui content segment padded">           
+    </div>   
+    <div class="ui very basic segment padded">           
         <div class="two fields">
             <div class="field">
                 <label>{{ fields.first_name.label }}</label>
@@ -56,10 +62,14 @@
             </div>
         </div>
     </div>  
-    <div class="fluid field">
-        <label>{{ fields.type.label }}</label>
-        {{ component('users::admin.type',{ selected: user_details.type_id }) }}
-    </div>  
+    <div class="two fields">
+        <div class="field">
+            <label>{{ fields.type.label }}</label>
+            {{ component('users::admin.type',{ selected: user_details.type_id }) }}
+        </div>  
+       <div class="field">
+       </div>
+    </div>
     {% if edit == false %}
     <div class="ui horizontal divider"></div>   
     <div class="two fields mt-4">    
@@ -85,6 +95,5 @@
         </div>  
     </div>            
     {% endif %}
-   
     {{ component('semantic~form.footer') }}    
 </form>

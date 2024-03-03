@@ -52,6 +52,12 @@ class UsersApi extends ApiController
     */
     public function sendConfirmEmail($request, $response, $data) 
     {   
+        $result = $this->get('access')->withProvider('token')->authenticate($data->toArray());
+        if ($result === false) {
+            $this->error('errors.token','Access token not valid.');
+            return; 
+        }
+
         $user = $this->get('access')->getUser();                 
         if ($user === null) {
             $this->error('errors.token','Access token not valid.');
@@ -67,7 +73,8 @@ class UsersApi extends ApiController
 
         $this
             ->message('confirm.email','Confirm email send')
-            ->field('uuid',$user['uuid']);
+            ->field('uuid',$user['uuid'])
+            ->field('email',$user['email']);
     }
 
     /**
@@ -248,7 +255,7 @@ class UsersApi extends ApiController
      * @param Validator $data
      * @return Psr\Http\Message\ResponseInterface
     */
-    public function loginController($request, $response, $data)
+    public function login($request, $response, $data)
     {       
         $loginWith = $this->get('options')->get('users.login.with',3);
       

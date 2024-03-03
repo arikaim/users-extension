@@ -121,40 +121,40 @@ class UsersControlPanel extends ControlPanelApiController
      * @param Validator $data
      * @return Psr\Http\Message\ResponseInterface
     */
-    public function updateController($request, $response, $data) 
+    public function update($request, $response, $data) 
     {  
         $user = Model::Users()->findById($data->get('uuid'));
 
-        $this->onDataValid(function($data) use($user) {
-            // save user 
-            $data['type_id'] = (empty($data->get('type_id') == true)) ? 1 : $data->get('type_id');
-            $userName = $data->getString('user_name',null);
-            $email = $data->getString('email',null);
-            
-            if (empty($userName) == true && empty($email) == true) {
-                $this->error('Email Or Username is required');
-                return false;
-            }
-
-            $result = $user->update([
-                'user_name' => $userName,
-                'email'     => $email
-            ]);
-        
-            // save user details
-            $result = Model::UserDetails('Users')->saveDetails($user->id,$data->toArray());
-            $this->setResponse((\is_object($result) == true || $result !== false),function() use($user) {                  
-                $this
-                    ->message('update')
-                    ->field('uuid',$user->uuid);                  
-            },'errors.update');                     
-        });        
         $data
             ->addRule('exists:model=Users|field=uuid','uuid')
             ->addRule('text:min=2','first_name')
             ->addRule('unique:model=Users|field=user_name|exclude=' . $user->user_name,'user_name','Username exist')
             ->addRule('unique:model=Users|field=email|exclude=' . $user->email,'email','Email exist')
-            ->validate();      
+            ->validate(true);      
+
+        // save user 
+        $data['type_id'] = (empty($data->get('type_id') == true)) ? 1 : $data->get('type_id');
+        $userName = $data->getString('user_name',null);
+        $email = $data->getString('email',null);
+        
+        if (empty($userName) == true && empty($email) == true) {
+            $this->error('Email Or Username is required');
+            return false;
+        }
+
+        $result = $user->update([
+            'user_name' => (empty($userName) == true) ? null : $userName,
+            'email'     => (empty($email) == true) ? null : $email
+        ]);
+    
+        // save user details
+        $result = Model::UserDetails('Users')->saveDetails($user->id,$data->toArray());
+
+        $this->setResponse(($result !== false),function() use($user) {                  
+            $this
+                ->message('update')
+                ->field('uuid',$user->uuid);                  
+        },'errors.update');                     
     }
 
     /**

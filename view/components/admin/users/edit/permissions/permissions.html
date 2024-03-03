@@ -1,14 +1,13 @@
-{% component 'semantic~tabs.vertical.content' %}
-{% set class = 'sixteen wide column' %}
 {% set user = createModel('Users').findById(uuid) %}
-<div class="ui mt-8"> 
-    {% if uuid is not empty %} 
-        {{  component('users::admin.permissions.relations',{
-                type: 'user',
-                uuid: user.uuid,
-                show_group_permissions: true
-            }) 
-        }}
-    {% endif %}
-</div>
+{% component 'semantic~panel' %}  
+    <div class="mt-8 w-full"> 
+        {% if uuid is not empty %} 
+            {{  component('users::admin.permissions.relations',{
+                    type: 'user',
+                    uuid: user.uuid,
+                    show_group_permissions: true
+                }) 
+            }}
+        {% endif %}
+    </div>
 {% endcomponent %}

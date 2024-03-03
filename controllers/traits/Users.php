@@ -56,8 +56,12 @@ trait Users
             if ($userDetails->isConfirmedEmail() == false) {
                 // Error: user email is not confirmed
                 $accessToken = Model::AccessTokens()->createToken($user['id'],AuthTokensInterface::PAGE_ACCESS_TOKEN,1800);
-                $this
-                    ->error('errors.login','Not verified emaiil.')     
+                $this->get('access')->withProvider($authProviderName)->logout();
+
+                $this                  
+                    ->field('email_status',$userDetails->email_status)
+                    ->field('user',$user['uuid'])
+                    ->field('action','load-confirm-email')
                     ->field('attempts',$loginAttempts)    
                     ->field('token',$accessToken['token']);
 
@@ -84,7 +88,8 @@ trait Users
         $this->get('event')->dispatch('user.login',$user);
         $this
             ->message('login')
-            ->field('uuid',$user['uuid'])
+            ->field('action','')
+            ->field('uuid',$user['uuid'])         
             ->field('token',$jwtToken)
             ->field('redirect_url',$this->getLoginRedirectUrl());                           
     }
@@ -182,18 +187,17 @@ trait Users
      * @param array $user
      * @return boolean
      */
-    public function sendConfirmationEmail(array $user)
+    public function sendConfirmationEmail(array $user): bool
     {
-        $properties = [
-            'user'              => $user,
-            'domain'            => DOMAIN,
-            'confirm_email_url' => $this->createProtectedUrl($user['id'],'email/confirm')
-        ];
-
         try {
-            $result = $this->get('mailer')->create('users>confirmation',$properties)           
-                ->to($user['email'])
-                ->send();   
+
+            $result = $this->get('mailer')->create('current>confirmation',[
+                'user'              => $user,
+                'domain'            => DOMAIN,
+                'confirm_email_url' => $this->createProtectedUrl($user['id'],'email/confirm')
+            ])->to($user['email'])
+            ->send();   
+
         } catch (\Exception $e) {
             return false;
         }

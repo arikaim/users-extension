@@ -8,6 +8,10 @@
             "placeholder": "Enter Email",
             "label": "Email"
         },
+        "confirmed": {
+            "placeholder": "Email Confirmed",
+            "label": "Email Confirmed"
+        },
         "public": {
             "placeholder": "Public profile",
             "label": "Public profile"

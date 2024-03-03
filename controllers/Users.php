@@ -14,6 +14,7 @@ use Arikaim\Core\Db\Model;
 use Arikaim\Core\Http\Cookie;
 use Arikaim\Core\Http\Session;
 use Arikaim\Core\Http\Url;
+use Exception;
 
 /**
  * Users pages controler
@@ -161,7 +162,19 @@ class Users extends Controller
         }
         
         // set email confirmed
-        $details->setEmailStatus(1);     
+        $sendWelcomeEmail = (bool)$this->get('options')->get('users.notifications.email.welcome',false);
+        $details->setEmailStatus(1);   
+
+        if ($sendWelcomeEmail == true) {
+            // send welcome email to user
+            try {
+                $this->get('mailer')
+                    ->create('users>welcome',$user)
+                    ->to($user['email'])
+                    ->send();
+            } catch (Exception $e) {               
+            }
+        }
     }
 
     /**

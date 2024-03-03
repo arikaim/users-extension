@@ -2,8 +2,11 @@
     {% set item = createModel('PermissionRelations').getRelationsQuery(relation_id,type).where('uuid','=',uuid).first() %}
 {% endif %}
 {% set name = item.permission.name %}
-<div class="item" id="item_{{ item.uuid }}"> 
-    <div class="flex flex-row items-center">
+<div 
+    class="item fluid" 
+    id="item_{{ item.uuid }}"> 
+    <div
+        class="flex flex-row items-center w-full">
         <div class="left floated content">
             {% if name != 'ControlPanel' %}
             <button class="ui mini icon basic button delete-permission" uuid="{{ item.uuid }}" title="{{ labels.delete }}">
@@ -11,8 +14,9 @@
             </button> 
             {% endif %}
         </div>       
-        <div class="content">                             
-            {{ component('users::admin.permissions.label',{ item: item, class: 'header' }) }}                       
+        <div                
+            class="content w-full">                             
+            {{ component('users::admin.permissions.label',{ item: item, class: 'w-full' }) }}                       
         </div>  
     </div>       
 </div>

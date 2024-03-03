@@ -36,8 +36,10 @@
                         <tr>
                             <td>{{ labels.email }}</td>
                             <td>
-                                {% if item.details.isConfirmedEmail() == true %}
-                                <i class="icon olive checkmark" title="{{ labels.confirmed }}"></i>          
+                                {% if userDetails.isConfirmedEmail() == true %}
+                                    <div class="ui basic horizontal label mini green">
+                                        {{ labels.confirmed }}
+                                    </div>                                  
                                 {% endif %}
                                 {{ user.email }}
                             </td>
@@ -93,13 +95,11 @@
                     </tbody>
                 </table>  
                 <h4>{{ labels.permissions }}</h4>
-                <table class="ui definition table">
-                    <tbody>
+                <div class="w-full">                
                     {% for item in permissions.get() %}
-                        {{ component('users::admin.permissions.label',{ item: item, class: ' flex flex-row items-center' }) }} 
-                    {% endfor %}
-                    </tbody>
-                </table> 
+                        {{ component('users::admin.permissions.label',{ item: item, class: 'mb-2' }) }} 
+                    {% endfor %}                  
+                </div> 
                 <h4>{{ labels.groups }}</h4>
                 <table class="ui definition table">
                     <tbody>

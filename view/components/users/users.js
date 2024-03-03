@@ -64,9 +64,9 @@ function Users() {
         return loginAttempts;
     };
 
-    this.sendConfirmEmail = function(token) {
-        return arikaim.put('/api/users/confirm/email',{ token: token },onError);
-    }
+    this.sendConfirmEmail = function(token,onSuccess,onError) {
+        return arikaim.put('/api/users/confirm/email',{ token: token },onSuccess,onError);
+    };
 }
 
 var users = new Users();
