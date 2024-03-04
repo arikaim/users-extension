@@ -1,5 +1,4 @@
 {
-    "labels": {
-        "add": "Add"
-    }
+    "title": "Add Permission",
+    "icon": "plus blue"        
 }

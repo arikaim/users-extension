@@ -1,0 +1,13 @@
+{
+    "tooltip": {
+        "create": "Create Permission",
+        "edit": "Edit",
+        "delete": "Delete"
+    },
+    "columns": {        
+        "actions": "Actions",
+        "name": "Name",
+        "slug": "Slug",
+        "type": "Type"        
+    }        
+}

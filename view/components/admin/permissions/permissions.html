@@ -1,15 +1,8 @@
-{{  component('semantic~tabs.vertical',{ 
-        items:  [ 
-            { title: labels.view,component: 'users::admin.permissions.view',icon: 'list', active: true },
-            { title: labels.add,component: 'users::admin.permissions.view.add',icon: 'plus' },
-            { id: 'edit_permisisons_tab',title: labels.edit,component: 'users::admin.permissions.view.edit',icon: 'edit' }
-        ], 
-        menu: { id: 'permissions_menu' }, 
-        item_class: 'permissions-tab-item',
-        content: {
-            id: 'permissions_content',
-            component: 'users::admin.permissions.view',
-            params: params 
-        } 
-    })
-}}
+<div class="ui two column grid">
+    <div class="column">
+        {{ component('users::admin.permissions.view',{}) }}
+    </div>
+    <div class="column" id="permissions_content">
+        
+    </div>
+</div>

@@ -1,8 +1,30 @@
-{% component 'semantic~tabs.vertical.content' %}
-{% set class = 'sixteen wide column' %}
-<div class="p-1">
-   <div class="ui middle aligned divided list">
-    {{ component('users::admin.permissions.view.rows') }}
-   </div>
+<div class="ui segment">
+    <div class="ui stackable grid">
+        <div class="ten wide column">
+            <button 
+                mountTo="permissions_content"
+                component="users::admin.permissions.add"
+                title="{{ tooltip.create }}"
+                class="ui mini curcular green icon button create-permission">
+                <i class="icon plus"></i>
+            </button>
+        </div>
+        <div class="six wide column right aligned">
+        </div>
+    </div>
 </div>
-{% endcomponent %}
+<div class="ui segment">
+    <table class="ui compact stackable selectable borderless basic table">
+        <thead class="table-head">
+            <tr>             
+                <th class="two wide">{{ columns.actions }}</th>
+                <th class="collapsing one wide aligned">{{ columns.type }}</th>   
+                <th class="collapsing four wide">{{ columns.slug }}</th>   
+                <th class="collapsing four wide">{{ columns.name }}</th>                                                    
+            </tr>
+        </thead>
+        <tbody id="permissions_rows" component="users::admin.permissions.view.rows" namespace="permissions">
+            {{ component('users::admin.permissions.view.rows') }}
+        </tbody>
+    </table>
+</div>

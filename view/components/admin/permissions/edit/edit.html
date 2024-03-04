@@ -1,0 +1,7 @@
+{% component 'semantic~panel' %}
+    <div class="mt-2" id="edit_permission">
+        {% if uuid is not empty %}
+            {{ component('users::admin.permissions.form',{ uuid: uuid }) }}
+        {% endif %}
+    </div>
+{% endcomponent %}

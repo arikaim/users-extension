@@ -22,32 +22,27 @@ function PermissionsAdmin() {
     }; 
 
     this.grantPermission = function(uuid, permissionUuid, type, onSuccess, onError) {
-        type = getDefaultValue(type,'user');
         var data = {
             uuid: permissionUuid,
             target_uuid : uuid,      
-            type: type       
+            type: getDefaultValue(type,'user')       
         }
 
         return arikaim.put('/api/users/admin/permission/grant',data,onSuccess,onError);         
     };
     
     this.denyPermission = function(uuid, onSuccess, onError) {      
-        var data = {
+        return arikaim.put('/api/users/admin/permission/deny',{
             uuid: uuid                    
-        }
-
-        return arikaim.put('/api/users/admin/permission/deny',data,onSuccess,onError);         
+        },onSuccess,onError);         
     };
 
     this.updatePermissionType = function(uuid, type, actionType, onSuccess, onError) {      
-        var data = {
+        return arikaim.put('/api/admin/users/permission/type',{
             uuid: uuid,
             type: type,
             actionType: actionType                
-        }
-
-        return arikaim.put('/api/admin/users/permission/type',data,onSuccess,onError);         
+        },onSuccess,onError);         
     };
 
     this.initItems = function() {
@@ -94,14 +89,10 @@ function PermissionsAdmin() {
         });
        
     }   
-
-    this.init = function() {
-        arikaim.ui.tab('.permissions-tab-item','permissions_content');
-    };
 }
 
 var permissions = new PermissionsAdmin();
 
 arikaim.component.onLoaded(function() {
-    permissions.init();
+    arikaim.ui.tab('.permissions-tab-item','permissions_content');
 });

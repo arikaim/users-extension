@@ -11,6 +11,7 @@ function PermissionsView() {
 
     this.init = function() {
         this.loadMessages('users::admin');
+        arikaim.ui.loadComponentButton('.create-permission');
     };
 
     this.initRows = function() {
@@ -21,7 +22,7 @@ function PermissionsView() {
             return arikaim.page.loadContent({
                 id: 'permissions_content',
                 params: { uuid: uuid },
-                component: 'users::admin.permissions.view.edit'
+                component: 'users::admin.permissions.edit'
             });
         });
 
