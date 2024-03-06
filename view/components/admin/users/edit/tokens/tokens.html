@@ -7,9 +7,17 @@
 </div>
 <div class="p-1">    
     {% if service('access').hasControlPanelAccess(user.id) == true %}
-    <button class="ui basic icon labeled button create-token mini">
+    <button 
+        type="2"
+        class="ui basic icon labeled button create-token mini">
         <i class="icon green plus"></i>
-        {{ buttons.create }}
+        {{ buttons.api }}
+    </button>
+    <button 
+        type="0"
+        class="ui basic icon labeled button create-token mini">
+        <i class="icon green plus"></i>
+        {{ buttons.page }}
     </button>
     {% endif %}
 </div>

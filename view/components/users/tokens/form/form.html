@@ -1,5 +1,9 @@
 <form class="ui form {{ class }}" id="token_form">
-    <div class="field">
+    <input type="hidden" name="type" value="{{ type }}">
+    <div class="font-bold mb-2">
+        {{ tokens[type] }}
+    </div>
+    <div class="field mt-2">
         <label>{{ fields.password.label }}</label>
         <input rule="minLength[4]" type="password" name="password" value="" placeholder="{{ fields.password.placeholder }}">
     </div>

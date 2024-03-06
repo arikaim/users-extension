@@ -12,7 +12,7 @@ namespace Arikaim\Extensions\Users\Controllers;
 use Arikaim\Core\Db\Model;
 use Arikaim\Core\Controllers\ApiController;
 
-use Arikaim\Core\Access\Interfaces\AutoTokensInterface;
+use Arikaim\Core\Access\Interfaces\AuthTokensInterface;
 use Arikaim\Core\Controllers\Traits\AccessToken;
 use Arikaim\Core\Controllers\Traits\Captcha;
 use Arikaim\Extensions\Users\Controllers\Traits\Users;
@@ -52,8 +52,9 @@ class TokensApi extends ApiController
             ->validate(true);       
 
         $password = $data->get('password');
-        $type = $data->get('type',AutoTokensInterface::API_ACCESS_TOKEN);
-        $expireTime = $data->get('expire_time',-1);
+        $type = $data->get('type',AuthTokensInterface::API_ACCESS_TOKEN);
+        $defaultExpireTime = ($type == AuthTokensInterface::API_ACCESS_TOKEN) ? -1 : 10000;
+        $expireTime = $data->get('expire_time',$defaultExpireTime);
         $reCreate = $data->get('recreate',false);
         $userId = $this->getUserId();
 
