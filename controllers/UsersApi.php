@@ -352,7 +352,7 @@ class UsersApi extends ApiController
      * @param Validator $data
      * @return Psr\Http\Message\ResponseInterface
     */
-    public function logoutController($request, $response, $data)
+    public function logout($request, $response, $data)
     {
         $user = $this->get('access')->getUser(); 
 
@@ -398,7 +398,7 @@ class UsersApi extends ApiController
      * @param Validator $data
      * @return Psr\Http\Message\ResponseInterface
     */
-    public function changePasswordController($request, $response, $data)
+    public function changePassword($request, $response, $data)
     {      
         $repeatPassword = $data->get('repeat_password');
         $data        
@@ -458,4 +458,37 @@ class UsersApi extends ApiController
 
         return $credentials;
     }   
+
+    /**
+     * Logout
+     *
+     * @Api(
+     *      description="Get user details"        
+     * )
+     * 
+     * @ApiResponse(
+     *      fields={
+     *          @ApiParameter (name="redirect_url",type="string",description="Redirect url")
+     *      }
+     * )  
+     * 
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param Validator $data
+     * @return Psr\Http\Message\ResponseInterface|bool
+    */
+    public function getDetails($request, $response, $data)
+    {
+        $user = $this->get('access')->getUser(); 
+        $userDetails = Model::Users()->findById($user['id']);
+
+        if ($userDetails == null) {
+            $this->error('Access denoed');
+            return false;
+        }
+
+        $this->field('email',$userDetails->email);
+        $this->field('username',$userDetails->username);
+        $this->field('avatar',$userDetails->details->avatar);
+    }
 }

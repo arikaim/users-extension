@@ -40,6 +40,7 @@ class Users extends Extension
         $this->addApiRoute('GET','/api/users/logout','UsersApi','logout',null);  
         $this->addApiRoute('PUT','/api/users/change-password','UsersApi','changePassword','token');  
         $this->addApiRoute('PUT','/api/users/confirm/email','UsersApi','sendConfirmEmail','token');  
+        $this->addApiRoute('GET','/api/users/details','UsersApi','getDetails','token,session,jwt');  
         // user admin panel
         $this->addApiRoute('PUT','/api/users/update','UsersApi','changeDetails','session');   
         $this->addApiRoute('PUT','/api/users/profile/change-password','UsersApi','changePassword','session');      
