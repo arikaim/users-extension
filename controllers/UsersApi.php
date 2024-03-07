@@ -479,16 +479,17 @@ class UsersApi extends ApiController
     */
     public function getDetails($request, $response, $data)
     {
-        $user = $this->get('access')->getUser(); 
-        $userDetails = Model::Users()->findById($user['id']);
+        $userId = $this->getUserId(); 
+        $userDetails = Model::Users()->findById($userId);
 
         if ($userDetails == null) {
-            $this->error('Access denoed');
+            $this->error('Access denied');
             return false;
         }
 
-        $this->field('email',$userDetails->email);
-        $this->field('username',$userDetails->username);
-        $this->field('avatar',$userDetails->details->avatar);
+        $this
+            ->field('email',$userDetails->email)
+            ->field('username',$userDetails->username)
+            ->field('avatar',$userDetails->details->avatar);       
     }
 }
