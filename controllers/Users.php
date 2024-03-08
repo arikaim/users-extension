@@ -143,7 +143,7 @@ class Users extends Controller
      * @param Validator $data
      * @return Psr\Http\Message\ResponseInterface
     */
-    public function emailConfirmPage($request, $response, $data)
+    public function emailConfirm($request, $response, $data)
     {            
         $result = $this->get('access')->withProvider('token')->authenticate($data->toArray());
         if ($result == false) {
@@ -172,9 +172,11 @@ class Users extends Controller
                     ->create('users>welcome',$user)
                     ->to($user['email'])
                     ->send();
-            } catch (Exception $e) {               
+            } catch (Exception $e) {                   
             }
         }
+
+        return $this->pageLoad($request,$response,$data,'current>user.email-confirm');
     }
 
     /**
