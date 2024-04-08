@@ -83,7 +83,7 @@ trait Users
             Cookie::delete('token');                  
         }
         
-        $jwtToken = $this->get('access')->createProvider('jwt')->createToken($user['auth_id']);
+        $jwtToken = $this->get('access')->createProvider('jwt')->createToken($user['id']);
         // dispatch event
         $this->get('event')->dispatch('user.login',$user);
         $this
