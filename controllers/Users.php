@@ -41,7 +41,7 @@ class Users extends Controller
         $data['user'] = $this->get('access')->getUser();            
         $response = $this->noCacheHeaders($response);
 
-        return $this->pageLoad($request,$response,$data,'users>user',$language);
+        return $this->pageLoad($request,$response,$data,'current>user',$language);       
     }
 
     /**

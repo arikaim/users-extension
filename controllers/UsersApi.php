@@ -222,6 +222,10 @@ class UsersApi extends ApiController
             $this->error('errors.update');
             return;
         }
+
+        // ceate user details
+        Model::UserDetails('Users')->findOrCreate($user['id']);
+
         // save user details
         $result = Model::UserDetails('Users')->saveDetails($user['id'],$data->toArray());
 
