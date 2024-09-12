@@ -43,12 +43,11 @@ class TokensApi extends ApiController
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param Validator $data
-     * @return Psr\Http\Message\ResponseInterface
+     * @return mixed
     */
     public function create($request, $response, $data)
     {       
         $data
-            ->addRule('text:min=4|required','password')
             ->validate(true);       
 
         $password = $data->get('password');
@@ -64,10 +63,13 @@ class TokensApi extends ApiController
         }
 
         $user = Model::Users()->findById($userId);
-        if ($user->verifyPassword($password) == false) {
-            $this->error('Not valid user password');
-            return false;  
+        if (empty($password) == false) {
+            if ($user->verifyPassword($password) == false) {
+                $this->error('Not valid user password');
+                return false;  
+            }
         }
+      
         $tokens = Model::AccessTokens();
 
         if ($tokens->hasToken($userId,$type) == true) {
