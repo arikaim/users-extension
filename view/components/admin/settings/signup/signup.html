@@ -1,5 +1,6 @@
 {% set settings = getOption('users.signup.form') %}
 {% set activation = getOption('users.sugnup.activation')|number_format %}
+{% set redirect = getOption('users.signup.redirect','') %}
 
 {% component 'semantic~tabs.vertical.content' %}
 {% if demo_mode == true %}
@@ -7,7 +8,7 @@
     Save optins is disabeld in DEMO MODE!
 </div>
 {% endif %}
-<div class="ui equal width form" id="settings_form">  
+<form class="ui equal width form" id="settings_form">  
     <div class="ui segment padded">
         <div class="field">
             <label>{{ labels.name }}</label>
@@ -75,6 +76,14 @@
                 <label>{{ labels.activation.admin }}</label>
             </div>
         </div>
-    </div>      
-</div>
+    </div> 
+    <div class="field">           
+        <label>{{ labels.redirect }}</label>
+        <div class="ui labeled input">
+            <div class="ui label">{{ base_url }}/</div>
+            <input type="text" name="redirect" id="redirect" value="{{ redirect }}" placeholder="{{ placeholder.redirect }}">     
+        </div> 
+    </div>     
+    {{ component('semantic~form.footer') }}
+</form>
 {% endcomponent %}

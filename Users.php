@@ -93,6 +93,7 @@ class Users extends Extension
         // Options       
         $this->createOption('users.login.with',3);
         $this->createOption('users.login.redirect','user');
+        $this->createOption('users.signup.redirect','');
         $this->createOption('users.logout.redirect',null);
         $this->createOption('users.login.captcha.protect',true);
        

@@ -15,4 +15,11 @@ arikaim.component.onLoaded(function() {
             options.save(name,value);
         }   
     });
+
+    arikaim.ui.form.onSubmit('#settings_form',function() {
+        var redirectUrl = $('#redirect').val();
+        return options.save('users.signup.redirect',redirectUrl);
+    },function(result) {
+        arikaim.ui.form.showMessage(result.message);
+    });
 });

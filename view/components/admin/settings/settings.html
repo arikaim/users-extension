@@ -1,12 +1,10 @@
-{% set items = [ 
-    { title: labels.login, component: 'users::admin.settings.login', icon: 'sign in', active: true },
-    { title: labels.signup, component: 'users::admin.settings.signup', icon: 'user plus' },  
-    { title: labels.notifications, component: 'users::admin.settings.notifications', icon: 'outline mail' },
-    { title: labels.type, component: 'users::admin.settings.type', icon: 'stream' }
-] %}
-
 {{  component('semantic~tabs.vertical',{ 
-        items: items, 
+        items: [ 
+            { title: labels.login, component: 'users::admin.settings.login', icon: 'sign in', active: true },
+            { title: labels.signup, component: 'users::admin.settings.signup', icon: 'user plus' },  
+            { title: labels.notifications, component: 'users::admin.settings.notifications', icon: 'outline mail' },
+            { title: labels.type, component: 'users::admin.settings.type', icon: 'stream' }
+        ], 
         menu: { id: 'settings_menu' }, 
         item_class: 'settings-tab-item',
         content: { id: 'settings_tab', component: 'users::admin.settings.login' } 
