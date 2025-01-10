@@ -3,33 +3,37 @@
 {% set model = createModel('Permissions') %}
 {% set permissions = model.getListQuery() %}
 {% if editable == true %}
-{% set permissions = permissions.where('editable','=',1) %}
+    {% set permissions = permissions.where('editable','=',1) %}
 {% endif %}
 {% if selected is not empty %}
     {% set selected = model.findById(selected) %}
 {% endif %}
+
+
 {% set selectet_text = (selected is empty) ? labels.select : selected.title %}
-<div class="ui search selection dropdown permissions-dropdown {{ class }}" id="{{ id }}">
+<div 
+    class="ui search selection dropdown permissions-dropdown {{ class }}" 
+    id="{{ id }}">
     <input name="{{ name }}" type="hidden">
     <i class="icon unlock {{ icon }}"></i> 
     <div class="default text">{{ selectet_text }}</div>
     <i class="dropdown icon"></i>
     <div class="menu">
-        {% for item in permissions.get() %}
-        <div class="item" data-value="{{ item.uuid }} ">
-            <div class="flex flex-rows items-center">
-                {% if item.deny == 1 %}
-                <div class="ui mini basic label red">
-                    {{ labels.deny }}
-                </div>
-                {% else %}
-                <div class="ui mini basic label green">
-                    {{ labels.allow }}
-                </div>
-                {% endif %}
-                <span class="px-1">{{ item.title }}</span>
-            </div>            
-        </div>
+        {% for item in permissions.get() %}       
+            <div class="item" data-value="{{ item.uuid }} ">
+                <div class="flex flex-rows items-center">
+                    {% if item.deny == 1 %}
+                    <div class="ui mini basic label red">
+                        {{ labels.deny }}
+                    </div>
+                    {% else %}
+                    <div class="ui mini basic label green">
+                        {{ labels.allow }}
+                    </div>
+                    {% endif %}
+                    <span class="px-1">{{ item.title }}</span>
+                </div>            
+            </div>
         {% endfor %}
     </div>
 </div>

@@ -1,13 +1,11 @@
 {% set user = createModel('Users').findById(uuid) %}
-{% component 'semantic~panel' %}  
-    <div class="mt-8 w-full"> 
-        {% if uuid is not empty %} 
-            {{  component('users::admin.permissions.relations',{
-                    type: 'user',
-                    uuid: user.uuid,
-                    show_group_permissions: true
-                }) 
-            }}
-        {% endif %}
-    </div>
-{% endcomponent %}
+<div class="mt-2 px-4"> 
+    {% if uuid is not empty %} 
+        {{  component('users::admin.permissions.relations',{
+                type: 'user',
+                uuid: user.uuid,
+                show_group_permissions: true
+            }) 
+        }}
+    {% endif %}
+</div>

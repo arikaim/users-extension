@@ -1,5 +1,5 @@
 {% set params = { uuid: uuid } %}
-{{  component('semantic~tabs.vertical',{ 
+{{  component('semantic~tabs',{ 
         items: [ 
             { title: labels.details, component: 'users::admin.users.edit.details', icon: 'edit', active: true, params: params },
             { title: labels.avatar, component: 'users::admin.users.edit.avatar', icon: 'user circle outline', params: params },   
@@ -10,7 +10,6 @@
         ], 
         menu_column: 'two',
         content_column: 'fourteen',
-        menu: { id: 'edit_user_tabs' }, 
         item_class: 'edit-tab-item',
         content: { id: 'edit_user_content', component: 'users::admin.users.edit.details', params: params } 
     })

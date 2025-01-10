@@ -1,8 +1,7 @@
-{% component 'semantic~tabs.vertical.content' %}
 {% set user = createModel('Users').findById(uuid) %}
 {% set user_details = createModel('UserDetails','users').findOrCreate(user.id) %}
 {% set options = [] %}
-<div class="mt-4">
+<div class="mt-2 px-4">
     <div class="ui label basic">
         {{ labels.type }}
         <div class="detail">
@@ -19,5 +18,3 @@
         class: 'mt-2 basic',
         hide: false 
 }) }}
-
-{% endcomponent %}

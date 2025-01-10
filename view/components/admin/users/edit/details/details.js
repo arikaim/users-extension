@@ -24,5 +24,7 @@ arikaim.component.onLoaded(function() {
         arikaim.ui.form.showMessage({
             message: result.message
         });
+
+        arikaim.events.emit('user.update',result);
     });
 });

@@ -1,6 +1,4 @@
 {
-    "title": {
-        "content": "Add User",
-        "icon": "user plus outline blue"        
-    }
+    "title": "Add User",
+    "icon": "user plus outline blue"        
 }

@@ -1,8 +1,4 @@
 {
-    "title": {
-        "content": "Groups",
-        "icon": "users"
-    },
     "labels": {
         "add": "Add user to group"
     },

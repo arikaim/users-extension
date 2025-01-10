@@ -1,24 +1,4 @@
 {% import systemMacro('orderBy.html') as order %}
-{% set status_filter = searchValue('status','users') %}
-<div class="ui segment">
-    <div class="ui stackable grid">
-        <div class="five wide column left aligned">
-            <i class="icon filter"></i>
-            {{  component('semantic~status.dropdown',{ 
-                    status: status_filter,
-                    class: 'status-filter clearable selection',                       
-                    all: false 
-                }) 
-            }} 
-        </div>
-        <div class="nine wide column left aligned">
-            {{ component('semantic~search.form',{ namespace: 'users' }) }}
-        </div>
-        <div class="two wide right aligned column">
-            {{ component('semantic~paginator.dropdown',{ class: '', namespace: 'users' }) }}
-        </div>
-    </div>
-</div>
 <div class="ui segment mt-2">
     <table class="ui compact stackable selectable borderless basic table">
         <thead class="table-head">
@@ -45,7 +25,10 @@
                 <th>{{ columns.name }}</th>                    
             </tr>
         </thead>
-        <tbody id="users_rows" component="users::admin.users.view.rows" namespace="users">
+        <tbody 
+            id="users_rows" 
+            component="users::admin.users.view.rows" 
+            namespace="users">
             {{ component('users::admin.users.view.rows') }}
         </tbody>
     </table>

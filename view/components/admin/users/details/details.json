@@ -17,6 +17,7 @@
         "permissions": "Permissions",
         "options": "Options",
         "groups": "Groups",
+        "inherited": "Inherited from groups",
         "date_created": "Date Created",
         "date_updated": "Date Updated",
         "date_login": "Date Last Login"        

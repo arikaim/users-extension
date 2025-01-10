@@ -1,6 +1,5 @@
-{% component 'semantic~tabs.vertical.content' %}
 {% set user = createModel('Users').findById(uuid) %}
-<div class="ui mt-8">
+<div class="mt-2 px-4">
     {% if user.groups is empty %}
     <div class="ui message" id="no_groups_message">
         {{ messages.empty }}
@@ -19,4 +18,3 @@
         <i class="icon plus"></i>
     </div>
 </div>
-{% endcomponent %}

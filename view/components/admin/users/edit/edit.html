@@ -1,14 +1,18 @@
-{% component 'semantic~tabs.vertical.content' %}
-{% set class = 'sixteen wide column' %}
-{% set panel_class = '' %}
-<div class="ui segment pt-4">   
-    <div class="w-1/3">
-        {{ component('users::admin.users.dropdown',{ selected: uuid, class: '' }) }}
-    </div>    
-</div>
-<div class="mt-6 ml-4" id="edit_user_menu">
-    {% if uuid is not null %}
-        {{ component('users::admin.users.edit.menu',{ uuid: uuid }) }}
-    {% endif %}   
-</div>
+{% if uuid is not empty %}
+    {% set user = createModel('Users').findById(uuid) %}
+   
+{% endif %}  
+
+{% component 'semantic~panel' %}   
+    <div class="my-4 flex flex-row items-center">
+        <div class="font-bold px-2">
+            {{ labels.user }}
+        </div>
+        {{ user.user_name_or_email }}
+    </div>
+    <div class="mt-2" id="edit_user_menu">
+        {% if uuid is not null %}
+            {{ component('users::admin.users.edit.menu',{ uuid: uuid }) }}
+        {% endif %}   
+    </div>
 {% endcomponent %}

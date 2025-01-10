@@ -6,9 +6,9 @@ arikaim.component.onLoaded(function() {
     arikaim.ui.form.onSubmit('#group_form',function() {
         return groupsAdmin.add('#group_form');
     },function(result) {
-        arikaim.ui.form.clear('#group_form');      
-        arikaim.ui.form.showMessage({
-            message: result.message
-        })
+        arikaim.events.emit('groups.create',result);
+
+        arikaim.page.toastMessage(result.message);
+        arikaim.ui.getComponent('group_create_panel').close();
     });
 });

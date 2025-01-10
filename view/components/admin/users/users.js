@@ -39,7 +39,3 @@ function UsersAdmin() {
 }
 
 var usersAdmin = new UsersAdmin();
-
-arikaim.component.onLoaded(function() {
-    arikaim.ui.tab('.users-tab-item','users_content');
-});

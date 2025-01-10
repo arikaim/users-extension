@@ -1,6 +1,6 @@
-{% component 'semantic~tabs.vertical.content' %}
-{% set class = 'ten wide computer sixteen wide tablet' %}
-<div class="mt-8">   
-    {{ component('users::admin.users.form') }}
-</div>
+{% component 'semantic~panel' %}
+    {% set id = 'user_create_panel' %}
+    <div class="mt-2">   
+        {{ component('users::admin.users.form') }}
+    </div>
 {% endcomponent %}

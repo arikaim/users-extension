@@ -1,5 +1,12 @@
-{% component 'semantic~panel' %}
-<div class="mt-2">   
-    {{ component('users::admin.permissions.form') }}
+<div class="mt-2 flex flex-row items-center">
+    <div class="w-1/2">
+        {{  component('users::admin.permissions.dropdown',{ 
+                icon: 'blue', 
+                class: 'fluid mini' 
+            }) 
+        }}
+    </div>
+    <button class="ui button green icon mini add-permission-button" {{ labels.add|attr('title') }} uuid="{{ uuid }}" type="{{ type }}">
+        <i class="plus icon"></i>
+    </button>
 </div>
-{% endcomponent %}

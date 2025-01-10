@@ -12,6 +12,8 @@ function UsersView() {
     this.init = function() {
         this.loadMessages('users::admin');
 
+        arikaim.ui.loadComponentButton('.add-user');
+
         withObject('order',function(order) {
             order.init('users_rows','users::admin.users.view.rows','users');
         });
@@ -40,7 +42,29 @@ function UsersView() {
         arikaim.events.on('user.search.load',function(result) {      
             paginator.reload();
             self.initRows();    
-        },'userSearch');                   
+        },'userSearch');   
+        
+        arikaim.events.on('user.update',function(data) {
+            self.loadItem(data.uuid,true,false);
+        },'onUserUpdate');
+
+        arikaim.events.on('user.create',function(data) {
+            self.loadItem(data.uuid,false,true);
+        },'onUserCreate');
+    };
+
+    this.loadItem = function(uuid,replace,append) {
+        arikaim.ui.loadComponent({
+            id: (replace) == true ? 'row_' + uuid : 'users_rows',
+            append: append,
+            replace: replace,
+            params: { 
+                uuid: uuid 
+            },
+            component: 'users::admin.users.view.item'
+        },function(result) {
+            self.initRows();
+        });
     };
 
     this.loadList = function() {        

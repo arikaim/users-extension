@@ -1,0 +1,14 @@
+{
+    "labels": {
+        "deleted": "Deleted",
+        "empty": "...",
+        "restore": "Restore",
+        "active": "Active",
+        "confirmed": "Confirmed",
+        "status": {
+            "active": "active",
+            "disabled": "disabled"
+        },
+        "cp": "Control Panel"
+    }
+}

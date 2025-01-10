@@ -1,0 +1,46 @@
+{% if uuid is not empty %}
+    {% set item = createModel('Permissions').findById(uuid) %} 
+{% endif %}
+
+<tr id="item_{{ item.uuid }}">             
+    <td>            
+        {% if item.editable == true %}
+            <button class="ui compact mini icon basic button delete-permission" uuid="{{ item.uuid }}" data-title="{{ item.name }}">
+                <i class="icon trash orange"></i>
+            </button> 
+            <button class="ui compact mini icon basic button edit-permission" uuid="{{ item.uuid }}">
+                <i class="icon edit"></i>
+            </button> 
+        {% else %}    
+            <div class="ui label basic blue">
+                {{ labels.readonly }}
+            </div>
+        {% endif %}              
+    </td>
+    <td>
+        {% if item.deny == true %}
+            <div class="ui label red basic">
+                {{ labels.deny }}
+            </div>
+        {% else %}
+            <div class="ui label green basic">
+                {{ labels.allow }}
+            </div>
+        {% endif %}   
+    </td>
+    <td>
+        <div class="ui label horizontal basic">                     
+            {{ item.slug }}
+        </div>
+    </td>
+    <td>
+        {{ item.name }}
+
+        {% if item.extension_name is not empty %}
+        <div class="ui label horizontal basic">           
+            <span class="ui text grey">{{ labels.extension }}</span>
+            <div class="detail">{{ item.extension_name }}</div>
+        </div>
+        {% endif %}
+    </td>          
+</tr>

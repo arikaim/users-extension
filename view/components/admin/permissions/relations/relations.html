@@ -7,20 +7,23 @@
 {% set permissions = createModel('PermissionRelations').getRelationsQuery(model.id,type) %}
 {% if uuid is not empty %}
     <div 
-        class="ui middle aligned list w-1/2" 
+        class="ui middle aligned list w-full" 
         id="permissions_list" 
         uuid="{{ model.uuid }}" 
         type="{{ type }}">        
-        {% if permissions is empty %}
+        {% if permissions.get()|length == 0 %}
             <div class="item">..</div>
         {% endif %}     
         {% for item in permissions.get() %}   
             {{ component('users::admin.permissions.relations.item',{ item: item, relation_id: model.id }) }}     
         {% endfor %}
     </div>   
+
+    {{ component('users::admin.permissions.add',{ uuid: uuid, type: type }) }}
+
     {% if show_group_permissions == true %}
         <div class="ui horizontal divider">{{ labels.inherited }}</div>
         {{ component('users::admin.permissions.groups',{ uuid: uuid }) }}
     {% endif %}
-    {{ component('users::admin.permissions.add',{ uuid: uuid, type: type }) }}
+
 {% endif %}

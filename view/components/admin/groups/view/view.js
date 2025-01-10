@@ -11,9 +11,31 @@ function UserGroupsView() {
 
     this.init = function() {
         arikaim.ui.loadComponentButton('.create-group');
-        
         this.loadMessages('users::admin')
+
+        arikaim.events.on('groups.update',function(data) {
+            self.loadRow(data.uuid,true,false);
+        },'onGroupUpdate');
+
+        arikaim.events.on('groups.create',function(data) {
+            self.loadRow(data.uuid,false,true);
+        },'onGroupCreate');
+
         paginator.init('group_rows','users::admin.groups.view.rows','groups');                
+    };
+
+    this.loadRow = function(uuid,replace, append) {
+        arikaim.ui.loadComponent({
+            id: (replace) == true ? 'row_' + uuid : 'group_rows',
+            append: append,
+            replace: replace,
+            params: { 
+                uuid: uuid 
+            },
+            component: 'users::admin.groups.view.item'
+        },function(result) {
+            self.initRows();
+        });
     };
 
     this.initRows = function() {

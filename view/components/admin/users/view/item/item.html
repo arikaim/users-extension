@@ -1,0 +1,60 @@
+{% if uuid is not empty %}
+    {% set item = createModel('Users').findById(uuid) %}
+{% endif %}
+{% set control_panel_user = service('access').hasControlPanelAccess(item.id) %}
+<tr 
+    id="row_{{ item.uuid }}" 
+    class="{{ (control_panel_user == true) ? 'warning' : '' }}" 
+    title="{{ (control_panel_user == true) ? labels.cp : '' }}">             
+    <td>
+        {% if item.avatar is not empty  %}
+        {% set image_url = url('/api/users/avatar/view/' ~  item.uuid,true) %}       
+        <img class="ui tiny circular image rounded-full" src="{{ image_url }}">
+        {% else %}
+        <i class="user outline icon circular large grey"></i>
+        {% endif %}
+    </td>
+    <td>              
+        {% if item.isDeleted() == false %}
+        <div class="ui icon basic mini buttons">
+            <button class="ui icon button edit-button" uuid="{{ item.uuid }}">
+                <i class="icon edit"></i>
+            </button>
+            {% if control_panel_user == false %}
+            <button class="ui icon button delete-button" uuid="{{ item.uuid }}" data-title="{{ (item.user_name is empty) ? item.email : item.user_name }}">
+                <i class="icon trash orange"></i>
+            </button>
+            {% endif %}
+        </div>
+        {% else %}
+        <button class="ui icon basic button mini restore-button" uuid="{{ item.uuid }}"  {{ labels.restore|attr('title') }}>
+            <i class="trash restore olive alternate icon"></i>
+        </button>
+        {% endif %}
+        <button 
+            class="ui icon mini basic button user-details-button" 
+            uuid="{{ item.uuid }}" 
+            data-title="{{ (item.user_name is empty) ? item.email : item.user_name }}">
+            <i class="icon info"></i>
+        </button>
+    </td>
+    <td>{{ item.date_created|dateFormat }}</td>
+    <td>{{ item.date_login|dateFormat }}</td>       
+    <td>          
+        {% if item.isDeleted() == false and control_panel_user == false %}
+            {{ component('semantic~status.dropdown',{ status: item.status, uuid: item.uuid }) }} 
+        {% elseif control_panel_user == true %}
+            <div class="ui blue basic label">{{ labels.active }}</div>
+        {% else %}
+            <div class="ui red basic label">{{ labels.deleted }}</div>
+        {% endif %}  
+    </td>  
+    <td>{{ item.user_name }}</td>
+    <td>
+        {% if item.details.isConfirmedEmail() == true %}
+            <i class="icon olive checkmark" title="{{ labels.confirmed }}"></i>          
+        {% endif %}
+        {{ item.email }}           
+    </td>       
+    <td>{{ item.first_name }} {{ item.last_name }}</td>    
+</tr>

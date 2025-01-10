@@ -1,15 +1,38 @@
-{{  component('semantic~tabs.vertical',{ 
-        items: [ 
-            { title: labels.view,component: 'users::admin.users.view',icon: 'list', active: true },
-            { title: labels.add,component: 'users::admin.users.add',icon: 'plus' },
-            { id: 'edit_user',title: labels.edit,component: 'users::admin.users.edit',icon: 'edit' }    
-        ], 
-        menu: { id: 'users_menu' }, 
-        item_class: 'users-tab-item',
-        content: {
-            id: 'users_content',
-            component: 'users::admin.users.view',
-            params: params 
-        } 
-    })
-}}
+{% set status_filter = searchValue('status','users') %}
+<div class="ui segment">
+    <div class="ui stackable grid">
+        <div class="five wide column left aligned">
+            <button 
+                title="{{ labels.add }}"
+                mountTo="users_content"
+                component="users::admin.users.add"
+                class="ui green icon button mini add-user">
+                <i class="ui icon plus"></i>
+            </button>
+            <i class="icon filter"></i>
+            {{  component('semantic~status.dropdown',{ 
+                    status: status_filter,
+                    class: 'status-filter clearable selection',                       
+                    all: false 
+                }) 
+            }} 
+        </div>
+        <div class="nine wide column left aligned">
+            {{ component('semantic~search.form',{ namespace: 'users' }) }}
+        </div>
+        <div class="two wide right aligned column">
+            {{ component('semantic~paginator.dropdown',{ class: '', namespace: 'users' }) }}
+        </div>
+    </div>
+</div>
+<div
+    class="w-full flex flex-row items-start">
+    <div
+        class="hidden w-1/2 mr-2" 
+        id="users_content">
+    </div>
+    <div      
+        class="flex-grow">
+        {{ component('users::admin.users.view',{}) }}
+    </div>   
+</div>

@@ -12,8 +12,31 @@ function PermissionsView() {
     this.init = function() {
         this.loadMessages('users::admin');
         arikaim.ui.loadComponentButton('.create-permission');
+
+        arikaim.events.on('permission.update',function(data) {
+            self.loadRow(data.uuid,true,false);
+        },'onPermisionUpdate');
+
+        arikaim.events.on('permission.create',function(data) {
+            self.loadRow(data.uuid,false,true);
+        },'onPermisionCreate');
+
     };
 
+    this.loadRow = function(uuid,replace, append) {
+        arikaim.ui.loadComponent({
+            id: (replace) == true ? 'item_' + uuid : 'permissions_rows',
+            append: append,
+            replace: replace,
+            params: { 
+                uuid: uuid 
+            },
+            component: 'users::admin.permissions.view.item'
+        },function(result) {
+            self.initRows();
+        });
+    };
+    
     this.initRows = function() {
         arikaim.ui.button('.edit-permission',function(element) {           
             var uuid = $(element).attr('uuid');

@@ -8,7 +8,9 @@ arikaim.component.onLoaded(function() {
         },function(result) {
             arikaim.ui.form.showMessage({
                 message: result.message
-            })
+            });
+
+            arikaim.events.emit('groups.update',result);
         });
     }
 

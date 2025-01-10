@@ -102,7 +102,7 @@ class UsersApi extends ApiController
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param \Arikaim\Core\Validator\Validator $data
-     * @return Psr\Http\Message\ResponseInterface
+     * @return mixed
     */
     public function signup($request, $response, $data) 
     {       
@@ -144,7 +144,10 @@ class UsersApi extends ApiController
             }
         }           
 
-        $data->validate(true);    
+        $data
+            ->addFilter('email','Trim')    
+            ->addFilter('user_name','Trim')  
+            ->validate(true);    
 
         $user = $this->userSignup($data,$settings);
         $redirectUrl = $data->get('redirect_url','');
@@ -198,9 +201,9 @@ class UsersApi extends ApiController
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param Validator $data
-     * @return Psr\Http\Message\ResponseInterface
+     * @return mixed
     */
-    public function changeDetailsController($request, $response, $data) 
+    public function changeDetails($request, $response, $data) 
     { 
         // get current auth user
         $user = $this->get('access')->getUser();
@@ -212,15 +215,20 @@ class UsersApi extends ApiController
             ->addRule('unique:model=Users|field=email|exclude=' . $user['email'],'email',$this->getMessage('errors.email'))
             ->validate(true);    
 
+        $userName = $data->getString('user_name',null);
         $userModel = Model::Users()->findById($user['id']);
         // save user 
-        $result = $userModel->update([
-            'user_name' => $data->getString('user_name',null),
-            'email'     => $data->getString('email',null)
-        ]);
+        $details = [           
+            'email' => $data->getString('email',null)
+        ];
+        if (empty($userName) == false) {
+            $details['user_name'] = $userName;
+        }
+
+        $result = $userModel->update($details);
         if ($result == false) {
             $this->error('errors.update');
-            return;
+            return false;
         }
 
         // ceate user details
@@ -228,12 +236,14 @@ class UsersApi extends ApiController
 
         // save user details
         $result = Model::UserDetails('Users')->saveDetails($user['id'],$data->toArray());
+        if ($result === false) {
+            $this->error('errors.update');
+            return false;
+        }
 
-        $this->setResponse($result,function() use($user) {  
-            $this
-                ->message('update')
-                ->field('uuid',$user['uuid']);
-        },'errors.update');               
+        $this
+            ->message('update')
+            ->field('uuid',$user['uuid']);            
     }
 
     /**
@@ -257,7 +267,7 @@ class UsersApi extends ApiController
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param Validator $data
-     * @return Psr\Http\Message\ResponseInterface
+     * @return mixed
     */
     public function login($request, $response, $data)
     {       
@@ -273,6 +283,8 @@ class UsersApi extends ApiController
         }
         $data
             ->addRule('text:min=2|required','password')
+            ->addFilter('email','Trim')    
+            ->addFilter('user_name','Trim')           
             ->validate(true);    
 
         $loginAttempts = $this->get('access')->getLoginAttempts();
