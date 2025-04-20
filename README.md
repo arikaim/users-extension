@@ -15,3 +15,11 @@ Manage users, user groups, user permissions, api keys, login and signup options.
 ```sh
 composer require arikaim/users-extension
 ```
+
+from console run 
+
+```sh
+php cli extensions:install users
+```
+
+or Control Panel > Extensions > Users  click "Install" button

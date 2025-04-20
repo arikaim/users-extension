@@ -8,7 +8,7 @@
     "version": "1.12.0",
     "private-repository": true,
     "repository-type": "arikaim",
-    "repository": "arikaim-repository/users-extension",
+    "repository": "https://github.com/arikaim/users-extension.git",
     "position": "2",
     "install-order": 2,
     "features": [
