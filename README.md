@@ -1,7 +1,7 @@
 ## Arikaim CMS Users Extension
 
 
-Manage users.
+Manage users, user groups, user permissions, api keys, login and signup options.
 
 
 #### Requirements   
