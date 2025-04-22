@@ -5,11 +5,11 @@
     "type": "user",
     "description": "Users management",
     "short-description": "Users",
-    "version": "1.12.1",
+    "version": "1.12.2",
     "private-repository": true,
     "repository-type": "arikaim",
     "repository": "https://github.com/arikaim/users-extension.git",
-    "position": "1",
+    "position": "2",
     "install-order": 1,
     "features": [
         "Login with Twitter, Github, Google, Facebook",
