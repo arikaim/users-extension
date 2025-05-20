@@ -38,7 +38,7 @@ class Users extends Service implements ServiceInterface
     {
         global $arikaim;
 
-        $userId = (empty($userId) == true) ? $arikaim->get('access')->geId() : $userId;
+        $userId = (empty($userId) == true) ? $arikaim->get('access')->getId() : $userId;
         if (empty($userId) == true) {
             return false;
         }
@@ -58,7 +58,7 @@ class Users extends Service implements ServiceInterface
     {
         global $arikaim;
 
-        $userId = (empty($userId) == true) ? $arikaim->get('access')->geId() : $userId;
+        $userId = (empty($userId) == true) ? $arikaim->get('access')->getId() : $userId;
         if (empty($userId) == true) {
             return false;
         }
