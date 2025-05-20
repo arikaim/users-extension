@@ -28,6 +28,45 @@ class Users extends Service implements ServiceInterface
     }
 
     /**
+     * Save user option
+     * @param string $key
+     * @param mixed $value
+     * @param mixed $userId
+     * @return bool
+     */
+    public function saveOption(string $key, $value, ?int $userId = null): bool
+    {
+        global $arikaim;
+
+        $userId = (empty($userId) == true) ? $arikaim->get('access')->geId() : $userId;
+        if (empty($userId) == true) {
+            return false;
+        }
+
+        $result = Model::UserOptions('users')->saveOption($userId,$key,$value);
+        
+        return ($result !== null);
+    }
+
+    /**
+     * Get user optioon
+     * @param string $key
+     * @param mixed $userId
+     * @param mixed $default
+     */
+    public function getOption(string $key, ?int $userId = null, $default = null)
+    {
+        global $arikaim;
+
+        $userId = (empty($userId) == true) ? $arikaim->get('access')->geId() : $userId;
+        if (empty($userId) == true) {
+            return false;
+        }
+
+        return Model::UserOptions('users')->getOptionValue($key,$userId,$default);
+    }
+
+    /**
      * Get view avatar url
      *
      * @param string|null $uuid
