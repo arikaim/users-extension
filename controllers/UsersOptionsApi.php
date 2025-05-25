@@ -30,5 +30,10 @@ class UsersOptionsApi extends ApiController
         $this->loadMessages('users>users.messages');
         $this->setModelClass('UserOptions');
         $this->setExtensionName('users');
+
+        $this->onBeforeOptionUpdate(function($data) {
+            $data['id'] = $this->getUserId();
+            return $data;
+        });
     }
 }

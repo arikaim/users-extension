@@ -126,12 +126,10 @@
         </table>  
 
         <h4>{{ labels.options }}</h4>
-        {{  component('system:admin.orm.options.edit',{ 
+        {{  component('semantic~orm.options.view',{ 
                 model: 'UserOptions',
                 extension: 'users',
-                id: user.id,
-                class: 'mt-2 basic',
-                hide: false 
+                id: user.id
             }) 
         }}
     </div>

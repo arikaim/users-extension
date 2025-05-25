@@ -12,6 +12,13 @@ function Users() {
 
     var loginAttempts = 0;
     
+    this.saveOption = function(key, value, onSuccess, onError) {
+        return arikaim.put('/api/users/option/save',{
+            key: key,
+            value: value
+        },onSuccess,onError);    
+    };
+
     this.deleteAvatar = function(onSuccess, onError) {
         return arikaim.delete('/api/users/avatar/delete',onSuccess,onError);          
     };
