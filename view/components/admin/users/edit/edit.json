@@ -1,6 +1,6 @@
 {
     "title": "Edit User",
-    "icon": "user outline blue",
+    "icon": "icons~edit",
     "labels": {
         "user": "User"
     }

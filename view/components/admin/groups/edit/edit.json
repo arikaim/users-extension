@@ -1,6 +1,6 @@
 {
     "title": "Edit Group",
-    "icon": "edit blue",   
+    "icon": "icons~edit",   
     "labels": {
         "user": "Group"
     }

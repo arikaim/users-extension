@@ -2,4 +2,21 @@
 
 arikaim.component.onLoaded(function() {
     arikaim.ui.viewPasswordButton('.view-password');
+
+     arikaim.ui.form.addRules("#create_user_form",{
+        inline: false,
+        fields: {
+            password: {
+                rules: [{
+                    type: "minLength[4]"
+                }]
+            },
+            repeat_password: {
+                rules: [
+                    { type: "minLength[4]" },
+                    { type: "match[password]" }
+                ]
+            }
+        }
+    });  
 });

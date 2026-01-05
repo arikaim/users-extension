@@ -13,13 +13,10 @@ function MembersAdmin() {
             var uuid = $(element).attr('uuid');
         
             return groupsAdmin.removeMember(uuid,function(result) {             
-                $('#item_' + uuid).remove();
-                arikaim.page.toastMessage(result.message);
+                $('#item_' + uuid).remove();            
+                arikaim.ui.getComponent('toast').show(result.message);
             },function(error) {              
-                arikaim.page.toastMessage({
-                    class: 'error',
-                    message: error
-                });                
+                arikaim.ui.getComponent('toast').show(error);                                 
             });
         });
     };

@@ -1,8 +1,6 @@
 {
-    "title": {
-        "content": "Options Definitions",
-        "icon": "horizontal sliders blue"        
-    },
+    "title": "Options Definitions",
+    "icon": "icons~cog",
     "labels": {
         "empty": "No definded options for this user type.",
         "type": "User Type",

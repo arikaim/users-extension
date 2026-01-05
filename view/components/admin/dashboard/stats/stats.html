@@ -1,7 +1,6 @@
-{% set users = createModel('Users') %}
-<div class="ui mini horizontal teal statistics">
-    <div class="statistic">
-        <div class="value">{{ users.count() }}</div>
-        <div class="label">{{ labels.users }}</div>
-    </div>                          
+{% set users = createModel('Users').getActive() %}
+<div class="stat">   
+    <div class="stat-title">{{ labels.users }}</div>
+    <div class="stat-value">{{ users.count() }}</div> 
+    <div class="stat-desc">{{ labels.description }}</div>                 
 </div>

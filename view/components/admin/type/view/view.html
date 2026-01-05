@@ -1,16 +1,9 @@
-<div>
-    <div class="ui grid">
-        <div class="row">
-            <div class="three wide column">
-                <div class="ui segment">
-                    {{ component('users::admin.type.list') }}
-                </div>                
-            </div>
-            <div class="thirteen wide column">
-                <div class="ui segment" id="user_type_options">
-                    {{ component('users::admin.type.options',{ uuid: 'default' }) }}
-                </div>                
-            </div>
-        </div>
+
+<div class="mt-4 flex flex-row items-start">
+    <div class="w-1/2">
+        {{ component('users::admin.type.list') }}     
     </div>
+    <div class="ml-4 w-1/2" id="user_type_options">
+        {{ component('users::admin.type.options',{ uuid: 'default' }) }}          
+    </div>    
 </div>

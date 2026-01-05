@@ -1,35 +1,29 @@
-
-<div class="ui segment">
-    <div class="ui stackable grid">
-        <div class="ten wide column">
-            <button 
-                mountTo="groups_content"
-                component="users::admin.groups.add"
-                title="{{ tooltip.create }}"
-                class="ui mini curcular green icon button create-group">
-                <i class="icon plus"></i>
-            </button>
-        </div>
-        <div class="six wide column right aligned">
-            {{ component('semantic~paginator.dropdown',{ class: 'mini', namespace: 'groups' }) }}
-        </div>
-    </div>
+<div class="{{ theme.panel }}">
+    <button 
+        mountTo="groups_content"
+        component="users::admin.groups.add"
+        title="{{ tooltip.create }}"
+        class="{{ theme.buttons.green }} create-group">
+        {{ buttons.create }}
+    </button>        
 </div>
-<div class="ui segment mt-2">
-    <table class="ui compact stackable selectable borderless basic table">
-        <thead class="table-head">
+<div class="{{ theme.panel }} mt-4">
+    <table class="{{ theme.table.default }}">
+        <thead>
             <tr>             
-                <th class="collapsing aligned three wide">{{ columns.actions }}</th>
-                <th class="collapsing one wide aligned">{{ columns.members }}</th>   
-                <th class="collapsing four wide">{{ columns.slug }}</th>   
-                <th class="collapsing four wide">{{ columns.name }}</th>                                                    
+                <th class="">{{ columns.actions }}</th>
+                <th class="">{{ columns.members }}</th>   
+                <th class="">{{ columns.slug }}</th>   
+                <th class="">{{ columns.name }}</th>                                                    
             </tr>
         </thead>
-        <tbody id="group_rows" component="users::admin.groups.view.rows" namespace="groups">
+        <tbody 
+            id="group_rows" 
+            component="users::admin.groups.view.rows" 
+            namespace="groups">
             {{ component('users::admin.groups.view.rows') }}
         </tbody>
     </table>
-    <div id="paginator">
-        {{ component("semantic~paginator",{ namespace: 'groups' }) }}
+    <div id="paginator">     
     </div>
 </div>

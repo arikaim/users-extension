@@ -1,5 +1,4 @@
 {
-    "labels": {
-        "title": "Users"        
-    }
+    "title": "Users",        
+    "icon": "icons~user"
 }

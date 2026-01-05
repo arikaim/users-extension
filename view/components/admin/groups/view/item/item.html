@@ -3,28 +3,41 @@
 {% endif %}
 <tr id="row_{{ item.uuid }}">             
     <td>                     
-        <div class="ui icon basic mini buttons">
-            <button class="ui icon button edit-button" uuid="{{ item.uuid }}">
-                <i class="icon edit"></i>
-            </button>      
-            <button class="ui icon button permissions-button" uuid="{{ item.uuid }}">
-                <i class="icon unlock"></i>
-            </button>   
-            <button class="ui icon button members-button" uuid="{{ item.uuid }}">
-                <i class="icon users"></i>
-            </button>        
-            {% if item.members.count() == 0 %}
-            <button class="ui icon button delete-button" uuid="{{ item.uuid }}" data-title="{{ item.title }}">
-                <i class="icon trash orange"></i>
-            </button>           
-            {% endif %}    
-        </div>           
+        <button 
+            mountTo="groups_content"
+            component="users::admin.groups.edit"
+            class="{{ theme.buttons.icon }} group-action" 
+            params="uuid:{{ item.uuid }}">
+            {{ component('icons~edit',theme.icons.menu,'svg') }}
+        </button>      
+        <button 
+            mountTo="groups_content"
+            component="users::admin.groups.permissions"
+            class="{{ theme.buttons.icon }} group-action" 
+            params="uuid:{{ item.uuid }}">
+            {{ component('icons~lock',theme.icons.menu,'svg') }}
+        </button>   
+        <button 
+            mountTo="groups_content"
+            component="users::admin.groups.members"
+            class="{{ theme.buttons.icon }} group-action" 
+            params="uuid:{{ item.uuid }}">
+            {{ component('icons~user',theme.icons.menu,'svg') }}
+        </button>        
+        {% if item.members.count() == 0 %}
+        <button 
+            class="{{ theme.buttons.icon }} delete-button" 
+            uuid="{{ item.uuid }}" 
+            title="{{ item.title }}">
+            {{ component('icons~trash',theme.icons.delete,'svg') }}
+        </button>           
+        {% endif %}        
     </td>
-    <td class="center aligned">
+    <td class="self-center">
         {{ item.members.count() }}
     </td>
     <td>
-        <div class="ui label basic">{{ item.slug }}</div>
+        <div class="badge badge-sm badge-outline">{{ item.slug }}</div>
     </td>
     <td>
         {{ item.title }}

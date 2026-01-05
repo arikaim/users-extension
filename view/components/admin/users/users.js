@@ -20,13 +20,11 @@ function UsersAdmin() {
         return arikaim.put('/api/users/admin/change-password',formId,onSuccess,onError);         
     };
 
-    this.setStatus = function(uuid, status, onSuccess, onError) { 
-        var data = { 
+    this.setStatus = function(uuid, status, onSuccess, onError) {   
+        return arikaim.put('/api/users/admin/status',{ 
             status: status,
             uuid: uuid 
-        };
-        
-        return arikaim.put('/api/users/admin/status',data,onSuccess,onError);           
+        },onSuccess,onError);           
     };
 
     this.delete = function(uuid, onSuccess, onError) {

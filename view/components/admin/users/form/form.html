@@ -2,12 +2,14 @@
     {% set user = createModel('Users').findById(uuid) %}
     {% set user_details = createModel('UserDetails','users').findByColumn(user.id,'user_id') %}   
 {% endif %}
-<form class="ui equal width form" id="create_user_form">  
+<form class="form" id="create_user_form">  
     <input type="hidden" name="uuid" id="uuid" value="{{ uuid }}">  
-    <div class="field">
-        <label>{{ fields.user_name.label }}</label>
-        <div class="ui left icon input">
-            <i class="icon user outline"></i>
+    <div class="{{ theme.form.field }}">
+        <label class="{{ theme.form.label }}">
+            {{ fields.user_name.label }}
+        </label>
+        <div class="{{ theme.form.input }}">
+            {{ component('icons~user',theme.form.icon,'svg') }}
             <input 
                 type="text" 
                 name="user_name" 
@@ -16,84 +18,121 @@
                 value="{{ user.user_name }}"> 
         </div>
     </div>   
-    <div class="two fields">
-        <div class="field">
-            <label>{{ fields.email.label }}</label>
-            <div class="ui left icon input">
-                <i class="icon mail outline"></i>
+    <div class="{{ theme.form.fields }}">
+        <div class="{{ theme.form.field }}">
+            <label class="{{ theme.form.label }}">
+                {{ fields.email.label }}
+            </label>
+            <div class="{{ theme.form.input }}">
+                {{ component('icons~mail',theme.form.icon,'svg') }}
                 <input type="text" name="email" id="email" {{ fields.email.placeholder|attr('placeholder') }} value="{{ user.email }}">  
             </div>
         </div>     
-        {{  component('semantic~form.fields.checkbox',{ 
+        {{  component('system:form.fields.checkbox',{ 
                 name: 'email_status',
                 value: user_details.email_status, 
                 field_label: fields.confirmed.label
             }) 
         }}      
     </div>  
-    {{  component('semantic~form.fields.checkbox',{ 
+    {{  component('system:form.fields.checkbox',{ 
             value: user_details.public_profile, 
             name: 'public_profile',
-            label: fields.public.label
+            field_label: fields.public.label
         }) 
     }}  
-    <div class="ui horizontal divider">
+    <div class="horizontal divider my-2">
         {{ labels.details }}
     </div>   
-    <div class="ui very basic segment padded">           
-        <div class="two fields">
-            <div class="field">
-                <label>{{ fields.first_name.label }}</label>
-                <input name="first_name" id="first_name" placeholder="{{ fields.first_name.placeholder }}" type="text" value="{{ user_details.first_name }}">
-            </div>
-            <div class="field">
-                <label>{{ fields.last_name.label }}</label>
-                <input name="last_name" id="last_name" placeholder="{{ fields.last_name.placeholder }}" type="text" value="{{ user_details.last_name }}">
-            </div>
+    <div class="{{ theme.form.fields }}">
+        <div class="{{ theme.form.field }}">
+            <label class="{{ theme.form.label }}">
+                {{ fields.first_name.label }}
+            </label>
+            <input 
+                class="{{ theme.form.input }}"
+                name="first_name" 
+                id="first_name" 
+                placeholder="{{ fields.first_name.placeholder }}" 
+                type="text" 
+                value="{{ user_details.first_name }}">
         </div>
-        <div class="two fields">
-            <div class="field">
-                <label>{{ fields.phone.label }}</label>
-                <input name="phone" id="phone" placeholder="{{ fields.phone.placeholder }}" type="text" value="{{ user_details.phone }}">
-            </div>
-            <div class="field">
-                <label>{{ fields.phone2.label }}</label>
-                <input name="phone_2" id="phone_2" placeholder="{{ fields.phone2.placeholder }}" type="text" value="{{ user_details.phone_2 }}">
-            </div>
+        <div class="{{ theme.form.field }}">
+            <label class="{{ theme.form.label }}">
+                {{ fields.last_name.label }}
+            </label>
+            <input 
+                class="{{ theme.form.input }}"
+                name="last_name" 
+                id="last_name" 
+                placeholder="{{ fields.last_name.placeholder }}" 
+                type="text" 
+                value="{{ user_details.last_name }}">
+        </div>
+    </div>
+    <div class="{{ theme.form.fields }}">
+        <div class="{{ theme.form.field }}">
+            <label class="{{ theme.form.label }}">
+                {{ fields.phone.label }}
+            </label>
+            <input 
+                class="{{ theme.form.input }}"
+                name="phone" 
+                id="phone" 
+                placeholder="{{ fields.phone.placeholder }}" 
+                type="text" 
+                value="{{ user_details.phone }}">
+        </div>
+        <div class="{{ theme.form.field }}">
+            <label class="{{ theme.form.label }}">
+                {{ fields.phone2.label }}
+            </label>
+            <input 
+                class="{{ theme.form.input }}"
+                name="phone_2" 
+                id="phone_2" 
+                placeholder="{{ fields.phone2.placeholder }}" 
+                type="text" 
+                value="{{ user_details.phone_2 }}">
         </div>
     </div>  
-    <div class="two fields">
-        <div class="field">
-            <label>{{ fields.type.label }}</label>
+    <div class="{{ theme.form.fields }}">
+        <div class="{{ theme.form.field }}">
+            <label class="{{ theme.form.label }}">
+                {{ fields.type.label }}
+            </label>
             {{ component('users::admin.type',{ selected: user_details.type_id }) }}
         </div>  
-       <div class="field">
+       <div class="{{ theme.form.field }}">
        </div>
     </div>
     {% if edit == false %}
-    <div class="ui horizontal divider"></div>   
-    <div class="two fields mt-4">    
+    <div class="horizontal divider my-2"></div>   
+    <div class="{{ theme.form.fields }} mt-4">    
         <div class="field required">
-            <label>{{ fields.password.label }}</label>
-            <div class="ui left icon right action input">
-                <i class="icon lock"></i>
+            <label class="{{ theme.form.label }}">
+                {{ fields.password.label }}
+            </label>
+            <div class="{{ theme.form.input }}">           
                 <input class="password-field" type="password" name="password" id="password" {{ fields.password.placeholder|attr('placeholder') }} value=""> 
                 <a class="ui icon basic link button view-password">               
-                    <i class="eye slash outline icon"></i>
+                    
                 </a>  
             </div>
         </div>    
-        <div class="field required">
-            <label>{{ fields.repeat_password.label }}</label>
-            <div class="ui left icon right action input">
-                <i class="icon lock"></i>
+        <div class="{{ theme.form.field }} required">
+            <label class="{{ theme.form.label }}">
+                {{ fields.repeat_password.label }}
+            </label>
+            <div class="{{ theme.form.input }}">
+              
                 <input class="password-field" type="password" name="repeat_password" id="repeat_password" {{ fields.repeat_password.placeholder|attr('placeholder') }} value="">
                 <a class="ui icon basic link button view-password">               
-                    <i class="eye slash outline icon"></i>
+                
                 </a> 
             </div>  
         </div>  
     </div>            
     {% endif %}
-    {{ component('semantic~form.footer') }}    
+    {{ component('system:form.footer') }}    
 </form>

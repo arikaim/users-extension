@@ -5,7 +5,7 @@
     "type": "user",
     "description": "Users management",
     "short-description": "Users",
-    "version": "1.12.5",
+    "version": "2.0.0",
     "private-repository": true,
     "repository-type": "arikaim",
     "repository": "https://github.com/arikaim/users-extension.git",
@@ -37,8 +37,8 @@
     "admin-menu": {        
         "title": "Users",
         "page-title": "Users",
-        "icon": "user friends",
-        "page-icon": "user friends",      
+        "svg_icon": "icons~user",
+        "page-icon": "icons~user",      
         "component": "users::admin"        
     }
 }

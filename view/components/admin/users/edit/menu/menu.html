@@ -1,16 +1,48 @@
-{% set params = { uuid: uuid } %}
-{{  component('semantic~tabs',{ 
+{{  component('system:admin.tabs',{ 
+        id: 'edit-user_tab_menu',
         items: [ 
-            { title: labels.details, component: 'users::admin.users.edit.details', icon: 'edit', active: true, params: params },
-            { title: labels.avatar, component: 'users::admin.users.edit.avatar', icon: 'user circle outline', params: params },   
-            { title: labels.tokens, component: 'users::admin.users.edit.tokens', icon: 'tags', params: params },    
-            { title: labels.permissions, component: 'users::admin.users.edit.permissions', icon: 'unlock', params: params },
-            { title: labels.groups, component: 'users::admin.users.edit.groups', icon: 'users', params: params },
-            { title: labels.options, component: 'users::admin.users.edit.options', icon: 'sliders horizontal', params: params }
+            { 
+                title: labels.details, 
+                component: 'users::admin.users.edit.details', 
+                svg_icon: 'icons~edit', 
+                active: true, 
+                params: 'uuid:' ~ uuid
+            },
+            { 
+                title: labels.avatar, 
+                component: 'users::admin.users.edit.avatar', 
+                svg_icon: 'icons~user', 
+                params: 'uuid:' ~ uuid 
+            },   
+            { 
+                title: labels.tokens, 
+                component: 'users::admin.users.edit.tokens', 
+                svg_icon: 'icons~tag', 
+                params: 'uuid:' ~ uuid 
+            },    
+            { 
+                title: labels.permissions, 
+                component: 'users::admin.users.edit.permissions', 
+                svg_icon: 'icons~lock', 
+                params: 'uuid:' ~ uuid  
+            },
+            { 
+                title: labels.groups, 
+                component: 'users::admin.users.edit.groups', 
+                svg_icon: 'icons~user', 
+                params: 'uuid:' ~ uuid   
+            },
+            { 
+                title: labels.options, 
+                component: 'users::admin.users.edit.options', 
+                svg_icon: 'icons~cog', 
+                params: 'uuid:' ~ uuid 
+            }
         ], 
-        menu_column: 'two',
-        content_column: 'fourteen',
-        item_class: 'edit-tab-item',
-        content: { id: 'edit_user_content', component: 'users::admin.users.edit.details', params: params } 
+        content: { 
+            id: 'edit_user_content', 
+            component: 'users::admin.users.edit.details', 
+            params: { uuid: uuid }
+        } 
     })
 }}

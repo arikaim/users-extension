@@ -15,6 +15,5 @@ arikaim.component.onLoaded(function() {
                 arikaim.ui.tab('.edit-tab-item','edit_user_content');
             });
         }                   
-    });
-    arikaim.ui.tab('.edit-tab-item','edit_user_content');
+    });   
 });

@@ -8,7 +8,7 @@ arikaim.component.onLoaded(function() {
     },function(result) {
         arikaim.events.emit('groups.create',result);
 
-        arikaim.page.toastMessage(result.message);
+        arikaim.ui.getComponent('toast').show(result.message);
         arikaim.ui.getComponent('group_create_panel').close();
     });
 });

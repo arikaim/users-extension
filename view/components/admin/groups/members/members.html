@@ -1,12 +1,12 @@
 {% set group = createModel('UserGroups').findById(uuid) %}
 
-{% component 'semantic~panel' %}
-    <h4>
+{% component 'system:admin.panel' %}
+    <h4 class="font-bold">
         {{ group.title }}
     </h4>
     <div class="mt-2" group-uuid="{{ uuid }}">
         {% if uuid is not empty %}
-        {{ component('users::admin.groups.members.list',{ uuid: uuid }) }}
+            {{ component('users::admin.groups.members.list',{ uuid: uuid }) }}
         {% endif %}
     </div>
 {% endcomponent %}

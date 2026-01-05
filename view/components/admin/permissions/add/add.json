@@ -1,4 +1,6 @@
 {
+    "title": "Create permission",
+    "icon": "icons~plus",
     "labels": {
         "add": "Add"
     }

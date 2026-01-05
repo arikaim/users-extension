@@ -3,7 +3,7 @@
 arikaim.component.onLoaded(function() {
     arikaim.ui.button('.add-group-member',function(element) {
         var groupUuid = $(element).attr('uuid');
-        var userUuid = $('.users-dropdown').dropdown('get value');
+        var userUuid = '' ;//$('.users-dropdown').dropdown('get value');
 
         groupsAdmin.addMember(groupUuid,userUuid,function(result) {           
             return arikaim.page.loadContent({

@@ -1,29 +1,26 @@
-<div class="ui segment">
-    <div class="ui stackable grid">
-        <div class="ten wide column">
-            <button 
-                mountTo="permissions_content"
-                component="users::admin.permissions.create"
-                title="{{ tooltip.create }}"
-                class="ui mini curcular green icon button create-permission">
-                <i class="icon plus"></i>
-            </button>
-        </div>
-        <div class="six wide column right aligned">
-        </div>
-    </div>
+<div class="{{ theme.panel }}">
+    <button 
+        mountTo="permissions_content"
+        component="users::admin.permissions.create"
+        title="{{ tooltip.create }}"
+        class="{{ theme.buttons.green }} create-permission">
+        {{ buttons.create }}
+    </button>   
 </div>
-<div class="ui segment">
-    <table class="ui compact stackable selectable borderless basic table">
-        <thead class="table-head">
+<div class="mt-4 {{ theme.panel }}">
+    <table class="{{ theme.table.default }}">
+        <thead>
             <tr>             
-                <th class="two wide">{{ columns.actions }}</th>
-                <th class="collapsing one wide aligned">{{ columns.type }}</th>   
-                <th class="collapsing four wide">{{ columns.slug }}</th>   
-                <th class="collapsing four wide">{{ columns.name }}</th>                                                    
+                <th class="">{{ columns.actions }}</th>
+                <th class="">{{ columns.type }}</th>   
+                <th class="">{{ columns.slug }}</th>   
+                <th class="">{{ columns.name }}</th>                                                    
             </tr>
         </thead>
-        <tbody id="permissions_rows" component="users::admin.permissions.view.rows" namespace="permissions">
+        <tbody 
+            id="permissions_rows" 
+            component="users::admin.permissions.view.rows" 
+            namespace="permissions">
             {{ component('users::admin.permissions.view.rows') }}
         </tbody>
     </table>

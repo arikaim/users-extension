@@ -4,11 +4,11 @@
     class="flex flex-row items-center {{ class }}"> 
     <div class="flex flex-row items-center" >
         {% if item.permission.deny == true %}
-        <div class="ui label red horizontal basic">
+        <div class="badge badge-sm badge-error">
             <span class="ui text">{{ labels.deny }}</span>
         </div>
         {% else %}
-        <div class="ui label green horizontal basic">
+        <div class="badge badge-sm badge-success">
             <span class="ui text">{{ labels.allow }}</span>
         </div>
         {% endif %} 
@@ -16,17 +16,17 @@
             {{ name }}
         </div> 
         <div class="flex-grow">
-            <div class="ui labels right floated">
+          
                 {% set permisssion_types = ['read','write','delete','execute'] %}
                 {% for type in permisssion_types %}
                     {% if permission[type] == 1 %}  
-                        {% set button = { action: 'remove', class: 'green', icon: 'check circle outline green' } %}          
+                        {% set button = { action: 'remove', class: 'badge-success', icon: 'check circle outline green' } %}          
                     {% else %}
-                        {% set button = { action: 'add', class: 'red', icon: 'ban red' } %}        
+                        {% set button = { action: 'add', class: 'badge-error', icon: 'ban red' } %}        
                     {% endif %}     
                     <span id="permission_type_content_{{ type }}_{{ item.uuid }}">
                         <div 
-                            class="ui horizontal basic {{ button.class }} label change-permission-type cursor-pointer" 
+                            class="badge badge-outline badge-sm {{ button.class }} change-permission-type cursor-pointer" 
                             type="{{ type }}" 
                             uuid="{{ item.uuid }}"
                             action-type="{{ button.action }}">       
@@ -37,7 +37,7 @@
                         </div>
                     </span>                
                 {% endfor %}
-            </div>
+            
         </div>  
     </div>  
 </div>

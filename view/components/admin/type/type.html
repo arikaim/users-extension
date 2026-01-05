@@ -8,6 +8,7 @@
 {% set selected_text = (selected is empty) ? labels.select : selected.title %}
 {% set class = class|default('selection') %}
 {% set icon = icon|default('stream') %}
+
 <div class="ui dropdown user-type-dropdown {{ class }}" id="{{ id }}">
     <input name="{{ name }}" type="hidden" value="{{ selected[data_field] }}">
     <i class="icon {{ icon }}"></i> 

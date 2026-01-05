@@ -2,7 +2,7 @@
     "include": {
         "js": [
             "users::users",
-            "semantic~search"
+            "system:admin.search"
         ]
     },
     "access": {

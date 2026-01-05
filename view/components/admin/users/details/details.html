@@ -3,27 +3,26 @@
 {% set tokens = createModel('AccessTokens').getUserTokens(user.id) %}
 {% set permissions = createModel('PermissionRelations').getRelationsQuery(user.id,'user') %}
 
-{% component 'semantic~panel' %}
+{% component 'system:admin.panel' %}
     <div class="mt-2">
         {% if userDetails.avatar is not empty %}
             {% set image_url = url('/api/users/avatar/view/' ~  uuid,true) %}    
             <img 
-                class="ui top aligned small circular image" 
+                class="h-10 w-10" 
                 src="{{ image_url }}">
         {% else %}
             <div class="w-32 h-32 border rounded-full border-solid border-gray-300">         
-                <div class="flex items-center justify-center align-middle pt-6 pl-2">
-                    <i class="icon user outline grey huge"></i>
+                <div class="flex items-center justify-center align-middle p-4">
+                    {{ component('icons~image',{ color: 'text-gray-300' },'svg') }}
                 </div>
             </div>
         {% endif %}                          
-        <table class="ui definition mini table">
+        <table class="{{ theme.table.details }}">
             <tbody>
                 <tr>
                     <td>{{ labels.id }}</td>
                     <td>
-                        <div class="ui basic label"> {{ user.id }}</div>
-                        {{ user.uuid }}
+                        {{ component('system:admin.view.id',{ model: user }) }}                     
                     </td>
                 </tr>
                 <tr>
@@ -60,9 +59,9 @@
                     <td>{{ labels.public }}</td>
                     <td>
                         {% if userDetails.public_profile == 1 %}
-                            <div class="ui basic green label">{{ labels.on }}</div>
+                            <div class="badge badge-success badge-sm">{{ labels.on }}</div>
                         {% else %}
-                            <div class="ui basic red label">{{ labels.off }}</div>                               
+                            <div class="badge badge-secondary badge-sm">{{ labels.off }}</div>                               
                         {% endif %}
                     </td>
                 </tr>
@@ -84,17 +83,23 @@
                 </tr>
             </tbody>
         </table> 
-        <h4>{{ labels.permissions }}</h4>
+        <h4 class="font-bold my-2">
+            {{ labels.permissions }}
+        </h4>
         <div class="w-full">                
             {% for item in permissions.get() %}
                 {{ component('users::admin.permissions.label',{ item: item, class: 'mb-2' }) }} 
             {% endfor %}                  
         </div> 
-        <div class="ui horizontal divider">{{ labels.inherited }}</div>
+        <div class="horizontal divider my-2">
+            {{ labels.inherited }}
+        </div>
         {{ component('users::admin.permissions.groups',{ uuid: user.uuid }) }}
 
-        <h4>{{ labels.groups }}</h4>
-        <table class="ui definition table">
+        <h4 class="font-bold my-2">
+            {{ labels.groups }}
+        </h4>
+        <table class="{{ theme.table.details }}">
             <tbody>
             {% for item in user.groups %}              
                 {{  component('users::admin.users.edit.groups.item',{ 
@@ -107,8 +112,10 @@
             </tbody>
         </table> 
 
-        <h4>{{ labels.tokens }}</h4>
-        <table class="ui definition table">
+        <h4 class="font-bold my-2">
+            {{ labels.tokens }}
+        </h4>
+        <table class="{{ theme.table.details }}">
             <tbody>
                 {% for token in tokens %}
                     {% if token.isExpired() == flase %}
@@ -125,7 +132,9 @@
             </tbody>
         </table>  
 
-        <h4>{{ labels.options }}</h4>
+        <h4 class="font-bold my-2">
+            {{ labels.options }}
+        </h4>
         {{  component('semantic~orm.options.view',{ 
                 model: 'UserOptions',
                 extension: 'users',

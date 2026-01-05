@@ -1,33 +1,28 @@
-{% component 'semantic~tabs.vertical.content' %}
-    {% set class = 'sixteen wide column' %}
-    {% set panel_class = '' %}
-    {% set options = [] %}
-    {% set user_type = createModel('UserType','users').findByColumn(uuid,['uuid','slug']) %}
-    {% set option_type = createModel('UserOptionType','users') %}
+{% set options = [] %}
+{% set user_type = createModel('UserType','users').findByColumn(uuid,['uuid','slug']) %}
+{% set option_type = createModel('UserOptionType','users') %}
+
+{% component 'system:admin.panel' %}
     <div class="mt-2">
-        <div class="ui horizontal segments">
-            <div class="ui segment">
-                <span class="font-bold">{{ labels.type }}</span>
-                <span class="pl-2">{{ user_type.title }}</span>
-            </div>          
-            <div class="ui segment">                
-                <div class="ui right floated aligned basic label">
-                    <span class="ui blue text">{{ labels.slug }}</span>
-                    <div class="detail">{{ user_type.slug }}</div>              
-                </div>                              
-            </div>            
-        </div>
+        <div class="flex flex-row items-center">
+            <span class="font-bold">{{ labels.type }}</span>
+            <span class="pl-2">{{ user_type.title }}</span>
+        </div>          
+        <div class="flex flex-row items-center">                
+            <div class="badge badge-sm badge-outline">
+                <span class="px-1">{{ labels.slug }}</span>
+                <div class="font-bold">{{ user_type.slug }}</div>              
+            </div>                              
+        </div>                
         {% set items = options.getItemsQuery(user_type.slug) %}       
         <div class="mt-8">
             {% if items.count() == 0 %}
-            <div class="ui message">
-                {{ labels.empty }}
-            </div>
+                {{ component('system:admin.alert.info',{ message: labels.empty }) }}          
             {% endif %}
             {% for item in items.get() %}
                 {% set type = option_type.getByKey(item.key) %}
                 <div class="mt-2 pb-4">
-                    <h4 class="ui header">
+                    <h4 class="font-bold">
                         {{ type.title }}
                     </h4>
                     <div class="ui ten column grid p-2">

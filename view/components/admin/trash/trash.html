@@ -1,31 +1,36 @@
 {% set deletedUsers = createModel('Users').getDeletedCount() %}  
-{% set disabled = (deletedUsers == 0) ? 'disabled' : '' %}
-<div class="p-1">
-    <button class="ui basic orange mini button empty-trash {{ disabled }} trash-button" {{ buttons.empty.title|attr('title') }}>
-        <i class="icon trash alternate outline orange"></i>
+
+<div class="mt-4 {{ theme.panel }}">
+    <button 
+        class="{{ theme.buttons.delete }} empty-trash 
+        {{ (deletedUsers == 0) ? 'disabled' : '' }} trash-button" 
+        {{ buttons.empty.title|attr('title') }}>       
         {{ buttons.empty.content }}
     </button>
 </div>
-<div class="ui segment">
-    <table class="ui compact stackable borderless basic table">
-        <thead class="table-head">
+<div class="mt-4 {{ theme.panel }}">
+    <table class="{{ theme.table.default }}">
+        <thead>
             <tr>
-                <th class="two wide">{{ columns.avatar }}</th>           
-                <th class="two wide collapsing center aligned">{{ columns.actions }}</th>
-                <th class="two wide">{{ columns.created }}</th>
-                <th class="two wide">{{ columns.last_login }}</th>               
-                <th class="collapsing two wide">{{ columns.status }}</th>
-                <th class="collapsing five wide">{{ columns.user_name }}</th>
-                <th class="collapsing five wide">{{ columns.email }}</th>              
+                <th class="">{{ columns.avatar }}</th>           
+                <th class="">{{ columns.actions }}</th>
+                <th class="">{{ columns.created }}</th>
+                <th class="">{{ columns.last_login }}</th>               
+                <th class="">{{ columns.status }}</th>
+                <th class="">{{ columns.user_name }}</th>
+                <th class="">{{ columns.email }}</th>              
                 <th>{{ columns.name }}</th>  
-                <th class="collapsing tow wide">{{ columns.phone }}</th>    
+                <th class="">{{ columns.phone }}</th>    
             </tr>
         </thead>
-        <tbody id="items_rows" component="users::admin.users.view.rows" namespace="trash">
+        <tbody 
+            id="items_rows" 
+            component="users::admin.users.view.rows" 
+            namespace="trash">
             {{ component("users::admin.users.view.rows",{ show_deleted: true }) }}
         </tbody>
     </table>
     <div id="paginator">
-        {{ component("semantic~paginator",{ namespace: 'trash' }) }}
+       
     </div>
 </div>

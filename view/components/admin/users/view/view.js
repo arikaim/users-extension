@@ -18,14 +18,13 @@ function UsersView() {
             order.init('users_rows','users::admin.users.view.rows','users');
         });
       
-        paginator.init('users_rows',"users::admin.users.view.rows",'users');    
-
         search.init({
             id: 'users_rows',
             component: 'users::admin.users.view.rows',
             event: 'user.search.load'
         },'users')  
         
+        /*
         $('.status-filter').dropdown({          
             onChange: function(value) {      
                 var searchData = {
@@ -38,6 +37,7 @@ function UsersView() {
                 });               
             }
         });
+        */
 
         arikaim.events.on('user.search.load',function(result) {      
             paginator.reload();
@@ -50,7 +50,7 @@ function UsersView() {
 
         arikaim.events.on('user.create',function(data) {
             self.loadItem(data.uuid,false,true);
-        },'onUserCreate');
+        },'onUserCreate');      
     };
 
     this.loadItem = function(uuid,replace,append) {
@@ -98,11 +98,11 @@ function UsersView() {
             });
         });
 
-        $('.status-dropdown').dropdown({
-            onChange: function(value) {               
-                var uuid = $(this).attr('uuid');
-                usersAdmin.setStatus(uuid,value);
-            }
+        $('.status-dropdown').on('chnage', function() {
+            var val = $(this).val();
+            var uuid = $(this).attr('uuid');
+            
+            usersAdmin.setStatus(uuid,val);
         });      
 
         arikaim.ui.button('.delete-button',function(element) {
@@ -125,6 +125,5 @@ function UsersView() {
 var usersView = createObject(UsersView,ControlPanelView);
 
 arikaim.component.onLoaded(function() {
-    usersView.init();
-    usersView.initRows();
+    usersView.init();   
 });

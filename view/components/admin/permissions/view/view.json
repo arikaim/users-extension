@@ -4,6 +4,9 @@
         "edit": "Edit",
         "delete": "Delete"
     },
+    "buttons": {
+        "create": "Create"
+    },
     "columns": {        
         "actions": "Actions",
         "name": "Name",

@@ -3,5 +3,8 @@
         "add": "Add User",
         "view": "View",    
         "edit": "Edit"    
-    }        
+    },
+    "buttons": {
+        "create": "Create"
+    }    
 }

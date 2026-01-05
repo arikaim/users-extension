@@ -8,10 +8,6 @@
 
 function UserSettings() {    
 
-    this.init = function() {      
-       arikaim.ui.tab('.settings-tab-item','settings_tab')
-    };
-
     this.getSignupSettings = function() {
         return {
             name: {
@@ -38,7 +34,3 @@ function UserSettings() {
 }
 
 var userSettings = new UserSettings();
-
-arikaim.component.onLoaded(function() {
-    userSettings.init();
-})

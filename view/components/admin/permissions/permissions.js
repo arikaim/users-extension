@@ -22,13 +22,11 @@ function PermissionsAdmin() {
     }; 
 
     this.grantPermission = function(uuid, permissionUuid, type, onSuccess, onError) {
-        var data = {
+        return arikaim.put('/api/users/admin/permission/grant',{
             uuid: permissionUuid,
             target_uuid : uuid,      
             type: getDefaultValue(type,'user')       
-        }
-
-        return arikaim.put('/api/users/admin/permission/grant',data,onSuccess,onError);         
+        },onSuccess,onError);         
     };
     
     this.denyPermission = function(uuid, onSuccess, onError) {      
@@ -92,7 +90,3 @@ function PermissionsAdmin() {
 }
 
 var permissions = new PermissionsAdmin();
-
-arikaim.component.onLoaded(function() {
-    arikaim.ui.tab('.permissions-tab-item','permissions_content');
-});

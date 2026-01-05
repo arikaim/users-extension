@@ -1,12 +1,16 @@
 {% set group = createModel('UserGroups').findById(uuid) %}
 
-{% component 'semantic~panel' %}
-    <h4>
+{% component 'system:admin.panel' %}
+    <h4 class="font-bold">
         {{ group.title }}
     </h4>
-    <div class="ui mt-8" id="group_permissions_list"> 
+    <div class="mt-4" id="group_permissions_list"> 
         {% if uuid is not empty %} 
-            {{ component('users::admin.permissions.relations',{ type: 'group', uuid: group.uuid }) }}
+            {{  component('users::admin.permissions.relations',{ 
+                    type: 'group', 
+                    uuid: group.uuid 
+                }) 
+            }}
         {% endif %}
     </div>
 {% endcomponent %}

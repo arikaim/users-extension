@@ -22,7 +22,9 @@
     {{ component('users::admin.permissions.add',{ uuid: uuid, type: type }) }}
 
     {% if show_group_permissions == true %}
-        <div class="ui horizontal divider">{{ labels.inherited }}</div>
+        <div class="horizontal divider my-2">
+            {{ labels.inherited }}
+        </div>
         {{ component('users::admin.permissions.groups',{ uuid: uuid }) }}
     {% endif %}
 

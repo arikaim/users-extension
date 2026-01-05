@@ -1,15 +1,19 @@
 {% set model = createModel('UserType','users') %}
-<div class="ui divided list">
+<div class="{{ theme.list.default }}">
     {% for item in model.get() %}
-        <div class="item">
-            <div class="content">         
-                <div class="ui tertiary button view-options {{ (item.slug == 'default') ? 'blue' : '' }}" uuid="{{ item.uuid }}">
+        <div class="flex flex-row items-center">  
+            <div class="flex-grow">
+                 <div 
+                    class="link view-options {{ (item.slug == 'default') ? 'blue' : '' }}" 
+                    uuid="{{ item.uuid }}">
                     {{ item.title }}              
                 </div>  
-                <div class="ui horizontal basic label">
+            </div>                    
+            <div>
+                <div class="badge badge-sm badge-outline">
                     {{ item.slug }}
-                </div>         
-            </div>    
+                </div>
+            </div>                                 
         </div>
     {% endfor %}
 </div>

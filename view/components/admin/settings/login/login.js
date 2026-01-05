@@ -1,6 +1,9 @@
 'use strict';
 
 arikaim.component.onLoaded(function() {
+   
+    /*
+
     $('.login-with').checkbox({
         onChange: function() {
             var value = $(this).val();
@@ -17,6 +20,8 @@ arikaim.component.onLoaded(function() {
         }   
     });
 
+    */
+   
     arikaim.ui.form.onSubmit('#settings_form',function() {
         var redirectUrl = $('#redirect').val();
         return options.save('users.login.redirect',redirectUrl);
@@ -24,6 +29,7 @@ arikaim.component.onLoaded(function() {
         arikaim.ui.form.showMessage(result.message);
     });
 
+    /*
     $('#require_verified_email').checkbox({
         onChecked: function() {
             options.save('users.login.require.verified.email',true);
@@ -32,4 +38,5 @@ arikaim.component.onLoaded(function() {
             options.save('users.login.require.verified.email',false);
         }   
     });
+    */
 });

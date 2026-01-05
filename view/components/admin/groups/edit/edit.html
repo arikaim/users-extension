@@ -1,4 +1,4 @@
-{% component 'semantic~panel' %}    
+{% component 'system:admin.panel' %}    
     <div class="mt-4">
         {% if uuid is not null %}
             {{ component('users::admin.groups.form',{ uuid: uuid }) }}

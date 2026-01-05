@@ -1,8 +1,6 @@
 {
-    "title": {
-        "content": "Login Settings",
-        "icon": "sign in"
-    },
+    "title": "Login Settings",        
+    "icon": "icons~user",
     "labels": {    
         "captcha": "Captcha", 
         "oauth": "Sign in with", 

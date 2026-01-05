@@ -10,8 +10,9 @@ function UserGroupsView() {
     var self = this;
 
     this.init = function() {
-        arikaim.ui.loadComponentButton('.create-group');
         this.loadMessages('users::admin')
+
+        arikaim.ui.loadComponentButton('.create-group');
 
         arikaim.events.on('groups.update',function(data) {
             self.loadRow(data.uuid,true,false);
@@ -19,9 +20,10 @@ function UserGroupsView() {
 
         arikaim.events.on('groups.create',function(data) {
             self.loadRow(data.uuid,false,true);
-        },'onGroupCreate');
-
-        paginator.init('group_rows','users::admin.groups.view.rows','groups');                
+        },'onGroupCreate'); 
+        
+        this.initRows();
+        console.log('init');
     };
 
     this.loadRow = function(uuid,replace, append) {
@@ -39,35 +41,7 @@ function UserGroupsView() {
     };
 
     this.initRows = function() {
-        arikaim.ui.button('.edit-button',function(element) {
-            var uuid = $(element).attr('uuid');
-           
-            return arikaim.page.loadContent({
-                id: 'groups_content',
-                params: { uuid: uuid },
-                component: 'users::admin.groups.edit'
-            });
-        });
-
-        arikaim.ui.button('.members-button',function(element) {
-            var uuid = $(element).attr('uuid');
-           
-            return arikaim.page.loadContent({
-                id: 'groups_content',
-                params: { uuid: uuid },
-                component: 'users::admin.groups.members'
-            });
-        });
-
-        arikaim.ui.button('.permissions-button',function(element) {
-            var uuid = $(element).attr('uuid');
-        
-            return arikaim.page.loadContent({
-                id: 'groups_content',
-                params: { uuid: uuid },
-                component: 'users::admin.groups.permissions'
-            });
-        });
+        arikaim.ui.loadComponentButton('.group-action');
 
         arikaim.ui.button('.delete-button',function(element) {
             var uuid = $(element).attr('uuid');

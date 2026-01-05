@@ -5,31 +5,36 @@
 <tr id="item_{{ item.uuid }}">             
     <td>            
         {% if item.editable == true %}
-            <button class="ui compact mini icon basic button delete-permission" uuid="{{ item.uuid }}" data-title="{{ item.name }}">
-                <i class="icon trash orange"></i>
+            <button 
+                class="{{ theme.buttons.icon }} delete-permission" 
+                uuid="{{ item.uuid }}" 
+                title="{{ item.name }}">
+                {{ component('icons~trash',theme.icons.delete,'svg') }}              
             </button> 
-            <button class="ui compact mini icon basic button edit-permission" uuid="{{ item.uuid }}">
-                <i class="icon edit"></i>
+            <button 
+                class="{{ theme.buttons.icon }} edit-permission" 
+                uuid="{{ item.uuid }}">
+                {{ component('icons~edit',theme.icons.menu,'svg') }}         
             </button> 
         {% else %}    
-            <div class="ui label basic blue">
+            <div class="badge badge-sm badge-info badge-outline">
                 {{ labels.readonly }}
             </div>
         {% endif %}              
     </td>
     <td>
         {% if item.deny == true %}
-            <div class="ui label red basic">
+            <div class="badge badge-sm badge-error badge-outline">
                 {{ labels.deny }}
             </div>
         {% else %}
-            <div class="ui label green basic">
+            <div class="badge badge-sm badge-success badge-outline">
                 {{ labels.allow }}
             </div>
         {% endif %}   
     </td>
     <td>
-        <div class="ui label horizontal basic">                     
+        <div class="badge badge-sm badge-outline">                     
             {{ item.slug }}
         </div>
     </td>
@@ -37,9 +42,9 @@
         {{ item.name }}
 
         {% if item.extension_name is not empty %}
-        <div class="ui label horizontal basic">           
-            <span class="ui text grey">{{ labels.extension }}</span>
-            <div class="detail">{{ item.extension_name }}</div>
+        <div class="badge badge-sm badge-outline">           
+            <span class="px-2">{{ labels.extension }}</span>
+            <div class="font-bold">{{ item.extension_name }}</div>
         </div>
         {% endif %}
     </td>          

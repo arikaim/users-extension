@@ -14,11 +14,9 @@ function TrashView() {
     };
     
     this.restoreUser = function(uuid, onSuccess, onError) {
-        var data = {
+        return arikaim.put('/api/users/admin/restore',{
             uuid: uuid
-        };
-
-        return arikaim.put('/api/users/admin/restore',data,onSuccess,onError);
+        },onSuccess,onError);
     };
 
     this.init = function() {
@@ -39,6 +37,8 @@ function TrashView() {
                 });
             });               
         });
+
+        this.initRows();
     };
 
     this.loadRows = function() {
@@ -73,6 +73,5 @@ function TrashView() {
 var trashView = createObject(TrashView,ControlPanelView);
 
 arikaim.component.onLoaded(function() {   
-    trashView.init();
-    trashView.initRows();
+    trashView.init();   
 });

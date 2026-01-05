@@ -1,7 +1,7 @@
 'use strict';
 
 arikaim.component.onLoaded(function() {
-    $('#permissions_dropdown').dropdown({});
+   // $('#permissions_dropdown').dropdown({});
 
     arikaim.ui.button('.add-permission-button',function(element) {
         var uuid = $(element).attr('uuid');

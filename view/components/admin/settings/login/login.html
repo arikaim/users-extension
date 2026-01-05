@@ -3,92 +3,91 @@
 {% set redirect = getOption('users.login.redirect','') %}
 {% set require_verified_email = getOption('users.login.require.verified.email',false) %}
 
-{% component 'semantic~tabs.vertical.content' %}
-
-{% if demo_mode == true %}
-<div class="ui warning message">
-    Save optins is disabeld in DEMO MODE!
-</div>
-{% endif %}
-<form class="ui equal width form" id="settings_form">  
-    <div class="ui segment">
-        <div class="field mt-8">           
-            <div class="ui radio checkbox login-with">
-                <input type="radio" name="login_with" id="login_with_username" tabindex="0" class="hidden" {{ login_with|ifthen(1,'checked') }} value="1">
-                <label>{{ labels.username }}</label>
-            </div>
-        </div>
-        <div class="field">           
-            <div class="ui radio checkbox login-with">
-                <input type="radio" name="login_with" id="login_with_email" tabindex="0" class="hidden" {{ login_with|ifthen(2,'checked') }} value="2">
-                <label>{{ labels.email }}</label>
-            </div>        
-        </div>       
-        <div class="field">           
-            <div class="ui radio checkbox login-with">
-                <input type="radio" name="login_with" id="login_with_username_email" tabindex="0" class="hidden" {{ login_with|ifthen(3,'checked') }} value="3">
-                <label>{{ labels.combined }}</label>
-            </div>
-        </div>
+{% component 'system:admin.panel' %}
+    {% if demo_mode == true %}
+    <div class="ui warning message">
+        Save optins is disabeld in DEMO MODE!
     </div>
-    <div class="ui field segment">
-        <label>{{ labels.verified }}</label>
-        <div class="ui checkbox" id="require_verified_email">
-            <input type="checkbox" name="verified_email" tabindex="0" class="hidden" value="true" {{ require_verified_email|ifthen(true,'checked') }}>
-            <label>{{ labels.verified_email }}</label>
-        </div>
-    </div>
-
-    <div class="ui field segment">
-        <label>{{ labels.captcha }}</label>
-        <div class="ui checkbox" id="captcha_protect">
-            <input type="checkbox" name="show_captcha" tabindex="0" class="hidden" value="true" {{ captcha_protect|ifthen(true,'checked') }}>
-            <label>{{ labels.protect }}</label>
-        </div>
-    </div>       
-    {% if hasExtension('oauth') == true %}
-    <div class="ui field segment">
-        <label>{{ labels.oauth }}</label>
-        {% set with_facebook = getOption('users.sign.with.facebook',false) %}
-        {{  component('semantic~option.checkbox',{ 
-                name: 'users.sign.with.facebook',
-                value: with_facebook,
-                label: labels.facebook 
-            }) 
-        }}
-        <div class="mt-2"></div>
-        {% set with_github = getOption('users.sign.with.github',false) %}
-        {{  component('semantic~option.checkbox',{ 
-                name: 'users.sign.with.github',
-                value: with_github,
-                label: labels.github 
-            }) 
-        }}
-        <div class="mt-2"></div>
-        {% set with_twitter = getOption('users.sign.with.twitter',false) %}
-        {{  component('semantic~option.checkbox',{ 
-                name: 'users.sign.with.twitter',
-                value: with_twitter,
-                label: labels.twitter 
-            }) 
-        }}
-        <div class="mt-2"></div>
-        {% set with_google = getOption('users.sign.with.google',false) %}
-        {{  component('semantic~option.checkbox',{ 
-                name: 'users.sign.with.google',
-                value: with_google,
-                label: labels.google 
-            }) 
-        }}
-    </div> 
     {% endif %}
-    <div class="field">           
-        <label>{{ labels.redirect }}</label>
-        <div class="ui labeled input">
-            <div class="ui label">{{ base_url }}/</div>
-            <input type="text" name="redirect" id="redirect" value="{{ redirect }}" placeholder="{{ placeholder.redirect }}">     
+    <form class="form" id="settings_form">  
+        <div class="ui segment">
+            <div class="field mt-8">           
+                <div class="login-with">
+                    <input type="radio" name="login_with" id="login_with_username" tabindex="0" class="hidden" {{ login_with|ifthen(1,'checked') }} value="1">
+                    <label>{{ labels.username }}</label>
+                </div>
+            </div>
+            <div class="field">           
+                <div class="login-with">
+                    <input type="radio" name="login_with" id="login_with_email" tabindex="0" class="hidden" {{ login_with|ifthen(2,'checked') }} value="2">
+                    <label>{{ labels.email }}</label>
+                </div>        
+            </div>       
+            <div class="field">           
+                <div class="  login-with">
+                    <input type="radio" name="login_with" id="login_with_username_email" tabindex="0" class="hidden" {{ login_with|ifthen(3,'checked') }} value="3">
+                    <label>{{ labels.combined }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="ui field segment">
+            <label>{{ labels.verified }}</label>
+            <div class="ui checkbox" id="require_verified_email">
+                <input type="checkbox" name="verified_email" tabindex="0" class="hidden" value="true" {{ require_verified_email|ifthen(true,'checked') }}>
+                <label>{{ labels.verified_email }}</label>
+            </div>
+        </div>
+
+        <div class="ui field segment">
+            <label>{{ labels.captcha }}</label>
+            <div class="ui checkbox" id="captcha_protect">
+                <input type="checkbox" name="show_captcha" tabindex="0" class="hidden" value="true" {{ captcha_protect|ifthen(true,'checked') }}>
+                <label>{{ labels.protect }}</label>
+            </div>
+        </div>       
+        {% if hasExtension('oauth') == true %}
+        <div class="ui field segment">
+            <label>{{ labels.oauth }}</label>
+            {% set with_facebook = getOption('users.sign.with.facebook',false) %}
+            {{  component('semantic~option.checkbox',{ 
+                    name: 'users.sign.with.facebook',
+                    value: with_facebook,
+                    label: labels.facebook 
+                }) 
+            }}
+            <div class="mt-2"></div>
+            {% set with_github = getOption('users.sign.with.github',false) %}
+            {{  component('system:admin.option.checkbox',{ 
+                    name: 'users.sign.with.github',
+                    value: with_github,
+                    label: labels.github 
+                }) 
+            }}
+            <div class="mt-2"></div>
+            {% set with_twitter = getOption('users.sign.with.twitter',false) %}
+            {{  component('system:admin.option.checkbox',{ 
+                    name: 'users.sign.with.twitter',
+                    value: with_twitter,
+                    label: labels.twitter 
+                }) 
+            }}
+            <div class="mt-2"></div>
+            {% set with_google = getOption('users.sign.with.google',false) %}
+            {{  component('system:admin.option.checkbox',{ 
+                    name: 'users.sign.with.google',
+                    value: with_google,
+                    label: labels.google 
+                }) 
+            }}
         </div> 
-    </div>
-    {{ component('semantic~form.footer') }}
-</form>
+        {% endif %}
+        <div class="field">           
+            <label>{{ labels.redirect }}</label>
+            <div class="ui labeled input">
+                <div class="ui label">{{ base_url }}/</div>
+                <input type="text" name="redirect" id="redirect" value="{{ redirect }}" placeholder="{{ placeholder.redirect }}">     
+            </div> 
+        </div>
+        {{ component('semantic~form.footer') }}
+    </form>
 {% endcomponent %}

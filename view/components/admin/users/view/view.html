@@ -1,20 +1,20 @@
 {% import systemMacro('orderBy.html') as order %}
-<div class="ui segment mt-2">
-    <table class="ui compact stackable selectable borderless basic table">
-        <thead class="table-head">
+<div class="{{ theme.panel }}">
+    <table class="{{ theme.table.default }}">
+        <thead>
             <tr>   
-                <th class="collapsing center aligned">{{ columns.avatar }}</th>          
-                <th class="two wide center aligned">{{ columns.actions }}</th>
-                <th class="two wide">
+                <th class="">{{ columns.avatar }}</th>          
+                <th class="">{{ columns.actions }}</th>
+                <th class="">
                     {{ order.orderByLink('users','date_created') }}
                     {{ columns.created }}
                 </th>
-                <th class="two wide">{{ columns.last_login }}</th>               
-                <th class="collapsing two wide">
+                <th class="">{{ columns.last_login }}</th>               
+                <th class="">
                     {{ order.orderByLink('users','status') }}
                     {{ columns.status }}
                 </th>               
-                <th class="collapsing two wide">
+                <th class="">
                     {{ order.orderByLink('users','user_name') }}
                     {{ columns.user_name }}
                 </th>
@@ -32,7 +32,6 @@
             {{ component('users::admin.users.view.rows') }}
         </tbody>
     </table>
-    <div id="paginator">
-        {{ component("semantic~paginator",{ namespace: 'users' }) }}
+    <div id="paginator">       
     </div>
 </div>

@@ -21,25 +21,17 @@ function GroupsAdmin() {
     };
 
     this.addMember = function(groupUuid, userUuid, onSuccess, onError) {
-        var data = {
+        return arikaim.put('/api/users/admin/groups/add/member',{
             uuid: groupUuid,
             user_uuid : userUuid,            
-        }
-
-        return arikaim.put('/api/users/admin/groups/add/member',data,onSuccess,onError);         
+        },onSuccess,onError);         
     };
 
     this.removeMember = function(uuid, onSuccess, onError) {
-        var data = {
+        return arikaim.put('/api/users/admin/groups/remove/member',{
             uuid: uuid
-        }
-
-        return arikaim.put('/api/users/admin/groups/remove/member',data,onSuccess,onError);         
+        },onSuccess,onError);         
     };
 }
 
 var groupsAdmin = new GroupsAdmin();
-
-arikaim.component.onLoaded(function() {
-    arikaim.ui.tab('.groups-tab-item','groups_content');
-});

@@ -1,15 +1,32 @@
 {% if uuid is not empty %}
     {% set permission = createModel('Permissions').findById(uuid) %}  
 {% endif %}
-<form class="ui equal width form" id="permission_form">  
+<form class="form" id="permission_form">  
     <input type="hidden" name="uuid" id="uuid" value="{{ uuid }}">  
-    <div class="field required">
-        <label>{{ fields.name.label }}</label>       
-        <input rule="minLength[2]" type="text" name="name" id="name" {{ fields.name.placeholder|attr('placeholder') }} value="{{ permission.name }}">         
+    <div class="{{ theme.form.field }} required">
+        <label class="{{ theme.form.label }}">
+            {{ fields.name.label }}
+        </label>       
+        <input 
+            class="{{ theme.form.input }}"
+            rule="minLength[2]" 
+            type="text"
+            name="name" 
+            id="name" 
+            {{ fields.name.placeholder|attr('placeholder') }} 
+            value="{{ permission.name }}">         
     </div>   
-    <div class="field">
-        <label>{{ fields.description.label }}</label>
-        <textarea name="description" id="description" rows="7" cols="7" {{ fields.description.placeholder|attr('placeholder') }}>{{ permission.description }}</textarea>       
+    <div class="{{ theme.form.field }}">
+        <label class="{{ theme.form.label }}">
+            {{ fields.description.label }}
+        </label>
+        <textarea 
+            class="{{ theme.form.textarea }}"
+            name="description" 
+            id="description" 
+            rows="7" 
+            cols="7" 
+            {{ fields.description.placeholder|attr('placeholder') }}>{{ permission.description }}</textarea>       
     </div>  
-    {{ component('semantic~form.footer') }}    
+    {{ component('system:form.footer') }}    
 </form>

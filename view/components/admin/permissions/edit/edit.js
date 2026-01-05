@@ -1,7 +1,6 @@
 'use strict';
 
 arikaim.component.onLoaded(function() {
-   
     arikaim.ui.form.onSubmit('#permission_form',function() {
         return permissions.update('#permission_form');
     },function(result) {         

@@ -7,7 +7,8 @@ arikaim.component.onLoaded(function() {
         arikaim.ui.form.clear('#permission_form'); 
         
         arikaim.events.emit('permission.create',result);
-        arikaim.page.toastMessage(result.message);
+        arikaim.ui.getComponent('teast').show(result.message);
+        
         arikaim.ui.getComponent('permission_create_panel').close();
     });
 });
