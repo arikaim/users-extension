@@ -4,43 +4,52 @@
 {% endif %}
 <form class="form" id="create_user_form">  
     <input type="hidden" name="uuid" id="uuid" value="{{ uuid }}">  
-    <div class="{{ theme.form.field }}">
-        <label class="{{ theme.form.label }}">
-            {{ fields.user_name.label }}
-        </label>
-        <div class="{{ theme.form.input }}">
-            {{ component('icons~user',theme.form.icon,'svg') }}
-            <input 
-                type="text" 
-                name="user_name" 
-                id="user_name" 
-                {{ fields.user_name.placeholder|attr('placeholder') }} 
-                value="{{ user.user_name }}"> 
-        </div>
-    </div>   
-    <div class="{{ theme.form.fields }}">
+    <div 
+        class="{{ theme.form.fields }}">
+        <div class="{{ theme.form.field }}">
+            <label class="{{ theme.form.label }}">
+                {{ fields.user_name.label }}
+            </label>
+            <div class="{{ theme.form.input }}">
+                {{ component('icons~user',theme.form.icon,'svg') }}
+                <input 
+                    type="text" 
+                    name="user_name" 
+                    id="user_name" 
+                    {{ fields.user_name.placeholder|attr('placeholder') }} 
+                    value="{{ user.user_name }}"> 
+            </div>
+        </div>   
         <div class="{{ theme.form.field }}">
             <label class="{{ theme.form.label }}">
                 {{ fields.email.label }}
             </label>
             <div class="{{ theme.form.input }}">
                 {{ component('icons~mail',theme.form.icon,'svg') }}
-                <input type="text" name="email" id="email" {{ fields.email.placeholder|attr('placeholder') }} value="{{ user.email }}">  
+                <input 
+                    rule="email"
+                    type="text" 
+                    name="email" 
+                    id="email" 
+                    {{ fields.email.placeholder|attr('placeholder') }} 
+                    value="{{ user.email }}">  
             </div>
-        </div>     
-        {{  component('system:form.fields.checkbox',{ 
-                name: 'email_status',
-                value: user_details.email_status, 
-                field_label: fields.confirmed.label
-            }) 
-        }}      
+        </div>                       
     </div>  
     {{  component('system:form.fields.checkbox',{ 
+            id: 'public_profile_checkbox',
             value: user_details.public_profile, 
             name: 'public_profile',
             field_label: fields.public.label
         }) 
     }}  
+    {{  component('system:form.fields.checkbox',{ 
+            id: 'email_status_checkbox',
+            name: 'email_status',               
+            value: user_details.email_status, 
+            field_label: fields.confirmed.label
+        }) 
+    }}    
     <div class="horizontal divider my-2">
         {{ labels.details }}
     </div>   
@@ -102,36 +111,28 @@
                 {{ fields.type.label }}
             </label>
             {{ component('users::admin.type',{ selected: user_details.type_id }) }}
-        </div>  
-       <div class="{{ theme.form.field }}">
-       </div>
+        </div>       
     </div>
     {% if edit == false %}
-    <div class="horizontal divider my-2"></div>   
+    <div class="horizontal divider my-4"></div>   
     <div class="{{ theme.form.fields }} mt-4">    
-        <div class="field required">
-            <label class="{{ theme.form.label }}">
-                {{ fields.password.label }}
-            </label>
-            <div class="{{ theme.form.input }}">           
-                <input class="password-field" type="password" name="password" id="password" {{ fields.password.placeholder|attr('placeholder') }} value=""> 
-                <a class="ui icon basic link button view-password">               
-                    
-                </a>  
-            </div>
-        </div>    
-        <div class="{{ theme.form.field }} required">
-            <label class="{{ theme.form.label }}">
-                {{ fields.repeat_password.label }}
-            </label>
-            <div class="{{ theme.form.input }}">
-              
-                <input class="password-field" type="password" name="repeat_password" id="repeat_password" {{ fields.repeat_password.placeholder|attr('placeholder') }} value="">
-                <a class="ui icon basic link button view-password">               
-                
-                </a> 
-            </div>  
-        </div>  
+        {{  component('system:form.fields.password',{ 
+                id: 'password_field',
+                name: 'password',  
+                class: 'required',  
+                rule: 'minLength[4]',                  
+                label: fields.password.label
+            }) 
+        }}
+
+        {{  component('system:form.fields.password',{ 
+                id: 'password_confirm_field',
+                name: 'repeat_password', 
+                class: 'required',  
+                rule: 'minLength[4],match[password]',                                      
+                label: fields.repeat_password.label
+            }) 
+        }}      
     </div>            
     {% endif %}
     {{ component('system:form.footer') }}    

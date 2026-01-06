@@ -5,12 +5,12 @@
 <div 
     class="flex flex-row items-center" 
     id="item_{{ uuid }}"> 
-    <div class="left floated content">
-        <button class="ui mini icon basic button remove-group-member" uuid="{{ uuid }}">
-            <i class="icon trash orange"></i>
-        </button> 
-    </div>
-    <div class="mt-2">               
+    <button 
+        class="{{ theme.buttons.icon }} remove-group-member" 
+        uuid="{{ uuid }}">           
+        {{ component('icons~trash',theme.icons.delete,'svg') }}
+    </button> 
+    <div class="ml-2">               
        <div class="font-bold">
             {{ user_name }}      
        </div> 

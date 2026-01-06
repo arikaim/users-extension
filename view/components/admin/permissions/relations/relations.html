@@ -7,12 +7,12 @@
 {% set permissions = createModel('PermissionRelations').getRelationsQuery(model.id,type) %}
 {% if uuid is not empty %}
     <div 
-        class="ui middle aligned list w-full" 
+        class="{{ theme.list.flush }} w-full" 
         id="permissions_list" 
         uuid="{{ model.uuid }}" 
         type="{{ type }}">        
         {% if permissions.get()|length == 0 %}
-            <div class="item">..</div>
+            <div class="px-1">..</div>
         {% endif %}     
         {% for item in permissions.get() %}   
             {{ component('users::admin.permissions.relations.item',{ item: item, relation_id: model.id }) }}     

@@ -1,8 +1,6 @@
 {
-    "title": {
-        "content": "Signup",
-        "icon": "user plus"
-    },
+    "title":"Signup",   
+    "icon": "icons~user.add",
     "buttons": {
         "signup": "Signup Page"
     },

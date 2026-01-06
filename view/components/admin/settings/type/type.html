@@ -1,9 +1,14 @@
-{% component 'semantic~tabs.vertical.content' %}  
-{% set default_user_type = getOption('users.default.type',null) %}
-<div class="ui mt-4 form">
-    <div class="five wide field">
-        <label>{{ labels.type }}</label>
-        {{ component('users::admin.type',{ selected: default_user_type }) }}
+{% component 'system:admin.panel' %}  
+    {% set size = 'w-1/2' %}
+    <div class="mt-4 form">
+        <div class="{{ theme.form.field }}">
+            <label class="{{ theme.form.label }}">
+                {{ labels.type }}
+            </label>
+            {{  component('users::admin.type',{ 
+                    selected: getOption('users.default.type',null) 
+                }) 
+            }}
+        </div>
     </div>
-</div>
 {% endcomponent %}

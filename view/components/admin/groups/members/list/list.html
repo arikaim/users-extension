@@ -1,8 +1,13 @@
 {% set group = createModel('UserGroups').findById(uuid) %}
 <div 
-    class="ui middle aligned list" 
+    class="{{ theme.list.flush }}" 
     id="group_members_list" 
     uuid="{{ model.uuid }}">   
+    {% if group.members|length == 0 %}
+    <div class="px-2">
+        {{ labels.empty }}
+    </div>
+    {% endif %}
     {% for member in group.members %}    
         {% set user_name = (member.user.user_name is empty) ? member.user.email : member.user.user_name %}
         {{ component('users::admin.groups.members.list.item',{ uuid: member.uuid, user_name: user_name }) }}            

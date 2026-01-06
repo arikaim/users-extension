@@ -2,8 +2,8 @@
     
     {# component('users::admin.users.dropdown',{ icon: 'blue' }) #}
     <button 
-        class="{{ theme.butons.green }} add-group-member" {{ labels.add|attr('title') }} 
+        class="{{ theme.buttons.green }} add-group-member" {{ labels.add|attr('title') }} 
         uuid="{{ uuid }}">
-        <i class="plus icon"></i>
+        {{ labels.add }}
     </button>
 </div>

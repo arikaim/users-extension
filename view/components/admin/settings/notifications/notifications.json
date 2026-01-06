@@ -1,8 +1,6 @@
 {   
-    "title": {
-        "content": "Notifications",
-        "icon": "outline mail"
-    },
+    "title": "Notifications",      
+    "icon": "icons~mail",
     "labels": {       
         "email": "Email",
         "fields": {

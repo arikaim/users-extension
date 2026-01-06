@@ -1,39 +1,30 @@
-{% set id = id|default('permissions_dropdown') %}
-{% set name = name|default('permissions') %}
 {% set model = createModel('Permissions') %}
 {% set permissions = model.getListQuery() %}
 {% if editable == true %}
     {% set permissions = permissions.where('editable','=',1) %}
 {% endif %}
-{% if selected is not empty %}
-    {% set selected = model.findById(selected) %}
-{% endif %}
 
-
-{% set selectet_text = (selected is empty) ? labels.select : selected.title %}
-<div 
-    class="ui search selection dropdown permissions-dropdown {{ class }}" 
-    id="{{ id }}">
-    <input name="{{ name }}" type="hidden">
-    <i class="icon unlock {{ icon }}"></i> 
-    <div class="default text">{{ selectet_text }}</div>
-    <i class="dropdown icon"></i>
-    <div class="menu">
-        {% for item in permissions.get() %}       
-            <div class="item" data-value="{{ item.uuid }} ">
-                <div class="flex flex-rows items-center">
-                    {% if item.deny == 1 %}
-                    <div class="ui mini basic label red">
-                        {{ labels.deny }}
-                    </div>
-                    {% else %}
-                    <div class="ui mini basic label green">
-                        {{ labels.allow }}
-                    </div>
-                    {% endif %}
-                    <span class="px-1">{{ item.title }}</span>
-                </div>            
+<select 
+    name="{{ name|default('permissions') }}"
+    class="select {{ size|default('select-sm') }} permissions-dropdown {{ class }}" 
+    id="{{ id|default('permissions_dropdown') }}">
+   
+    {% for item in permissions.get() %}       
+        <option 
+            {{ (item.uuid == selected) ? 'selected' : '' }}
+            value="{{ item.uuid }} ">
+            {% if item.deny == 1 %}
+            <div class="badge badge-xs badge-error">
+                {{ labels.deny }}
             </div>
-        {% endfor %}
-    </div>
-</div>
+            {% else %}
+            <div class="badge badge-xs badge-success">
+                {{ labels.allow }}
+            </div>
+            {% endif %}
+            <span class="px-1">{{ item.title }}</span>
+                 
+        </option>
+    {% endfor %}
+    
+</select>

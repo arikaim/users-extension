@@ -1,7 +1,7 @@
 {
     "title": "Create permission",
     "icon": "icons~plus",
-    "labels": {
+    "buttons": {
         "add": "Add"
     }
 }

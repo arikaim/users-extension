@@ -4,17 +4,25 @@
             { 
                 title: labels.login, 
                 component: 'users::admin.settings.login', 
-                icon: 'sign in', 
+                svg_icon: 'icons~login', 
                 active: true 
             },
             { 
                 title: labels.signup, 
-                component: 'users::admin.settings.signup', icon: 'user plus' },  
-            { title: labels.notifications, component: 'users::admin.settings.notifications', icon: 'outline mail' },
-            { title: labels.type, component: 'users::admin.settings.type', icon: 'stream' }
-        ], 
-        menu: { id: 'settings_menu' }, 
-       
+                component: 'users::admin.settings.signup', 
+                svg_icon: 'icons~user.add' 
+            },  
+            { 
+                title: labels.notifications,
+                component: 'users::admin.settings.notifications', 
+                svg_icon: 'icons~mail' 
+            },
+            { 
+                title: labels.type, 
+                component: 'users::admin.settings.type', 
+                svg_icon: 'icons~code' 
+            }
+        ],       
         content: { 
             id: 'settings_tab', 
             component: 'users::admin.settings.login' 

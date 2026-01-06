@@ -1,9 +1,7 @@
 <div class="{{ theme.list.flush }}">                
     {% for item in permissions %}   
-        <div class="item" id="item_{{ item.uuid }}">             
-            <div class="content">                      
-                {{ component('users::admin.permissions.label',{ item: item, class: 'header' }) }}              
-            </div>                
+        <div class="flex" id="item_{{ item.uuid }}">                                   
+            {{ component('users::admin.permissions.label',{ item: item, class: 'header' }) }}                                      
         </div>        
     {% endfor %}
 </div>

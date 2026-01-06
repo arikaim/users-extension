@@ -1,26 +1,18 @@
 'use strict';
 
 arikaim.component.onLoaded(function() {
-   
-    /*
-
-    $('.login-with').checkbox({
-        onChange: function() {
-            var value = $(this).val();
-            options.save('users.login.with',value);
-        }   
+    $('.login-with').on('change', function(event) {
+        var val = $(this).val();
+        options.save('users.login.with',val);
     });
 
-    $('#captcha_protect').checkbox({
-        onChecked: function() {
-            options.save('users.login.captcha.protect',true);
-        },
-        onUnchecked: function() {
-            options.save('users.login.captcha.protect',false);
-        }   
+    $('#captcha_protect').on('change', function(event) {     
+        options.save('users.login.captcha.protect',event.currentTarget.checked);
     });
 
-    */
+    $('#require_verified_email').on('change', function(event) {        
+        options.save('users.login.require.verified.email',event.currentTarget.checked);          
+    });
    
     arikaim.ui.form.onSubmit('#settings_form',function() {
         var redirectUrl = $('#redirect').val();
@@ -29,14 +21,4 @@ arikaim.component.onLoaded(function() {
         arikaim.ui.form.showMessage(result.message);
     });
 
-    /*
-    $('#require_verified_email').checkbox({
-        onChecked: function() {
-            options.save('users.login.require.verified.email',true);
-        },
-        onUnchecked: function() {
-            options.save('users.login.require.verified.email',false);
-        }   
-    });
-    */
 });

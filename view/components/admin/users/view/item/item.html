@@ -50,7 +50,11 @@
     <td>{{ item.date_login|dateFormat }}</td>       
     <td>          
         {% if item.isDeleted() == false and control_panel_user == false %}
-            {{ component('system:admin.status.dropdown',{ status: item.status, uuid: item.uuid }) }} 
+            {{  component('system:admin.status.dropdown',{ 
+                    status: item.status, 
+                    uuid: item.uuid 
+                }) 
+            }} 
         {% elseif control_panel_user == true %}
             <div class="badge badge-sm badge-success badge-outline">
                 {{ labels.active }}

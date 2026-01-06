@@ -10,7 +10,7 @@ function UsersView() {
     var self = this;
        
     this.init = function() {
-        this.loadMessages('users::admin');
+        this.loadMessages('users::admin.users.messages');
 
         arikaim.ui.loadComponentButton('.add-user');
 
@@ -24,23 +24,19 @@ function UsersView() {
             event: 'user.search.load'
         },'users')  
         
-        /*
-        $('.status-filter').dropdown({          
-            onChange: function(value) {      
-                var searchData = {
-                    search: {
-                        status: value,                       
-                    }          
-                }              
-                search.setSearch(searchData,'users',function(result) {                  
-                    self.loadList();
-                });               
-            }
+        $('.status-filter').on('change', function() { 
+            var val = $(this).val();    
+        
+            search.setSearch({
+                search: {
+                    status: val,                       
+                }          
+            },'users',function(result) {                  
+                self.loadList();
+            });               
         });
-        */
 
-        arikaim.events.on('user.search.load',function(result) {      
-            paginator.reload();
+        arikaim.events.on('user.search.load',function(result) {           
             self.initRows();    
         },'userSearch');   
         
@@ -72,14 +68,14 @@ function UsersView() {
             id: 'users_rows',         
             component: 'users::admin.users.view.rows'
         },function(result) {
-            self.initRows();  
-            paginator.reload(); 
+            self.initRows();          
         });
     };
 
     this.initRows = function() {
         arikaim.ui.button('.user-details-button',function(element) {
             var uuid = $(element).attr('uuid');
+
             return arikaim.page.loadContent({
                 id: 'users_content',
                 params: { uuid: uuid },
@@ -89,8 +85,7 @@ function UsersView() {
 
         arikaim.ui.button('.edit-button',function(element) {
             var uuid = $(element).attr('uuid');
-            arikaim.ui.setActiveTab('#edit_user','.users-tab-item');
-
+         
             return arikaim.page.loadContent({
                 id: 'users_content',
                 params: { uuid: uuid },
@@ -98,11 +93,13 @@ function UsersView() {
             });
         });
 
-        $('.status-dropdown').on('chnage', function() {
+        $('.status-dropdown').on('change', function() {
             var val = $(this).val();
             var uuid = $(this).attr('uuid');
             
-            usersAdmin.setStatus(uuid,val);
+            usersAdmin.setStatus(uuid,val,function(result) {
+                //arikaim.ui.getComponent('toast').show(result.message);
+            });
         });      
 
         arikaim.ui.button('.delete-button',function(element) {

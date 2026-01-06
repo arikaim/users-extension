@@ -1,24 +1,21 @@
-{% set id = id|default('user_type') %}
-{% set name = name|default('type_id') %}
 {% set model = createModel('UserType','users') %}
 {% if selected is not empty %}
     {% set selected = model.findByid(selected) %}
 {% endif %}
 {% set data_field = data_field|default('id') %}
-{% set selected_text = (selected is empty) ? labels.select : selected.title %}
-{% set class = class|default('selection') %}
-{% set icon = icon|default('stream') %}
 
-<div class="ui dropdown user-type-dropdown {{ class }}" id="{{ id }}">
-    <input name="{{ name }}" type="hidden" value="{{ selected[data_field] }}">
-    <i class="icon {{ icon }}"></i> 
-    <div class="text">{{ selected_text }}</div>
-    <i class="dropdown icon"></i>
-    <div class="menu">
-        {% for item in model.get() %}
-        <div class="item" data-value="{{ item[data_field] }}">
-            {{ item.title }}
-        </div>
-        {% endfor %}
-    </div>
-</div>
+<select 
+    aria-placeholder="labels.select"
+    name="{{ name|default('type_id') }}"
+    class="select {{ size|default('seelct-sm') }} user-type-dropdown {{ class }}" 
+    id="{{ id|default('user_type') }}">
+    
+    {% for item in model.get() %}
+    <option 
+        {{ (item[data_field] == selected[data_field]) ? 'selected' : '' }}
+        class="item" value="{{ item[data_field] }}">
+        {{ item.title }}
+    </option>
+    {% endfor %} 
+      
+</select>

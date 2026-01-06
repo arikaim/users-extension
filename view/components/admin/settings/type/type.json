@@ -1,8 +1,6 @@
 {   
-    "title": {
-        "content": "User Type",
-        "icon": "stream"
-    },
+    "title": "User Type",     
+    "icon": "icons~cog",
     "labels": {       
         "type": "Default User Type"      
     }  

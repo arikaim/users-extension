@@ -3,20 +3,25 @@
 {% endif %}
 {% set name = item.permission.name %}
 <div 
-    class="item fluid" 
+    class="flex " 
     id="item_{{ item.uuid }}"> 
     <div
         class="flex flex-row items-center w-full">
-        <div class="left floated content">
-            {% if name != 'ControlPanel' %}
-            <button class="ui mini icon basic button delete-permission" uuid="{{ item.uuid }}" title="{{ labels.delete }}">
-                <i class="icon trash orange"></i>
+        {% if name != 'ControlPanel' %}
+            <button 
+                class="{{ theme.buttons.icon }} delete-permission" 
+                uuid="{{ item.uuid }}" 
+                title="{{ labels.delete }}">
+                {{ component('icons~trash',theme.icons.delete,'svg') }}
             </button> 
-            {% endif %}
-        </div>       
+        {% endif %}       
         <div                
-            class="content w-full">                             
-            {{ component('users::admin.permissions.label',{ item: item, class: 'w-full' }) }}                       
+            class="w-full">                             
+            {{  component('users::admin.permissions.label',{ 
+                    item: item, 
+                    class: 'w-full' 
+                }) 
+            }}                       
         </div>  
     </div>       
 </div>

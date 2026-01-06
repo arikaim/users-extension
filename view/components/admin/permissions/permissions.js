@@ -47,13 +47,10 @@ function PermissionsAdmin() {
         arikaim.ui.button('.delete-permission',function(element) {           
             var uuid = $(element).attr('uuid');
             return permissions.denyPermission(uuid,function(result) {             
-                $('#item_' + uuid).remove();
-                arikaim.page.toastMessage(result.message);
-            },function(error) {              
-                arikaim.page.toastMessage({
-                    class: 'error',
-                    message: error
-                });                
+                $('#item_' + uuid).remove();              
+                arikaim.ui.getComponent('toast').show(result.message);             
+            },function(error) {   
+                arikaim.ui.getComponent('toast').show(error);                                          
             });
         });
 
@@ -77,12 +74,9 @@ function PermissionsAdmin() {
                     self.initItems();
                 });
 
-                arikaim.page.toastMessage(result.message);
-            },function(error) {              
-                arikaim.page.toastMessage({
-                    class: 'error',
-                    message: error
-                });                
+                arikaim.ui.getComponent('toast').show(result.message);                  
+            },function(error) {          
+                arikaim.ui.getComponent('toast').show(error);                                
             });
         });
        

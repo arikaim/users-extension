@@ -1,4 +1,3 @@
-{% set status_filter = searchValue('status','users') %}
 <div class="mt-4 flex flex-row items-center {{ theme.panel }}">
     <button 
         title="{{ labels.add }}"
@@ -9,9 +8,10 @@
     </button>
     <div class="ml-2 w-32">
         {{  component('system:admin.status.dropdown',{ 
-                status: status_filter,
-                class: 'status-filter ',                       
-                all: false 
+                status: searchValue('status','users'),
+                class: 'status-filter ',    
+                size: 'select-sm',                 
+                all: true 
             }) 
         }} 
     </div>
