@@ -4,11 +4,7 @@
 
 {% component 'system:admin.panel' %}
     {% set size = 'w-1/2' %}
-    {% if demo_mode == true %}
-    <div class="ui warning message">
-        Save optins is disabeld in DEMO MODE!
-    </div>
-    {% endif %}
+    {{ component('system:admin.alert.demo') }}
     <form class="form" id="settings_form">  
         <div class="{{ theme.form.field }}">
             <label class="{{ theme.form.label }}">
@@ -46,7 +42,7 @@
             <label class="{{ theme.form.label }}">
                 {{ labels.username }}
             </label> 
-            <div class="{{ theme.form.space }} ">
+            <div class="{{ theme.form.space }}">
                 <div class="{{ theme.form.space }}">
                     <input 
                         type="checkbox" 
@@ -75,57 +71,132 @@
         </div>
         
         <div class="{{ theme.form.field }}">
-            <label>{{ labels.email }}</label>
-            <div class="ui checkbox from-settings">
-                <input type="checkbox" name="show_email" id="show_email" tabindex="0" class="hidden" {{ settings.email.show|ifthen(true,'checked') }} >
-                <label>{{ labels.show }}</label>
-            </div>
-            <div class="ui checkbox from-settings ml-1">
-                <input type="checkbox" name="require_email" id="require_email" tabindex="0" class="hidden" {{ settings.email.required|ifthen(true,'checked') }} >
-                <label>{{ labels.required }}</label>
+            <label class="{{ theme.form.label }}">
+                {{ labels.email }}
+            </label>
+            <div class="{{ theme.form.space }}">      
+                <div class="{{ theme.form.space }}">
+                    <input 
+                        type="checkbox" 
+                        name="show_email" 
+                        id="show_email" 
+                        tabindex="0" 
+                        class="from-settings {{ theme.form.checkbox }}" 
+                        {{ settings.email.show|ifthen(true,'checked') }} >
+                    <label>
+                        {{ labels.show }}
+                    </label>
+                </div>
+                <div class="{{ theme.form.space }}">
+                    <input 
+                        type="checkbox" 
+                        name="require_email" 
+                        id="require_email" 
+                        tabindex="0" 
+                        class="from-settings {{ theme.form.checkbox }}"
+                        {{ settings.email.required|ifthen(true,'checked') }} >
+                    <label>
+                        {{ labels.required }}
+                    </label>
+                </div>
             </div>
         </div>
 
         <div class="{{ theme.form.field }}">
-            <label>{{ labels.phone }}</label>
-            <div class="ui checkbox from-settings">
-                <input type="checkbox" name="show_phone" id="show_phone" tabindex="0" class="hidden" {{ settings.phone.show|ifthen(true,'checked') }} >
-                <label>{{ labels.show }}</label>
-            </div>
-            <div class="ui checkbox from-settings ml-1">
-                <input type="checkbox" name="require_phone" id="require_phone" tabindex="0" class="hidden" {{ settings.phone.required|ifthen(true,'checked') }} >
-                <label>{{ labels.required }}</label>
+            <label class="{{ theme.form.label }}">
+                {{ labels.phone }}
+            </label>
+            <div class="{{ theme.form.space }}">      
+                <div class="{{ theme.form.space }}">
+                    <input 
+                        type="checkbox" 
+                        name="show_phone" 
+                        id="show_phone" 
+                        tabindex="0" 
+                        class="from-settings {{ theme.form.checkbox }}"
+                        {{ settings.phone.show|ifthen(true,'checked') }} >
+                    <label>
+                        {{ labels.show }}
+                    </label>
+                </div>
+                <div class="{{ theme.form.space }}">
+                    <input 
+                        type="checkbox" 
+                        name="require_phone" 
+                        id="require_phone" 
+                        tabindex="0" 
+                        class="from-settings {{ theme.form.checkbox }}"
+                        {{ settings.phone.required|ifthen(true,'checked') }} >
+                    <label>
+                        {{ labels.required }}
+                    </label>
+                </div>
             </div>
         </div>
 
         <div class="{{ theme.form.field }}">
-            <label>{{ labels.captcha }}</label>
-            <div class="ui checkbox from-settings">
-                <input type="checkbox" name="show_captcha" id="show_captcha" tabindex="0" class="hidden" {{ settings.captcha.show|ifthen(true,'checked') }}>
-                <label>{{ labels.protect }}</label>
+            <label class="{{ theme.form.label }}">
+                {{ labels.captcha }}
+            </label>
+            <div class="{{ theme.form.space }}">
+                <input 
+                    type="checkbox" 
+                    name="show_captcha" 
+                    id="show_captcha" 
+                    tabindex="0" 
+                    class="from-settings {{ theme.form.checkbox }}"
+                    {{ settings.captcha.show|ifthen(true,'checked') }}>
+                <label>
+                    {{ labels.protect }}
+                </label>
             </div>
         </div>
 
-        <div class="ui segment padded">
+        <div class="mt-4 {{ theme.panel }}">
+            <label class="{{ theme.form.label }}">
+                {{ labels.activation.title }}
+            </label>
             <div class="{{ theme.form.field }}">                 
-                <label>{{ labels.activation.title }}</label>
-                <div class="ui radio checkbox settings-checkbox">
-                    <input type="radio" name="users.sugnup.activation" value="1" {{ (activation == '1') ? 'checked' : '' }}>
-                    <label>{{ labels.activation.immediately }}</label>
+                <div class="{{ theme.form.space }}">
+                    <input 
+                        type="radio" 
+                        name="users.sugnup.activation" 
+                        value="1" 
+                        class="settings-checkbox {{ theme.form.radio }}"
+                        {{ (activation == '1') ? 'checked' : '' }}>
+                    <label>
+                        {{ labels.activation.immediately }}
+                    </label>
                 </div>
             </div>       
             <div class="{{ theme.form.field }}">
-                <div class="ui radio checkbox settings-checkbox">
-                    <input type="radio" name="users.sugnup.activation" value="2" {{ (activation == '2') ? 'checked' : '' }}>
-                    <label>{{ labels.activation.admin }}</label>
+                <div class="{{ theme.form.space }}">
+                    <input 
+                        type="radio" 
+                        name="users.sugnup.activation" 
+                        class="settings-checkbox {{ theme.form.radio }}"
+                        value="2" 
+                        {{ (activation == '2') ? 'checked' : '' }}>
+                    <label>
+                        {{ labels.activation.admin }}
+                    </label>
                 </div>
             </div>
         </div> 
         <div class="{{ theme.form.field }}">           
-            <label>{{ labels.redirect }}</label>
-            <div class="ui labeled input">
-                <div class="ui label">{{ base_url }}/</div>
-                <input type="text" name="redirect" id="redirect" value="{{ redirect }}" placeholder="{{ placeholder.redirect }}">     
+            <label class="{{ theme.form.label }}">
+                {{ labels.redirect }}
+            </label>
+            <div class="space-x-3 {{ theme.form.input }}">
+                <div class="w-1/2 label-text my-auto">
+                    {{ base_url }}/
+                </div>
+                <input 
+                    type="text" 
+                    name="redirect" 
+                    id="redirect" 
+                    value="{{ redirect }}" 
+                    placeholder="{{ placeholder.redirect }}">     
             </div> 
         </div>     
         {{ component('system:form.footer') }}

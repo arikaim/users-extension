@@ -1,14 +1,21 @@
-<form class="ui form {{ class }}" id="token_form">
+<form class="form {{ class }}" id="token_form">
     <input type="hidden" name="type" value="{{ type }}">
-    <div class="font-bold mb-2">
+    <div class="badge badge-sm badge-outline mb-2">
         {{ tokens[type] }}
     </div>
-    <div class="field mt-2">
-        <label>{{ fields.password.label }}</label>
-        <input rule="minLength[4]" type="password" name="password" value="" placeholder="{{ fields.password.placeholder }}">
+    <div class="{{ theme.form.field }}">
+        <label class="{{ theme.form.label }}">
+            {{ fields.password.label }}
+        </label>
+        <input 
+            class="{{ theme.form.input }}"
+            rule="minLength[4]" 
+            type="password" 
+            name="password" 
+            value="" 
+            placeholder="{{ fields.password.placeholder }}">
     </div>
-    {{  component('semantic~form.footer',{ 
-            button_class: 'green button mini',
+    {{  component('system:form.footer',{            
             button_title: buttons.create
         }) 
     }}

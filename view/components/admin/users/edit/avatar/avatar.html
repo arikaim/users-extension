@@ -4,7 +4,11 @@
 {% endif %}    
 <div class="mt-2">  
     <div class="mt-2" id="avatar_image">
-        {{ component('users::admin.users.edit.avatar.image',{ avatar: userDetails.avatar, uuid: uuid }) }}
+        {{  component('users::admin.users.edit.avatar.image',{ 
+                avatar: userDetails.avatar, 
+                uuid: user.uuid 
+            }) 
+        }}
     </div>      
     <div class="mt-4">
         <form class="form" id="avatar_form" enctype="multipart/form-data">

@@ -5,11 +5,7 @@
 
 {% component 'system:admin.panel' %}
     {% set size = 'w-1/2' %}
-    {% if demo_mode == true %}
-    <div class="ui warning message">
-        Save optins is disabeld in DEMO MODE!
-    </div>
-    {% endif %}
+    {{ component('system:admin.alert.demo') }}
     <form class="form" id="settings_form">  
         <div class="{{ theme.panel }}">
             <div class="{{ theme.form.space }} {{ theme.form.field }}">                           

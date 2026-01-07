@@ -48,19 +48,13 @@ function UserGroupsView() {
             var title = $(element).attr('data-title');
             var message = arikaim.ui.template.render(self.getMessage('group_remove.content'),{ title: title });
 
-            return modal.confirmDelete({ 
-                title: self.getMessage('group_remove.title'),
-                description: message
-            },function() {
+            arikaim.ui.getComponent('confirm_delete').open(function() {
                 groupsAdmin.delete(uuid,function(result) {
                     arikaim.ui.table.removeRow('#row_' + uuid);     
                 },function(error) {
-                    arikaim.page.toastMessage({
-                        class: 'error',
-                        message: error
-                    });  
+                    arikaim.ui.getComponent('toast').show(error);                          
                 });
-            });
+            },message);            
         });
     };
 }

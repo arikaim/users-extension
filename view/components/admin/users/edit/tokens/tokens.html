@@ -1,25 +1,22 @@
 {% if uuid is not empty %}
     {% set user = createModel('Users').findById(uuid) %}     
 {% endif %}
-
-<div class="mt-2 px-4" id="tokens_view">
-    {{ component('users::admin.users.edit.tokens.view',{ uuid: uuid }) }}
-</div>
-<div class="p-1">    
+<div class="mt-2 hidden">    
     {% if service('access').hasControlPanelAccess() == true %}
-    <button 
-        type="2"
-        class="ui basic icon labeled button create-token mini">
-        <i class="icon green plus"></i>
-        {{ buttons.api }}
-    </button>
-    <button 
-        type="0"
-        class="ui basic icon labeled button create-token mini">
-        <i class="icon green plus"></i>
-        {{ buttons.page }}
-    </button>
+        <button 
+            type="2"
+            class="{{ theme.buttons.green }} create-token">          
+            {{ buttons.api }}
+        </button>
+        <button 
+            type="0"
+            class="{{ theme.buttons.green }} create-token">         
+            {{ buttons.page }}
+        </button>
     {% endif %}
 </div>
-<div class="p-2 w-74" id="token_create_content">
+<div class="mt-4" id="tokens_view">
+    {{ component('users::admin.users.edit.tokens.view',{ uuid: uuid }) }}
+</div>
+<div class="mt-4 w-74" id="token_create_content">
 </div>

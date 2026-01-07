@@ -10,7 +10,7 @@ function UsersView() {
     var self = this;
        
     this.init = function() {
-        this.loadMessages('users::admin.users.messages');
+        this.loadMessages('users::admin');
 
         arikaim.ui.loadComponentButton('.add-user');
 
@@ -107,14 +107,11 @@ function UsersView() {
             var title = $(element).attr('data-title');
             var message = arikaim.ui.template.render(self.getMessage('remove.content'),{ title: title });
 
-            return modal.confirmDelete({ 
-                title: self.getMessage('remove.title'),
-                description: message
-            },function() {
+            arikaim.ui.getComponent('confirm_delete').open(function() {
                 usersAdmin.delete(uuid,function(result) {
                     arikaim.ui.table.removeRow('#row_' + uuid);     
                 });
-            });
+            },message);
         });
     };
 }

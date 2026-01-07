@@ -1,6 +1,7 @@
 {% set user = createModel('Users').findById(uuid) %}
 {% set tokens = createModel('AccessTokens').getUserTokens(user.id) %}
-<table class="ui very basic mini table fluid">
+
+<table class="{{ theme.table.default }} table-xs">
     <thead>
         <th>{{ labels.action }}</th>
         <th>{{ labels.type }}</th>
@@ -19,8 +20,8 @@
             {% set expired_class = (token.expired == true) ? 'error' : 'positive' %}
             <tr class="{{ expired_class }}" id="{{ token.uuid }}">
                 <td>
-                    <button class="ui mini basic icon button delete-token" uuid="{{ token.uuid }}">
-                        <i class="icon trash orange"></i>                  
+                    <button class="{{ theme.buttons.icon }} delete-token" uuid="{{ token.uuid }}">
+                        {{ component('icons~trash',theme.icons.delete,'svg')  }}    
                     </button>
                 </td>
                 <td>
@@ -35,7 +36,7 @@
                 </td>
                 <td>{{ token.date_created|dateTimeFormat }}</td>
                 <td>{{ (token.date_expired > 0) ? token.date_expired|dateTimeFormat : labels.never }}</td>
-                <td>{{ token.token }}</td>           
+                <td>{{ token.token|sliceLabel(5) }}</td>           
             </tr>            
         {% endfor %}
     </tbody>

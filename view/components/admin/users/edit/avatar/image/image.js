@@ -2,14 +2,11 @@
 
 arikaim.component.onLoaded(function() {
     arikaim.ui.button('.remove-avatar',function(element) {
-        var uuid = $(element).attr('uuid');
-        return users.deleteAvatar(uuid,function(result) {
+        return users.deleteAvatar(function(result) {
             arikaim.page.loadContent({
                 id: 'avatar_image',
-                params: { },
+                params: { avatar: null },
                 component: 'users::admin.users.edit.avatar.image'
-            },function(result) {
-
             });
         })       
     });

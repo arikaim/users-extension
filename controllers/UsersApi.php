@@ -275,11 +275,11 @@ class UsersApi extends ApiController
       
         // user name
         if ($loginWith == 1 || $loginWith == 3) {
-            $data->addRule('text:min=2|required','user_name');
+            $data->addRule('text:min=2','user_name');
         }
         // email
         if ($loginWith == 2) {
-            $data->addRule('email:|required','email');
+            $data->addRule('email','email');
         }
         $data
             ->addRule('text:min=2|required','password')
@@ -299,7 +299,7 @@ class UsersApi extends ApiController
         }
     
         $remember = $data->get('remember',false);
-        $credentials = $this->resolveLoginCredentials($loginWith,$data);
+        $credentials = $this->resolveLoginCredentials($data);
 
         $this->userLogin($credentials,$remember,'session',$loginAttempts);
     }
@@ -444,32 +444,19 @@ class UsersApi extends ApiController
     /**
      * Resolve login credentials
      *
-     * @param integer $loginWith
      * @param Collection $data
      * @return array
      */
-    protected function resolveLoginCredentials(int $loginWith, $data): array
+    protected function resolveLoginCredentials($data): array
     {
         $credentials['password'] = \trim($data->get('password',''));
         $userName = \strtolower(\trim($data->get('user_name','')));
+        $email = \trim($data->get('email',''));
 
-        switch($loginWith) {
-            case 1: 
-                $credentials['user_name'] = $userName;    
-                break;
-            case 2: 
-                $credentials['email'] = $data->get('email');  
-                break;
-            case 3: 
-                if (Utils::isEmail($data->get('user_name')) == true) {
-                    $credentials['email'] = $data->get('user_name');
-                } else {
-                    $credentials['user_name'] = $userName;  
-                }
-                break;
-
-            default:
-                $credentials['user_name'] = $userName;
+        if (Utils::isEmail($email) == true) {
+            $credentials['email'] = $email;
+        } else {
+            $credentials['user_name'] = $userName;
         }
 
         return $credentials;

@@ -3,7 +3,7 @@
     <table class="{{ theme.table.default }}">
         <thead>
             <tr>   
-                <th class="">{{ columns.avatar }}</th>          
+                <th class="w-12"></th>          
                 <th class="">{{ columns.actions }}</th>
                 <th class="">
                     {{ order.orderByLink('users','date_created') }}
@@ -26,12 +26,17 @@
             </tr>
         </thead>
         <tbody 
-            id="users_rows" 
-            component="users::admin.users.view.rows" 
-            namespace="users">
+            id="users_rows">
             {{ component('users::admin.users.view.rows') }}
         </tbody>
     </table>
-    <div id="paginator">       
+    <div id="paginator">  
+        {{  component("system:admin.paginator",{ 
+                id: 'users_paginator',
+                namespace: 'users',
+                rows_selector: 'users_rows',
+                component:"users::admin.users.view.rows" 
+            })  
+        }}       
     </div>
 </div>

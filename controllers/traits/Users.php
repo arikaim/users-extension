@@ -39,7 +39,7 @@ trait Users
     {
        
         $result = $this->get('access')->withProvider($authProviderName)->authenticate($credentials);
-        if ($result == false) {
+        if ($result == false) {            
             $this
                 ->error('errors.login')     
                 ->field('attempts',$loginAttempts);
@@ -50,7 +50,15 @@ trait Users
         $user = $this->get('access')->getUser();  
 
         $verifiedEmail = (bool)$this->get('options')->get('users.login.require.verified.email',false);
-        if ($verifiedEmail == true && empty($credentials['email']) == false) {
+        if ($verifiedEmail == true) {
+            if (empty($credentials['email']) == true) {
+                $this->get('access')->withProvider($authProviderName)->logout();
+                $this
+                    ->error('Not valid email')
+                    ->field('attempts',$loginAttempts);
+                return;
+            }
+
             $userDetails = Model::UserDetails('users')->findOrCreate($user['id']);
             
             if ($userDetails->isConfirmedEmail() == false) {

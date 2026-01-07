@@ -1,8 +1,7 @@
 {
     "labels": {
-        "add": "Add User",
-        "view": "View",    
-        "edit": "Edit"    
+        "add": "Add User",        
+        "status": "Status"       
     },
     "buttons": {
         "create": "Create"

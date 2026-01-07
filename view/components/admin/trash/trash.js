@@ -23,19 +23,13 @@ function TrashView() {
         this.loadMessages('users::admin.trash');
 
         arikaim.ui.button('.empty-trash',function(element) {       
-            return modal.confirmDelete({ 
-                title:  self.getMessage('empty.title'),
-                description: self.getMessage('empty.description') 
-            },function() {         
+            arikaim.ui.getComponent('confirm_delete').open(function() {         
                 self.emptyTrash(function(result) {
                     self.loadRows();
                 },function(error) {
-                    arikaim.page.toastMessage({
-                        class: 'error',
-                        message: error
-                    });
+                    arikaim.ui.getComponent('toast').show(error);      
                 });
-            });               
+            },self.getMessage('empty.description'));                   
         });
 
         this.initRows();
@@ -58,13 +52,10 @@ function TrashView() {
             trashView.restoreUser(uuid,function(result) {
                 arikaim.ui.table.removeRow('#row_' + uuid,null,function(element) {
                     $('.trash-button').addClass('disabled');
-                });              
-                arikaim.page.toastMessage(result.message);                   
+                });                           
+                arikaim.ui.getComponent('toast').show(result.message);                       
             },function(error) {
-                arikaim.page.toastMessage({
-                    class: 'error',
-                    message: error
-                });
+                arikaim.ui.getComponent('toast').show(error);      
             });
         });   
     };

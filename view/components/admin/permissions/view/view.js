@@ -54,20 +54,15 @@ function PermissionsView() {
             var title = $(element).attr('data-title');
             var message = arikaim.ui.template.render(self.getMessage('permisison_remove.content'),{ title: title });
 
-            return modal.confirmDelete({ 
-                title: self.getMessage('permisison_remove.title'),
-                description: message
-            },function() {
+            arikaim.ui.getComponent('confirm_delete').open(function() {
                 permissions.delete(uuid,function(result) {             
                     $('#item_' + uuid).remove();
-                    arikaim.page.toastMessage(result.message);
-                },function(error) {              
-                    arikaim.page.toastMessage({
-                        class: 'error',
-                        message: error
-                    });                
+                    arikaim.ui.getComponent('toast').show(result.message);           
+                 
+                },function(error) { 
+                    arikaim.ui.getComponent('toast').show(error);                              
                 });
-            });
+            }, message);            
         });
     }   
 }

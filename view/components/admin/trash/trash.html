@@ -24,13 +24,18 @@
             </tr>
         </thead>
         <tbody 
-            id="items_rows" 
-            component="users::admin.users.view.rows" 
-            namespace="trash">
+            id="items_rows">
             {{ component("users::admin.users.view.rows",{ show_deleted: true }) }}
         </tbody>
     </table>
     <div id="paginator">
-       
+        {{  component("system:admin.paginator",{ 
+                id: 'deleted_users_paginator',
+                namespace: 'trash',
+                params: 'show_deleted: true',
+                rows_selector: 'items_rows',
+                component:"users::admin.users.view.rows" 
+            })  
+        }}    
     </div>
 </div>

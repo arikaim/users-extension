@@ -1,20 +1,26 @@
 {% set user = createModel('Users').findById(uuid) %}
-<div class="mt-2 px-4">
+<div class="mt-2">
     {% if user.groups is empty %}
-    <div class="ui message" id="no_groups_message">
-        {{ messages.empty }}
-    </div>
+        {{  component('system:admin.alert.info',{
+                message: messages.empty,
+                id: 'no_groups_message'
+            }) 
+        }}   
     {% endif %}
-    <div class="ui list" id="groups_list">
+    <div 
+        class="{{ theme.list.flush }}" 
+        id="groups_list">
         {% for item in user.groups %}              
             {{ component('users::admin.users.edit.groups.item',{ group: item.group, relation_uuid: item.uuid  }) }}       
         {% endfor %}
     </div>  
 </div>
-
-<div class="ui segment pt-4">      
-    {{ component('users::admin.groups.dropdown',{ icon: 'blue' }) }}
-    <div class="ui button icon green add-group-button" title="{{ labels.add }}" uuid="{{ user.uuid }}">
-        <i class="icon plus"></i>
+<div class="join mt-4">      
+    {{ component('users::admin.groups.dropdown',{ class: 'join-item' }) }}
+    <div 
+        class="{{ theme.buttons.green }} add-group-button" 
+        title="{{ labels.add }}" 
+        uuid="{{ user.uuid }}">
+        {{ buttons.add }}
     </div>
 </div>

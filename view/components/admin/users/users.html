@@ -6,7 +6,10 @@
         class="{{ theme.buttons.green }} add-user">
         {{ buttons.create }}
     </button>
-    <div class="ml-2 w-32">
+    <div class="ml-8 flex flex-row items-center">
+        <label class="mx-2 font-bold">
+            {{ labels.status }}
+        </label>
         {{  component('system:admin.status.dropdown',{ 
                 status: searchValue('status','users'),
                 class: 'status-filter ',    

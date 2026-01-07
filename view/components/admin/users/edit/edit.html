@@ -1,6 +1,5 @@
 {% if uuid is not empty %}
     {% set user = createModel('Users').findById(uuid) %}
-   
 {% endif %}  
 
 {% component 'system:admin.panel' %}      
@@ -11,8 +10,6 @@
         {{ user.user_name_or_email }}
     </div>
     <div class="mt-2" id="edit_user_menu">
-        {% if uuid is not null %}
-            {{ component('users::admin.users.edit.menu',{ uuid: uuid }) }}
-        {% endif %}   
+        {{ component('users::admin.users.edit.menu',{ uuid: user.uuid }) }}
     </div>
 {% endcomponent %}

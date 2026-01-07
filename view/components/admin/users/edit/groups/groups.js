@@ -1,12 +1,10 @@
 'use strict';
 
 arikaim.component.onLoaded(function() {
-    $('.groups-dropdown').dropdown({});
-
     initGroupList();
     
     arikaim.ui.button('.add-group-button',function(element) {
-        var groupUuid = $('.groups-dropdown').dropdown('get value');
+        var groupUuid = $('.groups-dropdown').val();
         var userUuid = $(element).attr('uuid');
 
         groupsAdmin.addMember(groupUuid,userUuid,function(result) {
@@ -33,13 +31,10 @@ arikaim.component.onLoaded(function() {
             var relationUuid = $(element).attr('relation-uuid');
 
             groupsAdmin.removeMember(relationUuid,function(result) {               
-                $('#item_' + uuid).remove();
-                arikaim.page.toastMessage(result.message);               
+                $('#item_' + uuid).remove();              
+                arikaim.ui.getComponent('toast').show(result.message);             
             },function(error) { 
-                arikaim.page.toastMessage({
-                    class: 'error',
-                    message: error
-                });                 
+                arikaim.ui.getComponent('toast').show(error);                                 
             });
         });
     }   

@@ -9,10 +9,10 @@
     <td>
         {% if item.avatar is not empty  %}
             {% set image_url = url('/api/users/avatar/view/' ~  item.uuid,true) %}       
-            <img class="rounded-full" src="{{ image_url }}">
+            <img class="rounded-full h-8 w-8" src="{{ image_url }}">
         {% else %}
             <div class="h-8 w-8">
-                {{ component('icons~image',theme.icons.gray,'svg') }}
+                {{ component('icons~image',{ size: 'h-full w-full' },'svg') }}
             </div>           
         {% endif %}
     </td>

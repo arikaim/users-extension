@@ -1,20 +1,21 @@
 {% set user = createModel('Users').findById(uuid) %}
 {% set user_details = createModel('UserDetails','users').findOrCreate(user.id) %}
 {% set options = [] %}
-<div class="mt-2 px-4">
-    <div class="ui label basic">
+<div class="mt-2">
+    <div class="badge badge-sm badge-outline">
         {{ labels.type }}
-        <div class="detail">
+        <div class="font-bold">
             {{ (user_details.type.slug is empty) ? labels.default : user_details.type.title }}         
         </div>          
     </div>   
 </div>
-<div class="ui divider"></div>
+<div class="my-2 horizontal divider"></div>
 
 {{  component('system:admin.orm.options.edit',{ 
         model: 'UserOptions',
         extension: 'users',
         id: user.id,
-        class: 'mt-2 basic',
+        class: 'mt-2',
         hide: false 
-}) }}
+    }) 
+}}

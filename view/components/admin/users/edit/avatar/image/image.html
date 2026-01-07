@@ -1,13 +1,20 @@
 {% if avatar is not empty %}
     {% set image_url = url('/api/users/avatar/view/' ~  uuid,true) %}    
-    <img class="ui top aligned left floated small circular image" src="{{ image_url }}">
-    <button class="ui icon button basic remove-avatar" uuid="{{ uuid }}" title="{{ labels.remove }}">
-        <i class="icon orange trash"></i>
-    </button>  
-{% else %}
-<div class="w-32 h-32 border rounded-full border-solid border-gray-300">         
-    <div class="flex items-center justify-center align-middle pt-6 pl-2">
-        <i class="icon user outline grey huge"></i>
+    <div class="flex flex-row items-start">
+         <img 
+            class="w-20 h-20 m-auto" 
+            src="{{ image_url }}">
+        <button 
+            class="ml-4 {{ theme.buttons.icon }} remove-avatar" 
+            uuid="{{ uuid }}" 
+            title="{{ labels.remove }}">
+            {{ component('icons~trash',theme.icons.delete,'svg') }}
+        </button>  
     </div>
-    {% endif %}
-</div>
+{% else %}
+    <div class="w-20 h-20 border rounded-full border-solid border-gray-300">         
+        <div class="p-2 flex items-center justify-center align-middle">
+            {{ component('icons~image',{ size: 'h-full w-full' },'svg') }}
+        </div>        
+    </div>
+{% endif %}
