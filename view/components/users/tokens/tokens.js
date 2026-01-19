@@ -17,11 +17,9 @@ function UserApiTokens() {
     };
 
     this.delete = function(uuid, onSuccess, onError) {
-        var data = {
+        return arikaim.put('/api/users/token/delete',{
             uuid: uuid
-        };
-
-        return arikaim.put('/api/users/token/delete',data,onSuccess,onError);
+        },onSuccess,onError);
     };
 }
 

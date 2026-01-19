@@ -163,7 +163,7 @@ class UsersControlPanel extends ControlPanelApiController
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param Validator $data
-     * @return Psr\Http\Message\ResponseInterface
+     * @return mixed
     */
     public function getList($request, $response, $data)
     {
