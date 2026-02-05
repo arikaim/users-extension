@@ -169,32 +169,35 @@ class UsersControlPanel extends ControlPanelApiController
     {
         $this->requireControlPanelPermission();
 
-        $this->onDataValid(function($data) {          
-            $search = $data->get('query','');
-            $dataField = $data->get('data_field','uuid');
-            $size = $data->get('size',15);
-            
-            $model = Model::Users()->getNotDeletedQuery();
-            $model = $model
-                ->where('user_name','like','%' . $search . '%')
-                ->orWhere('email','like','%' . $search . '%')->take($size)->get();
-          
-            $this->setResponse(\is_object($model),function() use($model,$dataField) {     
-                $items = [];
-                foreach ($model as $item) {
-                    $name = (empty($item['user_name']) == true) ? $item['email'] : $item['user_name'];
-                    $items[] = [
-                        'name' => $name,
-                        'value' => $item[$dataField]
-                    ];
-                }
-                $this                    
-                    ->field('success',true)
-                    ->field('results',$items);  
-            },'errors.list');
-        });
-        $data->validate();
+        $data->validate(true);
 
+        $search = $data->get('query',$request->getAttribute('query'));
+        $dataField = $data->get('data_field','uuid');
+        $size = $data->get('size',$request->getAttribute('size',15));
+            
+        $model = Model::Users()->getNotDeletedQuery();
+        $model = $model
+            ->where('user_name','like','%' . $search . '%')
+            ->orWhere('email','like','%' . $search . '%')->take($size)->get();
+        
+        if ($model == null) {
+            $this->error('errors.list','Not found');
+            return;
+        }
+       
+        $items = [];
+        foreach ($model as $item) {
+            $name = (empty($item['user_name']) == true) ? $item['email'] : $item['user_name'];
+            $items[] = [
+                'name' => $name,
+                'value' => $item[$dataField]
+            ];
+        }
+        $this                    
+            ->field('success',true)
+            ->field('search',$search)
+            ->field('results',$items);  
+      
         return $this->getResponse(true); 
     }
 
@@ -204,7 +207,7 @@ class UsersControlPanel extends ControlPanelApiController
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param Validator $data
-     * @return Psr\Http\Message\ResponseInterface
+     * @return mixed
     */
     public function emptyTrashController($request, $response, $data)
     {

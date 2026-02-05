@@ -1,27 +1,9 @@
-{% set id = id|default('users_dropdown') %}
-{% set name = name|default('users') %}
-{% set language = language|default(null) %}
-{% set size = size|default(15) %}
-{% set model = createModel('Users') %}
-{% set users = model.orderBy('user_name') %}
-{% set items = users.take(size).get() %}
-{% if selected is not empty %}
-    {% set selected = model.findByid(selected) %}
-{% endif %}
-{% set data_field = data_field|default('uuid') %}
-{% set selectet_text = (selected is empty) ? labels.select : selected.user_name_or_email %}
-<div class="ui search selection dropdown users-dropdown {{ class }}" id="{{ id }}" data-field="{{ data_field }}">
-    <input {{ rule|attr('rule') }} name="{{ name }}" type="hidden" value="{{ selected[data_field] }}">
-    {% if show_icon == true %}
-    <i class="user icon {{ icon }}"></i>
-    {% endif %}
-    <div class="default text">{{ selectet_text }}</div>
-    <i class="dropdown icon"></i>
-    <div class="menu">
-        {% for item in items %}
-            <div class="item" data-value="{{ item[data_field] }}">              
-                {{ item.user_name_or_email }}
-            </div>
-        {% endfor %}
-    </div>
-</div>
+{% set data_field = data_field|default('id') %}
+{{  component('system:form.fields.select',{
+        id: id|default('users_select'),
+        apiUrl: DOMAIN ~ BASE_PATH ~ '/api/users/admin/list/' ~ data_field ~ '/',
+        clear_button: true,                     
+        selected: selected,
+        placeholder: labels.select
+    }) 
+}} 

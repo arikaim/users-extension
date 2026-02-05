@@ -57,9 +57,11 @@ class UsersAvatarApi extends ApiController
     */
     public function deleteAvatar($request, $response, $data) 
     { 
+        $data->validate(true);
+
         // get current auth user
         $user = $this->get('access')->getUser();
-        $data->validate(true);
+     
 
         $user = Model::Users()->findByid($user['uuid']);
         $details = Model::UserDetails('users')->findOrCreate($user->id);
