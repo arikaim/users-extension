@@ -1,6 +1,7 @@
 {% set data_field = data_field|default('id') %}
 {{  component('system:form.fields.select',{
         id: id|default('users_select'),
+        size: size,
         apiUrl: DOMAIN ~ BASE_PATH ~ '/api/users/admin/list/' ~ data_field ~ '/',
         clear_button: true,                     
         selected: selected,
